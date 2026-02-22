@@ -13,7 +13,7 @@
 | [cline](https://github.com/cline/cline) | TypeScript | IDE插件 | pending | `cline/cline` |
 | [continue](https://github.com/continuedev/continue) | TypeScript | IDE插件 | pending | `continuedev/continue` |
 | [goose](https://github.com/block/goose) | Rust | CLI | pending | `block/goose` |
-| [codex-cli](https://github.com/openai/codex) | TypeScript | CLI | pending | `openai/codex` |
+| [codex-cli](https://github.com/openai/codex) | Rust | CLI | in-progress | `openai/codex` |
 | [swe-agent](https://github.com/SWE-agent/SWE-agent) | Python | 研究 | pending | `SWE-agent/SWE-agent` |
 | [bolt.new](https://github.com/stackblitz/bolt.new) | TypeScript | Web | pending | `stackblitz/bolt.new` |
 | [devika](https://github.com/stitionai/devika) | Python | 自治 | pending | `stitionai/devika` |

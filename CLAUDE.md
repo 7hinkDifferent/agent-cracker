@@ -88,11 +88,12 @@ Git hooks 存放在 `scripts/githooks/`，`npm run setup` 安装到 `.git/hooks/
 ## 当前进度
 
 <!-- PROGRESS_START -->
-- **进行中**: aider, pi-agent
-- **待分析**: openhands, cline, continue, goose, codex-cli, swe-agent, bolt.new, devika, gpt-engineer
+- **进行中**: aider, codex-cli, pi-agent
+- **待分析**: openhands, cline, continue, goose, swe-agent, bolt.new, devika, gpt-engineer
 
 Demo 覆盖:
 - **aider**: 4/8 (repomap, search-replace, reflection, architect)
+- **codex-cli**: 0/6 ()
 - **pi-agent**: 4/6 (event-stream, pluggable-ops, steering-queue, structured-compaction)
 
 <!-- PROGRESS_END -->

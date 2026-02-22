@@ -39,9 +39,9 @@ agents:
 
   - name: codex-cli
     repo: https://github.com/openai/codex
-    language: TypeScript
+    language: Rust
     category: CLI
-    status: pending
+    status: in-progress
     description: OpenAI's lightweight coding agent
 
   - name: swe-agent
