@@ -202,6 +202,41 @@ else
 fi
 echo ""
 
+echo ""
+
+# ─── 7. Commit 跟踪一致性 ────────────────────────────
+echo "7. Commit 跟踪一致性"
+
+for name in "${AGENT_NAMES[@]}"; do
+  status=$(grep -A8 "name: $name" agents.yaml | grep "status:" | head -1 | sed 's/.*status:[[:space:]]*//' | tr -d '[:space:]')
+  if [[ "$status" != "in-progress" && "$status" != "done" ]]; then
+    continue
+  fi
+
+  analyzed_commit=$(grep -A8 "name: $name" agents.yaml | grep "analyzed_commit:" | head -1 | sed 's/.*analyzed_commit:[[:space:]]*//' | tr -d '[:space:]')
+
+  if [ -z "$analyzed_commit" ]; then
+    warn "$name: in-progress/done but no analyzed_commit in agents.yaml"
+    continue
+  fi
+
+  if [ -d "projects/$name" ]; then
+    submodule_head=$(git -C "projects/$name" rev-parse HEAD 2>/dev/null || echo "")
+    if [ -n "$submodule_head" ]; then
+      if [ "$analyzed_commit" = "$submodule_head" ]; then
+        ok "$name: analyzed_commit matches submodule HEAD (${analyzed_commit:0:7})"
+      else
+        warn "$name: DRIFT — analyzed ${analyzed_commit:0:7} ≠ submodule ${submodule_head:0:7}"
+      fi
+    else
+      ok "$name: has analyzed_commit (submodule HEAD unreadable)"
+    fi
+  else
+    ok "$name: has analyzed_commit ${analyzed_commit:0:7} (no local submodule)"
+  fi
+done
+echo ""
+
 # ─── Summary ───────────────────────────────────────────
 echo "=== Summary ==="
 echo "  Errors:   $ERRORS"

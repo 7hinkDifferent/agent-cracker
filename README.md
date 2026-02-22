@@ -26,7 +26,7 @@
 
 ```bash
 # 克隆项目
-git clone <this-repo-url>
+git clone https://github.com/7hinkDifferent/agent-cracker.git
 cd agent-cracker
 npm run setup                # 安装 git hooks
 

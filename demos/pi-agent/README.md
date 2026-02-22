@@ -2,6 +2,8 @@
 
 基于 [docs/pi-agent.md](../../docs/pi-agent.md) 分析，以下是值得复现的核心机制。
 
+> Based on commit: [`316c2af`](https://github.com/badlogic/pi-mono/tree/316c2afe38d34a352474b852b95195be266709cb) (2026-02-23)
+
 ## Demo 清单
 
 - [x] **event-stream** — EventStream 异步迭代器（自定义 async iterator + event queue，流式事件传递）

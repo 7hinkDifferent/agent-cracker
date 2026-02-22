@@ -2,6 +2,8 @@
 
 基于 [docs/codex-cli.md](../../docs/codex-cli.md) 分析，以下是值得复现的核心机制。
 
+> Based on commit: [`0a0caa9`](https://github.com/openai/codex/tree/0a0caa9df266ebc124d524ee6ad23ee6513fe501) (2026-02-23)
+
 ## Demo 清单
 
 - [x] **approval-policy** — 三级审批策略（Suggest/Auto-Edit/Full-Auto + ExecPolicy 规则引擎 + 危险命令检测）

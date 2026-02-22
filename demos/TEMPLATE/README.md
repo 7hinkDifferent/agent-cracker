@@ -39,3 +39,4 @@ demos/{{AGENT_NAME}}/{{MECHANISM}}/
 
 - 分析文档: [docs/{{AGENT_NAME}}.md](../../../docs/{{AGENT_NAME}}.md)
 - 原项目: {{REPO_URL}}
+- 基于 commit: `{{COMMIT_SHORT}}`

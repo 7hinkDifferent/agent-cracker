@@ -2,6 +2,7 @@
 
 > Auto-generated from template on 2026-02-22
 > Repo: https://github.com/Aider-AI/aider
+> Analyzed at commit: [`7afaa26`](https://github.com/Aider-AI/aider/tree/7afaa26f8b8b7b56146f0674d2a67e795b616b7c) (2026-02-22)
 
 ## 1. Overview & Architecture
 

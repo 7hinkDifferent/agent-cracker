@@ -2,6 +2,7 @@
 
 > Auto-generated from template on 2026-02-23
 > Repo: https://github.com/badlogic/pi-mono
+> Analyzed at commit: [`316c2af`](https://github.com/badlogic/pi-mono/tree/316c2afe38d34a352474b852b95195be266709cb) (2026-02-23)
 
 ## 1. Overview & Architecture
 

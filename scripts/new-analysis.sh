@@ -48,10 +48,22 @@ fi
 
 DATE=$(date +%Y-%m-%d)
 
+# 从 submodule 读取 HEAD SHA
+COMMIT_SHA=""
+COMMIT_SHORT=""
+if [[ -d "projects/$AGENT_NAME" ]]; then
+  COMMIT_SHA=$(git -C "projects/$AGENT_NAME" rev-parse HEAD 2>/dev/null || echo "")
+  COMMIT_SHORT="${COMMIT_SHA:0:7}"
+fi
+COMMIT_DATE="$DATE"
+
 # 替换模板中的占位符
 sed -e "s/{{AGENT_NAME}}/${AGENT_NAME}/g" \
     -e "s|{{REPO_URL}}|${REPO_URL}|g" \
     -e "s/{{DATE}}/${DATE}/g" \
+    -e "s/{{COMMIT_SHA}}/${COMMIT_SHA}/g" \
+    -e "s/{{COMMIT_SHORT}}/${COMMIT_SHORT}/g" \
+    -e "s/{{COMMIT_DATE}}/${COMMIT_DATE}/g" \
     "$TEMPLATE" > "$OUTPUT"
 
 echo "Created: $OUTPUT"

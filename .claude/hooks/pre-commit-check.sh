@@ -53,6 +53,17 @@ for demo_change in $(echo "$STAGED" | grep -E '^demos/[^/]+/[^/]+/' | \
   fi
 done
 
+# 检查 5: 暂存了新分析文档但未更新 analyzed_commit
+for doc_change in $(echo "$STAGED" | grep -E '^docs/[^/]+\.md$' | grep -v TEMPLATE); do
+  agent_name=$(basename "$doc_change" .md)
+  if echo "$STAGED" | grep -q '^agents.yaml$'; then
+    # agents.yaml 已暂存，检查是否包含 analyzed_commit 变更
+    if ! git diff --cached agents.yaml 2>/dev/null | grep -q "analyzed_commit"; then
+      ISSUES+=("暂存了 docs/$agent_name.md 和 agents.yaml，但 agents.yaml 中未更新 analyzed_commit — 检查是否需要 stamp commit")
+    fi
+  fi
+done
+
 if [ ${#ISSUES[@]} -gt 0 ]; then
   MSG="提交前检查发现以下可能遗漏："
   for issue in "${ISSUES[@]}"; do

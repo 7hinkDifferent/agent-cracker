@@ -8,6 +8,8 @@ agents:
     category: CLI
     status: in-progress
     description: AI pair programming in your terminal
+    analyzed_commit: 7afaa26f8b8b7b56146f0674d2a67e795b616b7c
+    analyzed_date: "2026-02-22"
 
   - name: openhands
     repo: https://github.com/All-Hands-AI/OpenHands
@@ -43,6 +45,8 @@ agents:
     category: CLI
     status: in-progress
     description: OpenAI's lightweight coding agent
+    analyzed_commit: 0a0caa9df266ebc124d524ee6ad23ee6513fe501
+    analyzed_date: "2026-02-23"
 
   - name: swe-agent
     repo: https://github.com/SWE-agent/SWE-agent
@@ -78,3 +82,5 @@ agents:
     category: CLI
     status: in-progress
     description: AI agent toolkit with coding agent, unified LLM API, and terminal UI
+    analyzed_commit: 316c2afe38d34a352474b852b95195be266709cb
+    analyzed_date: "2026-02-23"

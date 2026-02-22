@@ -26,6 +26,12 @@ Update the repository's agent data: pull latest submodule commits, refresh star 
 ./scripts/manage-submodules.sh update
 ```
 
+### 1.5. Check Analysis Drift
+
+For each updated agent, if `agents.yaml` has an `analyzed_commit`, compare it with the new submodule HEAD. If different, print:
+
+> ⚠️ <agent>: submodule 从 <old-short> 更新到 <new-short>，分析文档和 demo 可能过时。运行 `/check-updates <agent>` 查看详情。
+
 ### 2. Refresh Star Counts
 
 ```bash

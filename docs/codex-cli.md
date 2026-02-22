@@ -2,6 +2,7 @@
 
 > Auto-generated from template on 2026-02-23
 > Repo: https://github.com/openai/codex
+> Analyzed at commit: [`0a0caa9`](https://github.com/openai/codex/tree/0a0caa9df266ebc124d524ee6ad23ee6513fe501) (2026-02-23)
 
 ## 1. Overview & Architecture
 

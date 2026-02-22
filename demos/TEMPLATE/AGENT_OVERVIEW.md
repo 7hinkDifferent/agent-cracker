@@ -2,6 +2,8 @@
 
 基于 [docs/{{AGENT_NAME}}.md](../../docs/{{AGENT_NAME}}.md) 分析，以下是值得复现的核心机制。
 
+> Based on commit: [`{{COMMIT_SHORT}}`]({{REPO_URL}}/tree/{{COMMIT_SHA}}) ({{COMMIT_DATE}})
+
 ## Demo 清单
 
 - [ ] **{{mechanism-1}}** — 一句话描述

@@ -2,6 +2,8 @@
 
 基于 [docs/aider.md](../../docs/aider.md) 分析，以下是值得复现的核心机制。
 
+> Based on commit: [`7afaa26`](https://github.com/Aider-AI/aider/tree/7afaa26f8b8b7b56146f0674d2a67e795b616b7c) (2026-02-22)
+
 ## Demo 清单
 
 - [x] **repomap** — 仓库语法地图（tree-sitter AST 解析 + PageRank 排序 + token 约束）

@@ -60,6 +60,7 @@ Use the template from `demos/TEMPLATE/README.md` and fill in:
 - **文件结构**: Actual file tree
 - **关键代码解读**: Core algorithm with inline comments
 - **与原实现的差异**: What was simplified and what was preserved
+- **相关文档**: Must include `基于 commit: <short-sha>` and `核心源码: <原项目中对应的文件路径>` (the source path is used by `/check-updates` to match changes)
 
 ### Step 5: Implement Core Logic
 
@@ -93,3 +94,4 @@ The completed demo directory at `demos/<agent-name>/<mechanism>/`.
 1. Update the agent's overview at `demos/<agent-name>/README.md`: mark the mechanism as `[x]` and update the progress count
 2. Update `agents.yaml` status if needed (e.g. `pending` → `in-progress`)
 3. Run `npm run progress` to update the CLAUDE.md progress section (or it will auto-update on next commit)
+4. Confirm the demo README's "相关文档" section includes `基于 commit: <short-sha>` (read from `agents.yaml` `analyzed_commit`). This provides a baseline for `/check-updates` demo impact assessment.

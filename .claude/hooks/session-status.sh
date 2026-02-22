@@ -29,7 +29,31 @@ if [ -d "$PROJECT_DIR/demos" ]; then
   DEMO_COUNT=$(find "$PROJECT_DIR/demos" -name "main.py" -o -name "repomap.py" | grep -v TEMPLATE | wc -l | tr -d ' ')
 fi
 
+# 检查本地 drift（只查有 analyzed_commit 的 agent）
+DRIFT_COUNT=0
+current_name=""
+current_commit=""
+while IFS= read -r line; do
+  if [[ "$line" =~ ^[[:space:]]*-[[:space:]]*name:[[:space:]]*(.*) ]]; then
+    current_name="${BASH_REMATCH[1]}"
+    current_commit=""
+  fi
+  if [[ "$line" =~ ^[[:space:]]*analyzed_commit:[[:space:]]*(.*) ]]; then
+    current_commit="${BASH_REMATCH[1]}"
+    current_commit="${current_commit%"${current_commit##*[![:space:]]}"}"
+    if [ -n "$current_commit" ] && [ -d "$PROJECT_DIR/projects/$current_name" ]; then
+      local_head=$(git -C "$PROJECT_DIR/projects/$current_name" rev-parse HEAD 2>/dev/null || echo "")
+      if [ -n "$local_head" ] && [ "$local_head" != "$current_commit" ]; then
+        DRIFT_COUNT=$((DRIFT_COUNT + 1))
+      fi
+    fi
+  fi
+done < "$YAML_FILE"
+
 CONTEXT="Current project status:${STATUS_LINES}\nTotal demos: $DEMO_COUNT"
+if [ "$DRIFT_COUNT" -gt 0 ]; then
+  CONTEXT="$CONTEXT\n⚠️ $DRIFT_COUNT agent(s) have local drift (submodule HEAD ≠ analyzed_commit). Run /check-updates to see details."
+fi
 
 # 输出 JSON
 printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"%s"}}' "$CONTEXT"

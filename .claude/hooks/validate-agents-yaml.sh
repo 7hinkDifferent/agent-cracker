@@ -49,6 +49,12 @@ if [ -n "$BAD_STATUS" ]; then
   ERRORS="${ERRORS} Unknown status values found."
 fi
 
+# 检查 4: analyzed_commit 格式校验（如果存在）
+BAD_COMMIT=$(grep "analyzed_commit:" "$FILE_PATH" | grep -v -E "^[[:space:]]*analyzed_commit:[[:space:]]*[0-9a-f]{7,40}[[:space:]]*$" || true)
+if [ -n "$BAD_COMMIT" ]; then
+  ERRORS="${ERRORS} Invalid analyzed_commit format (must be 7-40 hex chars)."
+fi
+
 if [ -n "$ERRORS" ]; then
   ESCAPED=$(echo "$ERRORS" | sed 's/"/\\"/g')
   echo "{\"systemMessage\": \"agents.yaml validation FAILED: $ESCAPED\"}"

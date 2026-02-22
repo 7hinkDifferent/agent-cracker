@@ -87,7 +87,18 @@ cmd_status() {
   echo "=== agents.yaml vs submodules ==="
   parse_agents | while IFS='|' read -r name repo; do
     if [[ -d "projects/$name" ]]; then
-      echo "  [ok] $name"
+      local head
+      head=$(git -C "projects/$name" rev-parse HEAD 2>/dev/null || echo "")
+      local analyzed
+      analyzed=$(grep -A8 "name: $name" "$AGENTS_FILE" | grep "analyzed_commit:" | head -1 | sed 's/.*analyzed_commit:[[:space:]]*//' | tr -d '[:space:]')
+
+      if [[ -z "$analyzed" ]]; then
+        echo "  [ok] $name @ ${head:0:7} (no analyzed_commit)"
+      elif [[ "$analyzed" == "$head" ]]; then
+        echo "  [ok] $name @ ${head:0:7} (analyzed ✓)"
+      else
+        echo "  [!!] $name @ ${head:0:7} (analyzed: ${analyzed:0:7} — DRIFT)"
+      fi
     else
       echo "  [--] $name (not added)"
     fi

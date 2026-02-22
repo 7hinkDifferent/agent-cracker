@@ -2,6 +2,7 @@
 
 > Auto-generated from template on {{DATE}}
 > Repo: {{REPO_URL}}
+> Analyzed at commit: [`{{COMMIT_SHORT}}`]({{REPO_URL}}/tree/{{COMMIT_SHA}}) ({{COMMIT_DATE}})
 
 ## 1. Overview & Architecture
 

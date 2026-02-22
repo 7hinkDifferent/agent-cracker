@@ -100,8 +100,9 @@ For each language ecosystem, use these heuristics to find critical files:
 
 1. Create or update the demo overview at `demos/<agent-name>/README.md` using the template from `demos/TEMPLATE/AGENT_OVERVIEW.md`: list all mechanisms from the analysis worth creating demos for (as `- [ ] **name** — description`)
 2. Update `agents.yaml`: change the agent's `status` from `pending` to `in-progress`（分析完成但还没创建 demo）or `done`（全部完成）
-3. Run `npm run progress` to update the CLAUDE.md progress section (or it will auto-update on next commit)
-4. Check cross-agent comparison coverage: scan all other `docs/*.md` files (excluding TEMPLATE.md) that have completed analysis. List which docs' Dimension 8 sections do NOT reference the newly analyzed agent. Print a reminder like:
+3. **Stamp analyzed commit**: read `projects/<agent-name>/` HEAD (`git -C projects/<agent-name> rev-parse HEAD`), update `agents.yaml` with `analyzed_commit` and `analyzed_date` (today's date), and update `docs/<agent-name>.md` header's `> Analyzed at commit:` line
+4. Run `npm run progress` to update the CLAUDE.md progress section (or it will auto-update on next commit)
+5. Check cross-agent comparison coverage: scan all other `docs/*.md` files (excluding TEMPLATE.md) that have completed analysis. List which docs' Dimension 8 sections do NOT reference the newly analyzed agent. Print a reminder like:
 
    > 以下文档的跨 Agent 对比（Dimension 8）尚未引用 <new-agent>，建议运行 `/sync-comparisons`：
    > - docs/aider.md
