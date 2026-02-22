@@ -93,7 +93,7 @@ Git hooks 存放在 `scripts/githooks/`，`npm run setup` 安装到 `.git/hooks/
 
 Demo 覆盖:
 - **aider**: 4/8 (repomap, search-replace, reflection, architect)
-- **codex-cli**: 0/6 ()
+- **codex-cli**: 4/6 (approval-policy, head-tail-truncation, network-policy, prompt-assembly)
 - **pi-agent**: 4/6 (event-stream, pluggable-ops, steering-queue, structured-compaction)
 
 <!-- PROGRESS_END -->
