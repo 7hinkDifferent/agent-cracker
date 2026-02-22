@@ -1,0 +1,3 @@
+[submodule "projects/aider"]
+	path = projects/aider
+	url = https://github.com/Aider-AI/aider

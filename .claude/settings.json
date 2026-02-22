@@ -1,0 +1,44 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/session-status.sh",
+            "timeout": 10,
+            "statusMessage": "Loading project status..."
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/demo-syntax-check.sh",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/validate-agents-yaml.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Check if in this conversation any agent analysis was completed (wrote to docs/<agent>.md) or demos were created/modified. If so, check whether agents.yaml status was updated accordingly (e.g. from 'pending' to 'in-progress' or 'done'). If it was NOT updated but should have been, respond {\"ok\": false, \"reason\": \"agents.yaml status not updated for <agent>. Please update it.\"}. Otherwise respond {\"ok\": true}.",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

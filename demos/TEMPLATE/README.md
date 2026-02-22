@@ -21,7 +21,7 @@ python main.py  # 或 node index.js
 ## 文件结构
 
 ```
-demos/{{AGENT_NAME}}-{{MECHANISM}}/
+demos/{{AGENT_NAME}}/{{MECHANISM}}/
 ├── README.md       # 本文件
 ├── main.py         # 入口文件
 └── config.yaml     # 配置（可选）
@@ -37,5 +37,5 @@ demos/{{AGENT_NAME}}-{{MECHANISM}}/
 
 ## 相关文档
 
-- 分析文档: [docs/{{AGENT_NAME}}.md](../../docs/{{AGENT_NAME}}.md)
+- 分析文档: [docs/{{AGENT_NAME}}.md](../../../docs/{{AGENT_NAME}}.md)
 - 原项目: {{REPO_URL}}

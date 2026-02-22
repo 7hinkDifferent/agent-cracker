@@ -63,7 +63,8 @@ agent-cracker/
 │   └── ...
 ├── demos/                    # 机制复现 demo
 │   ├── TEMPLATE/
-│   └── ...
+│   └── <agent>/              # 按 agent 分组
+│       └── <mechanism>/      # 每个 demo 独立可运行
 ├── scripts/                  # 辅助脚本
 │   ├── manage-submodules.sh  # Submodule 管理
 │   ├── new-analysis.sh       # 生成分析文档

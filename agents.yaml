@@ -6,7 +6,7 @@ agents:
     repo: https://github.com/Aider-AI/aider
     language: Python
     category: CLI
-    status: pending
+    status: in-progress
     description: AI pair programming in your terminal
 
   - name: openhands
