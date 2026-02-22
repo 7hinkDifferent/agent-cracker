@@ -27,6 +27,7 @@ agent-cracker/
     │   └── update-repo/      # 更新 submodule 和 README
     ├── hooks/                # 自动化 hooks
     │   ├── session-status.sh       # SessionStart: 注入 agents.yaml 进度
+    │   ├── pre-commit-check.sh    # PreToolUse: 提交前任务完成检查
     │   ├── demo-syntax-check.sh    # PostToolUse: demos/ 下 .py 语法检查
     │   └── validate-agents-yaml.sh # PostToolUse: agents.yaml 格式校验
     └── settings.json         # Hooks 配置 + Stop prompt 完成提醒
@@ -82,9 +83,10 @@ Git hooks 存放在 `scripts/githooks/`，`npm run setup` 安装到 `.git/hooks/
 | Hook | 触发时机 | 作用 |
 |------|----------|------|
 | `session-status.sh` | 每次对话开始 | 从 agents.yaml 读取各 agent 状态，注入为上下文 |
+| `pre-commit-check.sh` | 执行 git commit 前 | 检查未暂存文档、缺少配套变更等遗漏，阻断并提示修复 |
 | `demo-syntax-check.sh` | 编辑 demos/ 下 .py 文件后 | 自动 py_compile 语法检查，错误立即反馈 |
 | `validate-agents-yaml.sh` | 编辑 agents.yaml 后 | 校验 YAML 结构完整性（必须有 name/repo/status） |
-| Stop prompt | Claude 结束回答前 | 检查是否遗漏了 agents.yaml status 更新、进度同步、或 CLAUDE.md 文档更新（项目结构/命令/自动化等） |
+| Stop prompt | Claude 结束回答前 | 按文件→文档映射规则检查是否有文档/配置遗漏未更新 |
 
 ## 当前进度
 
