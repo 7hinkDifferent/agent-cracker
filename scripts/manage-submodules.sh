@@ -52,8 +52,8 @@ cmd_add() {
     if [[ -d "$path" ]]; then
       echo "Skip: $name already exists at $path"
     else
-      echo "Adding submodule: $name -> $path"
-      git submodule add "$repo" "$path"
+      echo "Adding submodule (shallow): $name -> $path"
+      git submodule add --depth=1 "$repo" "$path"
     fi
   done
 }
@@ -76,8 +76,8 @@ cmd_update() {
 }
 
 cmd_init() {
-  echo "Initializing all submodules..."
-  git submodule update --init --recursive
+  echo "Initializing all submodules (shallow)..."
+  git submodule update --init --depth=1
 }
 
 cmd_status() {

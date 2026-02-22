@@ -24,28 +24,32 @@
 ## 快速开始
 
 ```bash
-# 克隆项目（含 submodule）
-git clone --recursive <this-repo-url>
-
-# 或者克隆后再初始化 submodule
+# 克隆项目
 git clone <this-repo-url>
 cd agent-cracker
-./scripts/manage-submodules.sh init
+npm run setup                # 安装 git hooks
+
+# 初始化 submodule（shallow clone，只拉代码）
+npm run init
 
 # 添加单个 agent 的源码
-./scripts/manage-submodules.sh add aider
+npm run add -- aider
 
 # 查看 submodule 状态
-./scripts/manage-submodules.sh status
+npm run status
 
 # 为某个 agent 创建分析文档
-./scripts/new-analysis.sh aider
+npm run new-doc -- aider
 
-# 更新 star 数
-./scripts/update-stars.sh
+# 一致性检查
+npm run lint
 
-# 从 agents.yaml 更新 README 表格
-./scripts/gen-readme.sh
+# 更新 CLAUDE.md 进度段落
+npm run progress
+
+# 更新 star 数 / README 表格
+npm run stars
+npm run readme
 ```
 
 ## 项目结构
@@ -53,25 +57,35 @@ cd agent-cracker
 ```
 agent-cracker/
 ├── agents.yaml              # Agent 目录（单一数据源）
-├── projects/                 # Agent 源码（git submodule）
-│   ├── aider/
-│   ├── openhands/
-│   └── ...
-├── docs/                     # 分析文档
-│   ├── TEMPLATE.md           # 分析模板
-│   ├── aider.md
-│   └── ...
-├── demos/                    # 机制复现 demo
+├── package.json             # npm scripts 统一入口
+├── projects/                 # Agent 源码（git submodule, shallow clone）
+│   └── <agent>/
+├── docs/                     # 分析文档（8 维度深度分析）
+│   ├── TEMPLATE.md
+│   └── <agent>.md
+├── demos/                    # 机制复现 demo（按 agent 分组）
 │   ├── TEMPLATE/
-│   └── <agent>/              # 按 agent 分组
+│   └── <agent>/
+│       ├── README.md         # Demo overview（机制清单 + 进度）
 │       └── <mechanism>/      # 每个 demo 独立可运行
-├── scripts/                  # 辅助脚本
-│   ├── manage-submodules.sh  # Submodule 管理
-│   ├── new-analysis.sh       # 生成分析文档
-│   ├── update-stars.sh       # 更新 star 数
-│   └── gen-readme.sh         # 更新 README 表格
-└── prd.md                    # 项目需求文档
+├── scripts/                  # 辅助脚本（通过 npm run 调用）
+│   ├── manage-submodules.sh
+│   ├── new-analysis.sh
+│   ├── gen-readme.sh
+│   ├── gen-progress.sh
+│   ├── update-stars.sh
+│   ├── lint.sh
+│   └── githooks/pre-commit
+└── .claude/
+    ├── skills/               # Claude Code skills
+    ├── hooks/                # 自动化 hooks
+    └── settings.json
 ```
+
+## 自动化
+
+- **Git pre-commit hook**: agents.yaml 改动 → 自动更新 README 表格 + CLAUDE.md 进度；每次 commit 自动 lint 一致性检查
+- **Claude hooks**: 对话中自动注入进度、语法检查 demo .py 文件、校验 agents.yaml 格式、结束时提醒更新文档
 
 ## 分析维度
 

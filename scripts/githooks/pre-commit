@@ -1,0 +1,25 @@
+#!/bin/bash
+# Git pre-commit hook
+# 1. 如果 agents.yaml 或 demos/ 有改动，自动更新 README 表格和 CLAUDE.md 进度
+# 2. 每次 commit 前跑 mono repo 一致性检查
+
+REPO_ROOT=$(git rev-parse --show-toplevel)
+STAGED=$(git diff --cached --name-only)
+
+# ── Step 1: agents.yaml 改动 → README 表格同步 ──
+if echo "$STAGED" | grep -q "^agents.yaml$"; then
+  echo "[pre-commit] agents.yaml changed, updating README table..."
+  bash "$REPO_ROOT/scripts/gen-readme.sh"
+  git add "$REPO_ROOT/README.md"
+fi
+
+# ── Step 2: agents.yaml 或 demos/ 改动 → CLAUDE.md 进度同步 ──
+if echo "$STAGED" | grep -qE "^(agents.yaml|demos/)"; then
+  echo "[pre-commit] Updating CLAUDE.md progress..."
+  bash "$REPO_ROOT/scripts/gen-progress.sh"
+  git add "$REPO_ROOT/CLAUDE.md"
+fi
+
+# ── Step 3: Mono repo lint ──
+echo "[pre-commit] Running lint..."
+bash "$REPO_ROOT/scripts/lint.sh"

@@ -87,3 +87,9 @@ Run the demo and confirm:
 ## Output
 
 The completed demo directory at `demos/<agent-name>/<mechanism>/`.
+
+## After Creating Demo
+
+1. Update the agent's overview at `demos/<agent-name>/README.md`: mark the mechanism as `[x]` and update the progress count
+2. Update `agents.yaml` status if needed (e.g. `pending` → `in-progress`)
+3. Run `npm run progress` to update the CLAUDE.md progress section (or it will auto-update on next commit)

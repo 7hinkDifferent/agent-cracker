@@ -98,4 +98,6 @@ For each language ecosystem, use these heuristics to find critical files:
 
 ## After Analysis
 
-Update `agents.yaml`: change the agent's `status` from `pending` to `done`.
+1. Create or update the demo overview at `demos/<agent-name>/README.md` using the template from `demos/TEMPLATE/AGENT_OVERVIEW.md`: list all mechanisms from the analysis worth creating demos for (as `- [ ] **name** — description`)
+2. Update `agents.yaml`: change the agent's `status` from `pending` to `in-progress`（分析完成但还没创建 demo）or `done`（全部完成）
+3. Run `npm run progress` to update the CLAUDE.md progress section (or it will auto-update on next commit)
