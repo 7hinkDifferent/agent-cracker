@@ -1,0 +1,73 @@
+# Agent Cracker - Agent 目录（单一数据源）
+# 所有脚本都从这个文件读取数据
+
+agents:
+  - name: aider
+    repo: https://github.com/Aider-AI/aider
+    language: Python
+    category: CLI
+    status: pending
+    description: AI pair programming in your terminal
+
+  - name: openhands
+    repo: https://github.com/All-Hands-AI/OpenHands
+    language: Python
+    category: 平台
+    status: pending
+    description: Platform for AI software developers
+
+  - name: cline
+    repo: https://github.com/cline/cline
+    language: TypeScript
+    category: IDE插件
+    status: pending
+    description: Autonomous coding agent for VS Code
+
+  - name: continue
+    repo: https://github.com/continuedev/continue
+    language: TypeScript
+    category: IDE插件
+    status: pending
+    description: Open-source AI code assistant for IDEs
+
+  - name: goose
+    repo: https://github.com/block/goose
+    language: Rust
+    category: CLI
+    status: pending
+    description: An open-source autonomous developer agent
+
+  - name: codex-cli
+    repo: https://github.com/openai/codex
+    language: TypeScript
+    category: CLI
+    status: pending
+    description: OpenAI's lightweight coding agent
+
+  - name: swe-agent
+    repo: https://github.com/SWE-agent/SWE-agent
+    language: Python
+    category: 研究
+    status: pending
+    description: SWE-agent turns LMs into software engineering agents
+
+  - name: bolt.new
+    repo: https://github.com/stackblitz/bolt.new
+    language: TypeScript
+    category: Web
+    status: pending
+    description: AI-powered full-stack web development in browser
+
+  - name: devika
+    repo: https://github.com/stitionai/devika
+    language: Python
+    category: 自治
+    status: pending
+    description: Agentic AI software engineer
+
+  - name: gpt-engineer
+    repo: https://github.com/gpt-engineer-org/gpt-engineer
+    language: Python
+    category: CLI
+    status: pending
+    description: Specify what you want it to build and let AI do the rest
