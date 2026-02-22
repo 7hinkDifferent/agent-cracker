@@ -2,3 +2,6 @@
 	path = projects/aider
 	url = https://github.com/Aider-AI/aider
 	shallow = true
+[submodule "projects/pi-agent"]
+	path = projects/pi-agent
+	url = https://github.com/badlogic/pi-mono

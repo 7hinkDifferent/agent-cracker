@@ -8,7 +8,7 @@
 
 | Agent | Language | Category | Status | Repo |
 |-------|----------|----------|--------|------|
-| [aider](https://github.com/Aider-AI/aider) | Python | CLI | pending | `Aider-AI/aider` |
+| [aider](https://github.com/Aider-AI/aider) | Python | CLI | in-progress | `Aider-AI/aider` |
 | [openhands](https://github.com/All-Hands-AI/OpenHands) | Python | 平台 | pending | `All-Hands-AI/OpenHands` |
 | [cline](https://github.com/cline/cline) | TypeScript | IDE插件 | pending | `cline/cline` |
 | [continue](https://github.com/continuedev/continue) | TypeScript | IDE插件 | pending | `continuedev/continue` |
@@ -18,6 +18,7 @@
 | [bolt.new](https://github.com/stackblitz/bolt.new) | TypeScript | Web | pending | `stackblitz/bolt.new` |
 | [devika](https://github.com/stitionai/devika) | Python | 自治 | pending | `stitionai/devika` |
 | [gpt-engineer](https://github.com/gpt-engineer-org/gpt-engineer) | Python | CLI | pending | `gpt-engineer-org/gpt-engineer` |
+| [pi-agent](https://github.com/badlogic/pi-mono) | TypeScript | CLI | in-progress | `badlogic/pi-mono` |
 
 <!-- AGENT_TABLE_END -->
 

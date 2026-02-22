@@ -44,8 +44,8 @@ for agent_dir in demos/*/; do
   overview="$agent_dir/README.md"
   if [ -f "$overview" ]; then
     # 从 overview 读取 done/total 计数
-    done_count=$(grep -c '^\- \[x\]' "$overview" 2>/dev/null || echo 0)
-    total_count=$(grep -c '^\- \[.\]' "$overview" 2>/dev/null || echo 0)
+    done_count=$(grep -c '^\- \[x\]' "$overview" 2>/dev/null) || done_count=0
+    total_count=$(grep -c '^\- \[.\]' "$overview" 2>/dev/null) || total_count=0
     # 收集已完成的 mechanism 名称
     mechanisms=""
     while IFS= read -r mline; do

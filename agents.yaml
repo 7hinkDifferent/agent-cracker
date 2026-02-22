@@ -71,3 +71,10 @@ agents:
     category: CLI
     status: pending
     description: Specify what you want it to build and let AI do the rest
+
+  - name: pi-agent
+    repo: https://github.com/badlogic/pi-mono
+    language: TypeScript
+    category: CLI
+    status: in-progress
+    description: AI agent toolkit with coding agent, unified LLM API, and terminal UI

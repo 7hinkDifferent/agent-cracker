@@ -141,8 +141,8 @@ for agent_dir in demos/*/; do
     fi
   done < <(grep '^\- \[x\]' "$overview" 2>/dev/null || true)
 
-  done_count=$(grep -c '^\- \[x\]' "$overview" 2>/dev/null || echo 0)
-  total_count=$(grep -c '^\- \[.\]' "$overview" 2>/dev/null || echo 0)
+  done_count=$(grep -c '^\- \[x\]' "$overview" 2>/dev/null) || done_count=0
+  total_count=$(grep -c '^\- \[.\]' "$overview" 2>/dev/null) || total_count=0
   ok "$agent: overview $done_count/$total_count"
 done
 echo ""
