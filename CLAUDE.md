@@ -22,6 +22,7 @@ agent-cracker/
     ├── skills/               # Claude Code skills
     │   ├── analyze-agent/    # /analyze-agent <name> — 8 维度分析
     │   ├── create-demo/      # /create-demo <agent> <mechanism> — 创建机制 demo
+    │   ├── sync-comparisons/ # /sync-comparisons — 同步跨 Agent 对比（Dimension 8）
     │   ├── translate-doc/    # 中英文翻译
     │   └── update-repo/      # 更新 submodule 和 README
     ├── hooks/                # 自动化 hooks

@@ -9,8 +9,8 @@ cd "$(git rev-parse --show-toplevel)"
 ERRORS=0
 WARNINGS=0
 
-error() { echo "  ❌ $1"; ((ERRORS++)); }
-warn()  { echo "  ⚠️  $1"; ((WARNINGS++)); }
+error() { echo "  ❌ $1"; ERRORS=$((ERRORS + 1)); }
+warn()  { echo "  ⚠️  $1"; WARNINGS=$((WARNINGS + 1)); }
 ok()    { echo "  ✅ $1"; }
 
 echo "=== Agent Cracker Mono Repo Lint ==="
@@ -160,7 +160,49 @@ else
 fi
 echo ""
 
-# ─── Summary ──────────���────────────────────────────────
+# ─── 6. 跨 Agent 对比覆盖 ─────────────────────────────
+echo "6. 跨 Agent 对比覆盖"
+
+# 收集已分析的 agent（status 为 in-progress 或 done 且有 docs/<name>.md）
+ANALYZED_AGENTS=()
+for name in "${AGENT_NAMES[@]}"; do
+  status=$(grep -A5 "name: $name" agents.yaml | grep "status:" | head -1 | sed 's/.*status:[[:space:]]*//' | tr -d '[:space:]')
+  if [[ "$status" == "in-progress" || "$status" == "done" ]] && [ -f "docs/$name.md" ]; then
+    ANALYZED_AGENTS+=("$name")
+  fi
+done
+
+if [ "${#ANALYZED_AGENTS[@]}" -lt 2 ]; then
+  ok "跳过（已分析 agent 不足 2 个）"
+else
+  for name in "${ANALYZED_AGENTS[@]}"; do
+    # 提取 Dimension 8 部分（从 ## 8. 到文件末尾或下一个 ## ）
+    dim8=$(sed -n '/^## 8\./,/^## [0-9]/p' "docs/$name.md" | sed '$d')
+    if [ -z "$dim8" ]; then
+      # 如果没有下一个 ##，取到文件末尾
+      dim8=$(sed -n '/^## 8\./,$p' "docs/$name.md")
+    fi
+
+    missing=()
+    total=0
+    for other in "${ANALYZED_AGENTS[@]}"; do
+      [ "$other" = "$name" ] && continue
+      total=$((total + 1))
+      if ! echo "$dim8" | grep -qi "$other"; then
+        missing+=("$other")
+      fi
+    done
+
+    if [ "${#missing[@]}" -gt 0 ]; then
+      warn "$name: Dimension 8 未引用 ${missing[*]} → 运行 /sync-comparisons"
+    else
+      ok "$name: 对比覆盖 $total/$total agents"
+    fi
+  done
+fi
+echo ""
+
+# ─── Summary ───────────────────────────────────────────
 echo "=== Summary ==="
 echo "  Errors:   $ERRORS"
 echo "  Warnings: $WARNINGS"
