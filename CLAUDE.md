@@ -93,6 +93,6 @@ Git hooks 存放在 `scripts/githooks/`，`npm run setup` 安装到 `.git/hooks/
 
 Demo 覆盖:
 - **aider**: 4/8 (repomap, search-replace, reflection, architect)
-- **pi-agent**: 0/6 ()
+- **pi-agent**: 4/6 (event-stream, pluggable-ops, steering-queue, structured-compaction)
 
 <!-- PROGRESS_END -->
