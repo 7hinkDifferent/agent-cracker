@@ -100,3 +100,65 @@ agent-cracker/
 6. **错误处理与恢复** — 解析错误、重试机制
 7. **关键创新点** — 独特设计、可借鉴模式
 8. **跨 Agent 对比** — 横向对比分析
+
+## 配合 Claude Code 使用
+
+本项目内置了 Claude Code skills 和 hooks，推荐以下工作流：
+
+### 可用 Skills
+
+| 命令 | 用途 |
+|------|------|
+| `/analyze-agent <name>` | 对 agent 源码做 8 维度深度分析 |
+| `/create-demo <agent> <mechanism>` | 创建机制复现 demo |
+| `/audit-coverage [agent]` | 检查 MVP 覆盖缺口 |
+| `/check-updates [agent]` | 检查上游更新、评估分析漂移 |
+| `/guide <query>` | 学习引导：按需求推荐 docs/demos/源码 |
+| `/sync-comparisons` | 同步跨 Agent 对比 |
+| `/translate-doc <file>` | 中英文互译 |
+
+### 自动化 Hooks
+
+- **对话开始**: 自动注入项目状态（各 agent 分析进度、drift 检测）
+- **编辑 demo**: 自动语法检查（Python/TypeScript/Rust）
+- **提交代码**: 自动检查文档配套更新是否完整
+- **对话结束**: 检查是否有遗漏的文档更新
+
+### 推荐用法
+
+1. 开启 Claude Code 对话，项目状态会自动注入
+2. 用 `/guide` 探索你感兴趣的机制或获取学习路径
+3. 用 `/analyze-agent` 分析新的 agent
+4. 用 `/create-demo` 复现特定机制
+5. 用 `/audit-coverage` 检查还有哪些 MVP 组件缺 demo
+
+## 如何学习
+
+### 按目标选择路径
+
+**"我想了解某个 agent 怎么工作的"**
+→ 读 `docs/<agent>.md`（8 维度分析），跑 `demos/<agent>/` 下的 demo
+
+**"我想对比不同 agent 的某个机制"**
+→ 读各 docs 的同一维度（如 D3 Tool 系统），或用 `/guide how do agents handle <topic>`
+
+**"我想自己造一个 coding agent"**
+→ 参考 `docs/<agent>.md` 的 7.5 节（MVP 组件清单），按 MVP → 进阶 → 串联的顺序学习 demo
+
+**"我想从零学习 agent 基础概念"**
+→ 先看任一 agent 的 `docs/<agent>.md` D1-D2，理解 agent loop 的核心模式，再逐步展开其他维度
+
+### 推荐阅读顺序
+
+1. **入门**: 挑一个你熟悉的 agent（如 aider），读 `docs/aider.md` 的 D1（概览）和 D2（主循环）
+2. **上手**: 跑 `demos/aider/search-replace/`，对照 README 中的原始源码路径看原实现
+3. **对比**: 读第二个 agent 的 docs（如 codex-cli），体会不同设计选择
+4. **深入**: 按 D7.5 MVP 组件清单，逐个跑 demo，理解构建完整 agent 需要什么
+5. **实践**: 参考 `demos/<agent>/mini-<agent>/` 串联 demo，尝试组装自己的 mini agent
+
+### Demo 与原始源码的关系
+
+每个 demo 的 README 都包含：
+- **基于 commit**: 分析时的源码版本
+- **核心源码**: 原项目中对应的文件路径（可直接在 `projects/<agent>/` 中查看）
+- **与原实现的差异**: 简化了什么、保留了什么

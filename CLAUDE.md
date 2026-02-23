@@ -24,6 +24,7 @@ agent-cracker/
     │   ├── audit-coverage/  # /audit-coverage <name> — MVP 覆盖缺口审计
     │   ├── check-updates/   # /check-updates — 检查上游更新、评估分析漂移
     │   ├── create-demo/      # /create-demo <agent> <mechanism> — 创建机制 demo
+    │   ├── guide/           # /guide <query> — 学习引导与资源推荐
     │   ├── sync-comparisons/ # /sync-comparisons — 同步跨 Agent 对比（Dimension 8）
     │   ├── translate-doc/    # 中英文翻译
     │   └── update-repo/      # 更新 submodule 和 README
@@ -56,6 +57,7 @@ npm run setup                # 安装 git hooks（clone 后执行一次）
 2. **分析 agent**: `/analyze-agent <name>` → 输出到 `docs/<name>.md`
 3. **创建 demo**: `/create-demo <agent> <mechanism>` → 输出到 `demos/<agent>/<mechanism>/`
 4. **审计覆盖**: `/audit-coverage <name>` → 检查 MVP 覆盖缺口
+5. **学习引导**: `/guide <query>` → 按需求推荐相关 docs/demos/源码
 
 ## 约定
 
