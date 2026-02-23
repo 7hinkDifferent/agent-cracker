@@ -11,13 +11,9 @@
 
 [English](README.en.md)
 
-<!-- 录制终端动画后取消注释:
 <p align="center">
   <img src="demo.gif" alt="Agent Cracker Demo" width="700">
 </p>
-
-录制方式: brew install vhs && vhs demo.tape
--->
 
 ## 跨 Agent 对比亮点
 

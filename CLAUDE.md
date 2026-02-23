@@ -8,6 +8,8 @@
 agent-cracker/
 ├── agents.yaml              # Agent 目录（单一数据源，所有脚本从此读取）
 ├── package.json             # npm scripts 统一入口
+├── README.md / README.en.md # 中英文 README
+├── articles/                # 独立可传播的对比文章
 ├── projects/                 # Agent 源码（git submodule, shallow clone）
 │   └── <agent>/
 ├── docs/                     # 分析文档（8 维度深度分析）

@@ -11,6 +11,10 @@
 
 [中文版](README.md)
 
+<p align="center">
+  <img src="demo.gif" alt="Agent Cracker Demo" width="700">
+</p>
+
 ## Cross-Agent Comparison Highlights
 
 Side-by-side comparison of core mechanisms across 3 analyzed agents (continuously updated):
