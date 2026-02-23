@@ -8,10 +8,10 @@
 
 构建最小可运行版本需要以下组件：
 
-- [ ] **event-multiplex** — 事件多路复用主循环（tokio select! 多通道并发，消息/工具/中断统一调度）(Rust — 依赖语言特性: async runtime + select! 宏是核心机制)
-- [ ] **tool-execution** — Tool 沙箱执行（命令白名单 + sandbox-exec 包装 + 输出捕获）(Rust — 依赖语言特性: 平台 API 集成 + 进程管理)
+- [x] **event-multiplex** — 事件多路复用主循环（tokio select! 多通道并发，消息/工具/中断统一调度）(Python — 原实现 Rust，Python asyncio 等价复现)
+- [x] **tool-execution** — Tool 沙箱执行（命令白名单 + sandbox-exec 包装 + 输出捕获）(Python — 原实现 Rust，沙箱策略逻辑可 Python 复现)
 - [x] **prompt-assembly** — 多层 Prompt 组装（模板叠加 + 人格注入 + 协作模式 + 策略约束）(Python)
-- [ ] **response-stream** — 流式响应解析（SSE 流接收 + function call 增量拼接 + 超时处理）(Python)
+- [x] **response-stream** — 流式响应解析（SSE 流接收 + function call 增量拼接 + 超时处理）(Python)
 
 ## 进阶机制
 
@@ -29,4 +29,4 @@
 
 ## 进度
 
-MVP: 1/4 | 进阶: 3/5 | 串联: 0/1 | 总计: 4/10
+MVP: 4/4 | 进阶: 3/5 | 串联: 0/1 | 总计: 7/10

@@ -47,7 +47,7 @@
 | [bolt.new](https://github.com/stackblitz/bolt.new) | TypeScript | Web | pending | `stackblitz/bolt.new` |
 | [devika](https://github.com/stitionai/devika) | Python | 自治 | pending | `stitionai/devika` |
 | [gpt-engineer](https://github.com/gpt-engineer-org/gpt-engineer) | Python | CLI | pending | `gpt-engineer-org/gpt-engineer` |
-| [pi-agent](https://github.com/badlogic/pi-mono) | TypeScript | CLI | in-progress | `badlogic/pi-mono` |
+| [pi-agent](https://github.com/badlogic/pi-mono) | TypeScript | CLI | done | `badlogic/pi-mono` |
 
 <!-- AGENT_TABLE_END -->
 

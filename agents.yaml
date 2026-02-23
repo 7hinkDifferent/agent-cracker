@@ -80,7 +80,7 @@ agents:
     repo: https://github.com/badlogic/pi-mono
     language: TypeScript
     category: CLI
-    status: in-progress
+    status: done
     description: AI agent toolkit with coding agent, unified LLM API, and terminal UI
     analyzed_commit: 316c2afe38d34a352474b852b95195be266709cb
     analyzed_date: "2026-02-23"
