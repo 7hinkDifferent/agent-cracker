@@ -1,11 +1,11 @@
 ---
 name: analyze-agent
-description: Systematically analyze a coding agent's source code across 8 dimensions and output structured analysis to docs/<agent>.md
+description: Systematically analyze an AI agent's source code across 8 core + 4 optional platform dimensions and output structured analysis to docs/<agent>.md
 ---
 
 # Analyze Agent
 
-Deep-dive analysis of a coding agent's implementation. Reads the agent's source code from `projects/<agent>/` and fills `docs/<agent>.md` using the 8-dimension template.
+Deep-dive analysis of an AI agent's implementation. Reads the agent's source code from `projects/<agent>/` and fills `docs/<agent>.md` using the 8+4 dimension template.
 
 ## Trigger
 
@@ -18,7 +18,22 @@ Deep-dive analysis of a coding agent's implementation. Reads the agent's source 
 
 ## Analysis Framework
 
-Analyze the agent across these 8 dimensions, in order:
+Analyze the agent across 8 core dimensions (always), plus 4 optional platform dimensions (when applicable).
+
+### Platform Detection
+
+Before starting analysis, check if this is a platform-level agent:
+- Read `agents.yaml` for `type: agent-platform` field
+- Or detect signals: multi-channel support, gateway architecture, scheduling, persistent memory, companion apps
+- If platform agent: fill D1-D12
+- If pure coding agent: fill D1-D8 only, delete or mark D9-D12 as "不适用"
+
+### Core Agent Reference
+
+If the platform agent's core coding engine is another agent already analyzed (e.g., OpenClaw uses pi-agent):
+- D2-D6 should **reference** the existing analysis (link to `docs/<core-agent>.md`)
+- Focus on **customizations and extensions** the platform makes to the core (tool injection, prompt overlay, security overrides)
+- Do NOT duplicate the core agent's analysis content
 
 ### Dimension 1: Overview & Architecture
 
@@ -65,12 +80,16 @@ Analyze the agent across these 8 dimensions, in order:
 ### Dimension 7.5: MVP Component Map
 
 - **Goal**: 识别构建最小可运行版本需要的组件集合
-- **Strategy**: 基于 D1-D7 的发现，对照以下参考类目映射：
+- **Strategy**: 基于 D1-D7（及 D9-D12 如适用）的发现，对照以下参考类目映射：
   1. 主循环（D2）
   2. Tool 注册与分发（D3）
   3. Prompt 组装（D4）
   4. LLM 调用与响应解析（D2/D6）
   5. 编辑应用（D3）
+  平台型 agent 额外参考：
+  6. 通道路由（D9）
+  7. 记忆检索（D10）
+  8. 安全沙箱（D11）
   根据 agent 实际架构调整类目（合并/拆分/新增均可）
 - **Language Decision**: 对每个组件判断 Python 是否足够，还是必须用原生语言
   规则：仅当机制根本依赖语言特性时（async runtime、类型系统、FFI、平台 API）才用原生语言
@@ -81,6 +100,30 @@ Analyze the agent across these 8 dimensions, in order:
 - **Goal**: Compare with other analyzed agents
 - **Strategy**: Reference existing docs in `docs/` directory. If this is the first agent analyzed, note "first agent" and compare with general patterns.
 - **Output**: Comparison table, summary paragraph
+
+### Dimension 9: Channels & Gateway _(platform only)_
+
+- **Goal**: Understand how external channels route messages to the agent
+- **Strategy**: Find gateway/server entry points, channel adapters, message normalization layers. Search for `channel`, `gateway`, `webhook`, `socket`, `route`.
+- **Output**: Channel architecture, supported channels table, message normalization, multi-modal support (voice, canvas, etc.)
+
+### Dimension 10: Memory & Persistence _(platform only)_
+
+- **Goal**: Understand cross-session memory and persistent storage (distinct from D5 which covers within-session context window)
+- **Strategy**: Find storage backends (JSONL, SQLite, vector DB), memory retrieval (embedding search, BM25), session branching. Search for `memory`, `persist`, `store`, `vector`, `embed`, `session`.
+- **Output**: Persistence architecture, long-term memory retrieval strategy, state recovery
+
+### Dimension 11: Security Model & Autonomy _(platform only)_
+
+- **Goal**: Understand trust levels, sandboxing, and autonomous execution
+- **Strategy**: Find permission gating, Docker/sandbox isolation, scheduling (cron, heartbeat). Search for `permission`, `trust`, `sandbox`, `docker`, `cron`, `schedule`, `agent-to-agent`.
+- **Output**: Trust levels, sandboxing strategy, autonomous scheduling, multi-agent collaboration
+
+### Dimension 12: Other Notable Mechanisms _(platform only)_
+
+- **Goal**: Capture unique mechanisms that don't fit D9-D11
+- **Strategy**: Review remaining unique features: skills marketplace, companion apps, special UI modes, deployment architecture, onboarding flows. Cross-reference with D7 to avoid duplication.
+- **Output**: Mechanism list table, detailed analysis of each
 
 ## Key File Discovery Strategy
 
@@ -103,17 +146,19 @@ For each language ecosystem, use these heuristics to find critical files:
 
 ## Output Requirements
 
-1. Fill all 8 sections in `docs/<agent-name>.md`
+1. Fill all 8 core sections in `docs/<agent-name>.md`; for platform agents, also fill D9-D12
 2. Include actual code snippets (key fragments, not entire files)
 3. Architecture diagram should be ASCII or Mermaid
 4. Tool list should be comprehensive
 5. Write in Chinese (matching the template style), code/identifiers stay in English
 6. Remove all `<!-- comment -->` placeholders and replace with actual content
+7. For platform agents referencing a core coding engine: link to existing analysis for D2-D6, focus on customizations
 
 ## After Analysis
 
-1. Create or update the demo overview at `demos/<agent-name>/README.md` using the template from `demos/TEMPLATE/AGENT_OVERVIEW.md`（三段式结构）：
+1. Create or update the demo overview at `demos/<agent-name>/README.md` using the template from `demos/TEMPLATE/AGENT_OVERVIEW.md`（三段式或四段式结构）：
    - MVP 组件: 从 7.5 节表格导出，注明语言
+   - 平台机制 _(仅平台型 agent)_: 从 D9-D12 提取值得复现的机制
    - 进阶机制: D7 中值得复现的特色机制
    - 完整串联: mini-<agent> 占位
 2. Update `agents.yaml`: change the agent's `status` from `pending` to `in-progress`（分析完成但还没创建 demo）or `done`（全部完成）

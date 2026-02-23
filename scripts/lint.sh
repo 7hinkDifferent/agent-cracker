@@ -147,7 +147,7 @@ for agent_dir in demos/*/; do
   # 检查 overview 进度行格式（应包含串联统计）
   if grep -q '^MVP:' "$overview" 2>/dev/null; then
     if ! grep -q '串联' "$overview" 2>/dev/null; then
-      warn "$agent: overview 进度行缺少串联统计 — 格式应为 MVP: X/N | 进阶: Y/M | 串联: Z/1 | 总计: A/B"
+      warn "$agent: overview 进度行缺少串联统计 — 格式应为 MVP: X/N | [平台: P/Q |] 进阶: Y/M | 串联: Z/1 | 总计: A/B"
     fi
   fi
 
@@ -272,11 +272,21 @@ for agent_dir in demos/*/; do
     mvp_done=$(sed -n '/^## MVP 组件/,/^## /p' "$overview" | grep -c '^\- \[x\]' 2>/dev/null) || mvp_done=0
     mvp_total=$(sed -n '/^## MVP 组件/,/^## /p' "$overview" | grep -c '^\- \[.\]' 2>/dev/null) || mvp_total=0
 
-    if [ "$mvp_done" -eq "$mvp_total" ] && [ "$mvp_total" -gt 0 ]; then
+    # 检查平台机制完成度（如果有该段）
+    platform_done=0; platform_total=0
+    if grep -q '^## 平台机制' "$overview" 2>/dev/null; then
+      platform_done=$(sed -n '/^## 平台机制/,/^## /p' "$overview" | grep -c '^\- \[x\]' 2>/dev/null) || platform_done=0
+      platform_total=$(sed -n '/^## 平台机制/,/^## /p' "$overview" | grep -c '^\- \[.\]' 2>/dev/null) || platform_total=0
+    fi
+
+    all_prereq_done=$((mvp_done + platform_done))
+    all_prereq_total=$((mvp_total + platform_total))
+
+    if [ "$all_prereq_done" -eq "$all_prereq_total" ] && [ "$all_prereq_total" -gt 0 ]; then
       # 检查串联 demo：查找 mini-* 目录（如 mini-aider, mini-pi）
       mini_dir=$(find "${agent_dir}" -maxdepth 1 -type d -name 'mini-*' 2>/dev/null | head -1)
       if [ -z "$mini_dir" ]; then
-        warn "$agent: all MVP components done ($mvp_done/$mvp_total) but no mini-* integration demo"
+        warn "$agent: all MVP/platform components done ($all_prereq_done/$all_prereq_total) but no mini-* integration demo"
       else
         ok "$agent: MVP complete with integration demo"
       fi

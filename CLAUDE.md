@@ -1,6 +1,6 @@
 # Agent Cracker
 
-系统性研究开源 Coding Agent 的实现原理，提取关键机制并用最简代码复现。
+系统性研究开源 AI Agent 的实现原理，提取关键机制并用最简代码复现。覆盖纯 Coding Agent 和平台型 Agent。
 
 ## 项目结构
 
@@ -12,7 +12,7 @@ agent-cracker/
 ├── articles/                # 独立可传播的对比文章
 ├── projects/                 # Agent 源码（git submodule, shallow clone）
 │   └── <agent>/
-├── docs/                     # 分析文档（8 维度深度分析）
+├── docs/                     # 分析文档（8+4 维度深度分析）
 │   ├── TEMPLATE.md
 │   └── <agent>.md
 ├── demos/                    # 机制复现 demo（按 agent 分组）
@@ -22,7 +22,7 @@ agent-cracker/
 ├── scripts/                  # 辅助脚本（通过 npm run 调用）
 └── .claude/
     ├── skills/               # Claude Code skills
-    │   ├── analyze-agent/    # /analyze-agent <name> — 8 维度分析
+    │   ├── analyze-agent/    # /analyze-agent <name> — 8+4 维度分析（平台维度自动检测）
     │   ├── audit-coverage/  # /audit-coverage <name> — MVP 覆盖缺口审计
     │   ├── check-updates/   # /check-updates — 检查上游更新、评估分析漂移
     │   ├── create-demo/      # /create-demo <agent> <mechanism> — 创建机制 demo（含 mini-agent 组合）
@@ -78,6 +78,9 @@ vhs demo.tape                # 录制终端 demo 动画（需 brew install vhs�
 | TypeScript | ≥18 (Node) | npm / npx | `npx tsx main.ts` | openai SDK |
 | Rust | stable | cargo | `cargo run` | reqwest |
 - **MVP 覆盖**: 每个 agent 的 demo overview 区分 MVP 组件/进阶机制/完整串联，进度行格式 `MVP: X/N | 进阶: Y/M | 串联: Z/1 | 总计: A/K`
+- **平台型 agent 覆盖**: 平台型 agent 额外包含平台机制 demo（D9-D12），进度行格式 `MVP: X/N | 平台: P/Q | 进阶: Y/M | 串联: Z/1 | 总计: A/K`
+- **平台型判定**: agents.yaml 中 `type: agent-platform` 的项目启用 D9-D12 维度分析和平台机制 demo
+- **核心引用**: 若平台型 agent 的核心 coding agent 已被独立分析（如 openclaw 基于 pi-agent），D2-D6 可引用已有分析，重点分析其定制和扩展部分
 - **Mini-agent 组合**: 串联 demo（`mini-<agent>`）**必须 import 兄弟 MVP demo 的模块**，不重写代码；每个 MVP demo 提取可复用模块（如 `assembler.py`），mini-agent 通过 `sys.path` 导入
 - **数据源**: `agents.yaml` 是 agent 列表的唯一数据源
 - **Agent status**: pending → in-progress → done，分析或 demo 完成后必须更新

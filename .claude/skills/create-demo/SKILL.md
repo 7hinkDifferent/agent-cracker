@@ -1,22 +1,23 @@
 ---
 name: create-demo
-description: Create a minimal reproduction demo for a specific mechanism from an analyzed coding agent
+description: Create a minimal reproduction demo for a specific mechanism from an analyzed AI agent (coding or platform)
 ---
 
 # Create Demo
 
-Create a standalone, minimal demo that reproduces a single core mechanism from an analyzed coding agent.
+Create a standalone, minimal demo that reproduces a single core mechanism from an analyzed AI agent. Supports both coding agent mechanisms (D2-D7) and platform mechanisms (D9-D12).
 
 ## Trigger
 
 `/create-demo <agent-name> <mechanism>`
 
 Example: `/create-demo aider repomap`
+Example: `/create-demo openclaw channel-router`
 
 ## Prerequisites
 
 1. Analysis doc must exist at `docs/<agent-name>.md` (run `/analyze-agent` first)
-2. The mechanism must be identified in the analysis doc's "Key Innovations" or other sections
+2. The mechanism must be identified in the analysis doc (D2-D7 for coding, D9-D12 for platform)
 
 ## Workflow
 
@@ -101,14 +102,15 @@ Guidelines:
 
 ### Step 5.5: Complete Integration Demo (mini-agent)
 
-When all MVP component demos for an agent are complete, create a combined integration demo:
+When all MVP component demos (and platform mechanism demos if applicable) for an agent are complete, create a combined integration demo:
 
 - **目录**: `demos/<agent>/mini-<agent>/`
-- **目标**: 串联所有 MVP 组件为一个最简可运行 agent
-- **核心原则**: **必须 import 兄弟 MVP demo 的模块**，而非把所有代码重写到一个文件中。mini-agent 本身只实现 Core Loop 逻辑，其余能力全部通过 import 复用
+- **目标**: 串联所有 MVP 组件（+ 平台机制 demo，如适用）为一个最简可运行 agent
+- **核心原则**: **必须 import 兄弟 MVP/平台 demo 的模块**，而非把所有代码重写到一个文件中。mini-agent 本身只实现 Core Loop 逻辑，其余能力全部通过 import 复用
 - **行数**: mini-agent 自身 100-200 行（不含导入的模块）
-- **前提**: 所有 MVP 组件 demo 已完成，且每个 MVP demo 已提取可复用模块（如 `assembler.py`、`parser.py`）
+- **前提**: 所有 MVP 组件 demo 已完成；平台型 agent 的平台机制 demo 也需完成
 - **语言**: 与多数 MVP 组件一致（混合则用 Python）
+- **平台型 agent 特别说明**: 串联 demo 应体现完整的消息流路径——从通道接入到 agent 执行再到响应返回，而非只串联编码部分
 
 **模块提取约定**:
 - 每个 MVP demo 应将核心逻辑提取到独立模块文件（如 `prompt-assembly/assembler.py`）
@@ -144,7 +146,9 @@ The completed demo directory at `demos/<agent-name>/<mechanism>/`.
 
 ## After Creating Demo
 
-1. Update the agent's overview at `demos/<agent-name>/README.md`: mark the mechanism as `[x]` and update the progress line to format `MVP: X/N | 进阶: Y/M | 串联: Z/1 | 总计: A/K`
+1. Update the agent's overview at `demos/<agent-name>/README.md`: mark the mechanism as `[x]` and update the progress line. Format:
+   - Coding agents: `MVP: X/N | 进阶: Y/M | 串联: Z/1 | 总计: A/K`
+   - Platform agents: `MVP: X/N | 平台: P/Q | 进阶: Y/M | 串联: Z/1 | 总计: A/K`
 2. Update `agents.yaml` status if needed (e.g. `pending` → `in-progress`)
 3. Run `npm run progress` to update the CLAUDE.md progress section (or it will auto-update on next commit)
 4. Confirm the demo README's "相关文档" section includes `基于 commit: <short-sha>` (read from `agents.yaml` `analyzed_commit`). This provides a baseline for `/check-updates` demo impact assessment.

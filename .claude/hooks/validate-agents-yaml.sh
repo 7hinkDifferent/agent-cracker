@@ -55,6 +55,12 @@ if [ -n "$BAD_COMMIT" ]; then
   ERRORS="${ERRORS} Invalid analyzed_commit format (must be 7-40 hex chars)."
 fi
 
+# 检查 5: type 值必须是已知值（如果存在，可选字段）
+BAD_TYPE=$(grep "type:" "$FILE_PATH" | grep -v -E "coding-agent|agent-platform" || true)
+if [ -n "$BAD_TYPE" ]; then
+  ERRORS="${ERRORS} Unknown type values (must be coding-agent or agent-platform)."
+fi
+
 if [ -n "$ERRORS" ]; then
   ESCAPED=$(echo "$ERRORS" | sed 's/"/\\"/g')
   echo "{\"systemMessage\": \"agents.yaml validation FAILED: $ESCAPED\"}"

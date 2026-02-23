@@ -5,9 +5,9 @@
 [![Agents](https://img.shields.io/badge/Agents-11-green.svg)](agents.yaml)
 [![Demos](https://img.shields.io/badge/Demos-32-orange.svg)](demos/)
 
-> **拆解 Coding Agent，从源码到最小复现。**
+> **拆解 AI Agent，从源码到最小复现。**
 >
-> 系统性研究 11 个开源 Coding Agent 的实现原理，用 8 维度深度分析提取关键机制，再用 100-200 行代码逐一复现。最终串联为可运行的 mini-agent，让你真正理解 AI 编程助手是怎么工作的。
+> 系统性研究 11 个开源 AI Agent 的实现原理，用 8+4 维度深度分析提取关键机制，再用 100-200 行代码逐一复现。最终串联为可运行的 mini-agent，让你真正理解 AI 编程助手是怎么工作的。覆盖纯 Coding Agent 和平台型 Agent（多通道、记忆、调度、安全）。
 
 [English](README.en.md)
 
@@ -136,7 +136,9 @@ agent-cracker/
 
 ## 分析维度
 
-每个 agent 的分析覆盖 8 个维度：
+每个 agent 的分析覆盖 8 个核心维度 + 4 个可选平台维度：
+
+**核心维度（所有 agent）：**
 
 1. **Overview & Architecture** — 项目定位、技术栈、架构图
 2. **Agent Loop** — 主循环机制（输入→思考→行动→观察）
@@ -147,6 +149,13 @@ agent-cracker/
 7. **关键创新点** — 独特设计、可借鉴模式
 8. **跨 Agent 对比** — 横向对比分析
 
+**平台维度（超越纯 coding agent 的项目，可选）：**
+
+9. **通道层与网关** — 多渠道路由、消息标准化、多模态交互
+10. **记忆与持久化** — 跨 session 记忆、向量/关键词检索
+11. **安全模型与自治** — 信任分级、沙箱隔离、自主调度
+12. **其他特色机制** — Skills 生态、Companion Apps 等不属于 D9-D11 的独特设计
+
 ## 配合 Claude Code 使用
 
 本项目内置了 Claude Code skills 和 hooks，推荐以下工作流：
@@ -155,7 +164,7 @@ agent-cracker/
 
 | 命令 | 用途 |
 |------|------|
-| `/analyze-agent <name>` | 对 agent 源码做 8 维度深度分析 |
+| `/analyze-agent <name>` | 对 agent 源码做 8+4 维度深度分析（平台维度自动检测） |
 | `/create-demo <agent> <mechanism>` | 创建机制复现 demo |
 | `/audit-coverage [agent]` | 检查 MVP 覆盖缺口 |
 | `/check-updates [agent]` | 检查上游更新、评估分析漂移 |
@@ -190,6 +199,9 @@ agent-cracker/
 
 **"我想自己造一个 coding agent"**
 → 参考 `docs/<agent>.md` 的 7.5 节（MVP 组件清单），按 MVP → 进阶 → 串联的顺序学习 demo
+
+**"我想了解平台型 agent（如 OpenClaw）和纯 coding agent 的区别"**
+→ 读平台型 agent 的 D9-D12（通道、记忆、安全、特色机制），对比同一核心引擎的纯 coding agent 分析
 
 **"我想从零学习 agent 基础概念"**
 → 先看任一 agent 的 `docs/<agent>.md` D1-D2，理解 agent loop 的核心模式，再逐步展开其他维度

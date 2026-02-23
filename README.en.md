@@ -5,9 +5,9 @@
 [![Agents](https://img.shields.io/badge/Agents-11-green.svg)](agents.yaml)
 [![Demos](https://img.shields.io/badge/Demos-32-orange.svg)](demos/)
 
-> **Disassemble Coding Agents, from source code to minimal reproduction.**
+> **Disassemble AI Agents, from source code to minimal reproduction.**
 >
-> Systematically study 11 open-source Coding Agents through 8-dimensional deep analysis, extract key mechanisms, and reproduce each in 100-200 lines of code. Finally, compose them into runnable mini-agents so you truly understand how AI coding assistants work.
+> Systematically study 11 open-source AI Agents through 8+4 dimensional deep analysis, extract key mechanisms, and reproduce each in 100-200 lines of code. Finally, compose them into runnable mini-agents so you truly understand how AI coding assistants work. Covers both pure Coding Agents and platform-level Agents (multi-channel, memory, scheduling, security).
 
 [中文版](README.md)
 
@@ -136,7 +136,9 @@ agent-cracker/
 
 ## Analysis Dimensions
 
-Each agent analysis covers 8 dimensions:
+Each agent analysis covers 8 core dimensions + 4 optional platform dimensions:
+
+**Core Dimensions (all agents):**
 
 1. **Overview & Architecture** — Project positioning, tech stack, architecture diagram
 2. **Agent Loop** — Main loop mechanism (input → think → act → observe)
@@ -147,6 +149,13 @@ Each agent analysis covers 8 dimensions:
 7. **Key Innovations** — Unique designs, reusable patterns
 8. **Cross-Agent Comparison** — Horizontal comparative analysis
 
+**Platform Dimensions (for agents beyond pure coding, optional):**
+
+9. **Channels & Gateway** — Multi-channel routing, message normalization, multi-modal interaction
+10. **Memory & Persistence** — Cross-session memory, vector/keyword retrieval
+11. **Security Model & Autonomy** — Trust levels, sandboxing, autonomous scheduling
+12. **Other Notable Mechanisms** — Skills ecosystem, companion apps, and other unique designs outside D9-D11
+
 ## Using with Claude Code
 
 This project includes built-in Claude Code skills and hooks. Recommended workflow:
@@ -155,7 +164,7 @@ This project includes built-in Claude Code skills and hooks. Recommended workflo
 
 | Command | Purpose |
 |---------|---------|
-| `/analyze-agent <name>` | 8-dimensional deep analysis of agent source code |
+| `/analyze-agent <name>` | 8+4 dimensional deep analysis of agent source code (platform dimensions auto-detected) |
 | `/create-demo <agent> <mechanism>` | Create mechanism reproduction demo |
 | `/audit-coverage [agent]` | Check MVP coverage gaps |
 | `/check-updates [agent]` | Check upstream changes, assess analysis drift |
@@ -190,6 +199,9 @@ This project includes built-in Claude Code skills and hooks. Recommended workflo
 
 **"I want to build my own coding agent"**
 → Refer to `docs/<agent>.md` Section 7.5 (MVP Component List), learn demos in MVP → Advanced → Integration order
+
+**"I want to understand the difference between platform agents (e.g., OpenClaw) and pure coding agents"**
+→ Read platform agent's D9-D12 (Channels, Memory, Security, Notable Mechanisms), compare with the pure coding agent analysis of the same core engine
 
 **"I want to learn agent fundamentals from scratch"**
 → Start with any agent's `docs/<agent>.md` D1-D2 to understand the core agent loop pattern, then explore other dimensions

@@ -1,5 +1,6 @@
 # Agent Cracker - Agent 目录（单一数据源）
 # 所有脚本都从这个文件读取数据
+# type 字段（可选）: coding-agent（默认，纯编码 agent） | agent-platform（超越编码的平台型 agent，启用 D9-D12 分析）
 
 agents:
   - name: aider
