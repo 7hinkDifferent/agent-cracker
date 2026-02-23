@@ -43,7 +43,7 @@ agents:
     repo: https://github.com/openai/codex
     language: Rust
     category: CLI
-    status: in-progress
+    status: done
     description: OpenAI's lightweight coding agent
     analyzed_commit: 0a0caa9df266ebc124d524ee6ad23ee6513fe501
     analyzed_date: "2026-02-23"

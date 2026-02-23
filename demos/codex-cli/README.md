@@ -20,13 +20,13 @@
 - [x] **approval-policy** — 三级审批策略（Suggest/Auto-Edit/Full-Auto + ExecPolicy 规则引擎 + 危险命令检测）
 - [x] **head-tail-truncation** — 首尾保留截断（bytes/4 token 估算 + UTF-8 边界切割 + 中间截断标记）
 - [x] **network-policy** — 网络策略引擎（域名白名单/黑名单 + SSRF 防护 + GlobSet 匹配）
-- [ ] **sandbox-exec** — 平台沙箱执行（Seatbelt 策略生成 + sandbox-exec 包装 + 读写权限控制）
-- [ ] **retry-backoff** — 指数退避重试（错误可重试性分类 + 指数退避 + ±10% 抖动）
+- [x] **sandbox-exec** — 平台沙箱执行（Seatbelt 策略生成 + sandbox-exec 包装 + 读写权限控制）
+- [x] **retry-backoff** — 指数退避重试（错误可重试性分类 + 指数退避 + ±10% 抖动）
 
 ## 完整串联
 
-- [ ] **mini-codex** — 组合以上 MVP 组件的最小完整 agent
+- [x] **mini-codex** — 组合以上 MVP 组件的最小完整 agent
 
 ## 进度
 
-MVP: 4/4 | 进阶: 3/5 | 串联: 0/1 | 总计: 7/10
+MVP: 4/4 | 进阶: 5/5 | 串联: 1/1 | 总计: 10/10
