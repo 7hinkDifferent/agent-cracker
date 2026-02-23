@@ -8,10 +8,10 @@
 
 构建最小可运行版本需要以下组件：
 
-- [ ] **agent-session-loop** — Agent 会话主循环（消息→LLM→tool call→结果回填，含 steering 中断）(TypeScript — 依赖语言特性: async/await + EventStream async iterator 是核心抽象)
+- [x] **agent-session-loop** — Agent 会话主循环（消息→LLM→tool call→结果回填，含 steering 中断）(Python — 原实现 TypeScript，Python asyncio 等价复现)
 - [x] **pluggable-ops** — Pluggable Operations 模式（工具执行环境依赖注入，本地/SSH/Docker 透明切换）(Python)
-- [ ] **prompt-builder** — Prompt 构建器（system prompt 分层组装 + tool schema 注入 + 上下文拼接）(Python)
-- [ ] **llm-multi-provider** — 多 Provider LLM 调用（统一接口适配 OpenAI/Anthropic/Google + 流式响应解析）(Python)
+- [x] **prompt-builder** — Prompt 构建器（system prompt 分层组装 + tool schema 注入 + 上下文拼接）(Python)
+- [x] **llm-multi-provider** — 多 Provider LLM 调用（统一接口适配 OpenAI/Anthropic/Google + 流式响应解析）(Python)
 
 ## 进阶机制
 
@@ -29,4 +29,4 @@
 
 ## 进度
 
-MVP: 1/4 | 进阶: 3/5 | 串联: 0/1 | 总计: 4/10
+MVP: 4/4 | 进阶: 3/5 | 串联: 0/1 | 总计: 7/10
