@@ -200,7 +200,7 @@ agent-cracker/
 2. **上手**: 跑 `demos/aider/search-replace/`，对照 README 中的原始源码路径看原实现
 3. **对比**: 读第二个 agent 的 docs（如 codex-cli），体会不同设计选择
 4. **深入**: 按 D7.5 MVP 组件清单，逐个跑 demo，理解构建完整 agent 需要什么
-5. **实践**: 参考 `demos/<agent>/mini-<agent>/` 串联 demo，尝试组装自己的 mini agent
+5. **实践**: 参考 `demos/<agent>/mini-<agent>/` 串联 demo（通过 import 兄弟 MVP demo 模块组合而成），尝试组装自己的 mini agent
 
 ### Demo 与原始源码的关系
 

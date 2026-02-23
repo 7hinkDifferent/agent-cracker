@@ -51,6 +51,7 @@ npm run stars                # 查询 GitHub star 数
 npm run lint                 # 一致性检查（agents.yaml/docs/demos/README 是否对齐）
 npm run progress             # 更新 CLAUDE.md 进度段落
 npm run setup                # 安装 git hooks（clone 后执行一次）
+vhs demo.tape                # 录制终端 demo 动画（需 brew install vhs）
 ```
 
 ## 工作流

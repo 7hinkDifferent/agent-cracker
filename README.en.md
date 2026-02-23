@@ -200,7 +200,7 @@ This project includes built-in Claude Code skills and hooks. Recommended workflo
 2. **Hands-on**: Run `demos/aider/search-replace/`, compare with original source paths in README
 3. **Compare**: Read a second agent's docs (e.g., codex-cli), observe different design choices
 4. **Deep Dive**: Follow D7.5 MVP Component List, run each demo to understand what building a complete agent requires
-5. **Practice**: Reference `demos/<agent>/mini-<agent>/` integration demo, try assembling your own mini agent
+5. **Practice**: Reference `demos/<agent>/mini-<agent>/` integration demo (composed by importing sibling MVP demo modules), try assembling your own mini agent
 
 ### Demo-to-Source Relationship
 
