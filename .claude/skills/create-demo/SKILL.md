@@ -129,7 +129,7 @@ The completed demo directory at `demos/<agent-name>/<mechanism>/`.
 
 ## After Creating Demo
 
-1. Update the agent's overview at `demos/<agent-name>/README.md`: mark the mechanism as `[x]` and update the progress line to format `MVP: X/N | 进阶: Y/M | 总计: Z/K`
+1. Update the agent's overview at `demos/<agent-name>/README.md`: mark the mechanism as `[x]` and update the progress line to format `MVP: X/N | 进阶: Y/M | 串联: Z/1 | 总计: A/K`
 2. Update `agents.yaml` status if needed (e.g. `pending` → `in-progress`)
 3. Run `npm run progress` to update the CLAUDE.md progress section (or it will auto-update on next commit)
 4. Confirm the demo README's "相关文档" section includes `基于 commit: <short-sha>` (read from `agents.yaml` `analyzed_commit`). This provides a baseline for `/check-updates` demo impact assessment.

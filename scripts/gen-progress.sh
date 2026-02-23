@@ -45,9 +45,11 @@ for agent_dir in demos/*/; do
   if [ -f "$overview" ]; then
     # 检查是否使用新的三段式格式
     if grep -q '^## MVP 组件' "$overview" 2>/dev/null; then
-      # MVP-aware 格式：分别统计 MVP 和总计
+      # MVP-aware 格式：分别统计 MVP、进阶、串联和总计
       mvp_done=$(sed -n '/^## MVP 组件/,/^## /p' "$overview" | grep -c '^\- \[x\]' 2>/dev/null) || mvp_done=0
       mvp_total=$(sed -n '/^## MVP 组件/,/^## /p' "$overview" | grep -c '^\- \[.\]' 2>/dev/null) || mvp_total=0
+      integration_done=$(sed -n '/^## 完整串联/,/^## /p' "$overview" | grep -c '^\- \[x\]' 2>/dev/null) || integration_done=0
+      integration_total=$(sed -n '/^## 完整串联/,/^## /p' "$overview" | grep -c '^\- \[.\]' 2>/dev/null) || integration_total=0
       done_count=$(grep -c '^\- \[x\]' "$overview" 2>/dev/null) || done_count=0
       total_count=$(grep -c '^\- \[.\]' "$overview" 2>/dev/null) || total_count=0
       # 收集已完成的 mechanism 名称
@@ -59,7 +61,7 @@ for agent_dir in demos/*/; do
       mechanisms="${mechanisms#, }"
       if [ "$total_count" -gt 0 ]; then
         demo_lines="${demo_lines}
-- **${agent}**: MVP ${mvp_done}/${mvp_total} | 总计 ${done_count}/${total_count} (${mechanisms})"
+- **${agent}**: MVP ${mvp_done}/${mvp_total} | 串联 ${integration_done}/${integration_total} | 总计 ${done_count}/${total_count} (${mechanisms})"
       fi
     else
       # 旧格式：保持兼容

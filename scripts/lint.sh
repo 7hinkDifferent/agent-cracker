@@ -144,6 +144,13 @@ for agent_dir in demos/*/; do
     fi
   done < <(grep '^\- \[x\]' "$overview" 2>/dev/null || true)
 
+  # 检查 overview 进度行格式（应包含串联统计）
+  if grep -q '^MVP:' "$overview" 2>/dev/null; then
+    if ! grep -q '串联' "$overview" 2>/dev/null; then
+      warn "$agent: overview 进度行缺少串联统计 — 格式应为 MVP: X/N | 进阶: Y/M | 串联: Z/1 | 总计: A/B"
+    fi
+  fi
+
   done_count=$(grep -c '^\- \[x\]' "$overview" 2>/dev/null) || done_count=0
   total_count=$(grep -c '^\- \[.\]' "$overview" 2>/dev/null) || total_count=0
   ok "$agent: overview $done_count/$total_count"

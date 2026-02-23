@@ -67,7 +67,7 @@ npm run setup                # 安装 git hooks（clone 后执行一次）
 - **Demo 原则**: 单一机制、最少依赖、独立可运行
 - **Demo 语言**: 默认 Python；当机制依赖语言特性时使用原生语言，README 须说明原因
 - **Python Demo**: `uv run --with <deps> python main.py` + `litellm` | **TypeScript Demo**: `npx tsx main.ts` + `openai` SDK | **Rust Demo**: `cargo run` + `reqwest`
-- **MVP 覆盖**: 每个 agent 的 demo overview 区分 MVP 组件/进阶机制/完整串联
+- **MVP 覆盖**: 每个 agent 的 demo overview 区分 MVP 组件/进阶机制/完整串联，进度行格式 `MVP: X/N | 进阶: Y/M | 串联: Z/1 | 总计: A/K`
 - **数据源**: `agents.yaml` 是 agent 列表的唯一数据源
 - **Agent status**: pending → in-progress → done，分析或 demo 完成后必须更新
 - **Commit 跟踪**: 分析完成后自动记录 analyzed_commit/analyzed_date 到 agents.yaml，demo 记录基于的 commit
@@ -102,8 +102,8 @@ Git hooks 存放在 `scripts/githooks/`，`npm run setup` 安装到 `.git/hooks/
 - **待分析**: openhands, cline, continue, goose, swe-agent, bolt.new, devika, gpt-engineer
 
 Demo 覆盖:
-- **aider**: MVP 4/4 | 总计 8/12 (core-loop, search-replace, prompt-assembly, llm-response-parsing, repomap, reflection, architect, mini-aider)
-- **codex-cli**: MVP 1/4 | 总计 4/10 (prompt-assembly, approval-policy, head-tail-truncation, network-policy)
-- **pi-agent**: MVP 1/4 | 总计 4/10 (pluggable-ops, event-stream, steering-queue, structured-compaction)
+- **aider**: MVP 4/4 | 串联 1/1 | 总计 8/12 (core-loop, search-replace, prompt-assembly, llm-response-parsing, repomap, reflection, architect, mini-aider)
+- **codex-cli**: MVP 1/4 | 串联 0/1 | 总计 4/10 (prompt-assembly, approval-policy, head-tail-truncation, network-policy)
+- **pi-agent**: MVP 1/4 | 串联 0/1 | 总计 4/10 (pluggable-ops, event-stream, steering-queue, structured-compaction)
 
 <!-- PROGRESS_END -->
