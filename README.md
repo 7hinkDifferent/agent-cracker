@@ -37,7 +37,7 @@
 
 | Agent | Language | Category | Status | Repo |
 |-------|----------|----------|--------|------|
-| [aider](https://github.com/Aider-AI/aider) | Python | CLI | in-progress | `Aider-AI/aider` |
+| [aider](https://github.com/Aider-AI/aider) | Python | CLI | done | `Aider-AI/aider` |
 | [openhands](https://github.com/All-Hands-AI/OpenHands) | Python | 平台 | pending | `All-Hands-AI/OpenHands` |
 | [cline](https://github.com/cline/cline) | TypeScript | IDE插件 | pending | `cline/cline` |
 | [continue](https://github.com/continuedev/continue) | TypeScript | IDE插件 | pending | `continuedev/continue` |

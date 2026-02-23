@@ -6,7 +6,7 @@ agents:
     repo: https://github.com/Aider-AI/aider
     language: Python
     category: CLI
-    status: in-progress
+    status: done
     description: AI pair programming in your terminal
     analyzed_commit: 7afaa26f8b8b7b56146f0674d2a67e795b616b7c
     analyzed_date: "2026-02-22"
