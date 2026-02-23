@@ -48,7 +48,7 @@ Side-by-side comparison of core mechanisms across 3 analyzed agents (continuousl
 | [devika](https://github.com/stitionai/devika) | Python | Autonomous | pending | `stitionai/devika` |
 | [gpt-engineer](https://github.com/gpt-engineer-org/gpt-engineer) | Python | CLI | pending | `gpt-engineer-org/gpt-engineer` |
 | [pi-agent](https://github.com/badlogic/pi-mono) | TypeScript | CLI | done | `badlogic/pi-mono` |
-| [openclaw](https://github.com/openclaw/openclaw) | TypeScript | Platform | pending | `openclaw/openclaw` |
+| [openclaw](https://github.com/openclaw/openclaw) | TypeScript | Platform | in-progress | `openclaw/openclaw` |
 
 <!-- AGENT_TABLE_END -->
 

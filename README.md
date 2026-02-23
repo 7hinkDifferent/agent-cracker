@@ -48,7 +48,7 @@
 | [devika](https://github.com/stitionai/devika) | Python | 自治 | pending | `stitionai/devika` |
 | [gpt-engineer](https://github.com/gpt-engineer-org/gpt-engineer) | Python | CLI | pending | `gpt-engineer-org/gpt-engineer` |
 | [pi-agent](https://github.com/badlogic/pi-mono) | TypeScript | CLI | done | `badlogic/pi-mono` |
-| [openclaw](https://github.com/openclaw/openclaw) | TypeScript | 平台 | pending | `openclaw/openclaw` |
+| [openclaw](https://github.com/openclaw/openclaw) | TypeScript | 平台 | in-progress | `openclaw/openclaw` |
 
 <!-- AGENT_TABLE_END -->
 

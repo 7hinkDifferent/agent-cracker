@@ -91,5 +91,7 @@ agents:
     language: TypeScript
     category: 平台
     type: agent-platform
-    status: pending
+    status: in-progress
     description: Personal AI assistant with multi-channel support, built on pi-agent
+    analyzed_commit: ea47ab29bd6d92394185636a27c3572c19aac8e5
+    analyzed_date: "2026-02-23"
