@@ -527,20 +527,20 @@ const bashTool = createBashTool(cwd, { operations: sshBashOps });
 
 ## 8. 跨 Agent 对比
 
-### vs Aider
+### vs Aider / Codex-CLI
 
-| 维度 | pi-agent | aider |
-|------|----------|-------|
-| **语言** | TypeScript（Node.js） | Python |
-| **Agent Loop** | 双层循环 + steering/follow-up 队列，支持实时干预 | 三层嵌套（外层切换 + REPL + 反思循环），同步等待 |
-| **Tool 系统** | 原生 LLM tool calling + TypeBox schema 校验 + pluggable operations | 双轨制：用户命令（cmd_* 约定）+ LLM 文本格式（SEARCH/REPLACE） |
-| **Context 策略** | 阈值触发 + LLM 结构化摘要压缩，无代码分析 | tree-sitter AST + PageRank 仓库地图，二分搜索 token 约束 |
-| **编辑方式** | edit tool（精确文本替换 + 模糊匹配） | 12+ 种编辑格式（SEARCH/REPLACE, whole, udiff, patch 等），多态切换 |
-| **错误处理** | 多 provider overflow 检测 + 指数退避 + auto-compact 重试 | 多级容错解析 + 反思循环 + 指数退避 |
-| **扩展性** | 深度扩展系统（hook 每个生命周期阶段） | 无正式扩展系统 |
-| **LLM 支持** | 原生多 provider SDK（OpenAI, Anthropic, Gemini, Bedrock, Mistral） | 通过 litellm 统一适配 |
-| **Session** | JSONL 持久化 + 分支 + HTML 导出 | Git 集成（自动 commit + undo） |
-| **架构** | 分层 monorepo（7 个独立包） | 单包多模块 |
+| 维度 | pi-agent | aider | codex-cli |
+|------|----------|-------|-----------|
+| **语言** | TypeScript（Node.js） | Python | Rust + TypeScript |
+| **Agent Loop** | 双层循环 + steering/follow-up 队列，支持实时干预 | 三层嵌套（外层切换 + REPL + 反思循环） | tokio::select! 多路复用 + turn 循环 |
+| **Tool 系统** | 原生 LLM tool calling + TypeBox schema 校验 + pluggable operations | 双轨制：用户命令（cmd_* 约定）+ LLM 文本格式（SEARCH/REPLACE） | 原生 function calling + 审批门 |
+| **Context 策略** | 阈值触发 + LLM 结构化摘要压缩，无代码分析 | tree-sitter AST + PageRank 仓库地图，二分搜索 token 约束 | bytes/4 估算 + 首尾保留截断 + auto-compact |
+| **编辑方式** | edit tool（精确文本替换 + 模糊匹配） | 12+ 种编辑格式多态切换 | apply_patch（unified diff） |
+| **安全模型** | 无内建沙箱 | Git 集成（自动 commit + undo） | 三级审批 + 平台沙箱 + 网络代理 |
+| **错误处理** | 多 provider overflow 检测 + 指数退避 + auto-compact 重试 | 多级容错解析 + 反思循环 + 指数退避 | 可重试性分类 + 指数退避 |
+| **扩展性** | 深度扩展系统（hook 每个生命周期阶段） | 无正式扩展系统 | Hooks + MCP + Skills + Custom Prompts |
+| **LLM 支持** | 原生多 provider SDK（OpenAI, Anthropic, Gemini, Bedrock, Mistral） | 通过 litellm 统一适配 | OpenAI 为主（可配置） |
+| **Session** | JSONL 持久化 + 分支 + HTML 导出 | Git 集成（自动 commit + undo） | 无明显持久化 |
 
 ### 总结
 
@@ -550,4 +550,4 @@ Pi-agent 是一个**架构精良、高度模块化的 AI Agent 工具包**。其
 2. **环境无关性**：Pluggable Operations 模式让工具代码与执行环境解耦，同一套 tool 可透明运行在本地、SSH、Docker 等环境
 3. **深度可扩展**：扩展系统覆盖 Agent 生命周期每个阶段，从输入拦截到 UI 覆盖，扩展能力远超同类 Agent
 
-与 Aider 相比，Pi 更重**架构抽象和运行时灵活性**（分层设计、扩展系统、多 provider 原生支持），而 Aider 更重**代码理解智能**（RepoMap、多编辑格式、Git 深度集成）。Pi 适合需要高度自定义或集成的场景（SDK 嵌入、Slack Bot、Web UI），Aider 适合终端环境中的深度代码编辑。
+与 Aider 相比，Pi 更重**架构抽象和运行时灵活性**（分层设计、扩展系统、多 provider 原生支持），而 Aider 更重**代码理解智能**（RepoMap、多编辑格式、Git 深度集成）。与 Codex CLI 相比，Pi 有更灵活的环境抽象（Pluggable Ops）和实时交互（Steering Queue），Codex CLI 有硬件级沙箱和网络代理。Pi 适合需要高度自定义或集成的场景（SDK 嵌入、Slack Bot、Web UI），Aider 适合终端环境中的深度代码编辑，Codex CLI 适合需要高安全性和自主执行的场景。

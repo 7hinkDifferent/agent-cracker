@@ -263,8 +263,10 @@ for agent_dir in demos/*/; do
     mvp_total=$(sed -n '/^## MVP 组件/,/^## /p' "$overview" | grep -c '^\- \[.\]' 2>/dev/null) || mvp_total=0
 
     if [ "$mvp_done" -eq "$mvp_total" ] && [ "$mvp_total" -gt 0 ]; then
-      if [ ! -d "${agent_dir}mini-${agent}" ]; then
-        warn "$agent: all MVP components done ($mvp_done/$mvp_total) but no mini-$agent integration demo"
+      # 检查串联 demo：查找 mini-* 目录（如 mini-aider, mini-pi）
+      mini_dir=$(find "${agent_dir}" -maxdepth 1 -type d -name 'mini-*' 2>/dev/null | head -1)
+      if [ -z "$mini_dir" ]; then
+        warn "$agent: all MVP components done ($mvp_done/$mvp_total) but no mini-* integration demo"
       else
         ok "$agent: MVP complete with integration demo"
       fi

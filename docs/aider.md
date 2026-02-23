@@ -626,17 +626,20 @@ class ArchitectCoder(AskCoder):
 
 ## 8. 跨 Agent 对比
 
-### vs 其他 agent
+### vs Codex-CLI / Pi-agent
 
-| 维度 | aider | 通用 Agent 模式 |
-|------|-------|----------------|
-| Agent Loop | 三层嵌套（外层切换 + REPL + 反思循环） | 通常单层 while 循环 |
-| Tool 系统 | 双轨：用户命令（约定发现）+ LLM 函数调用 | 通常统一的 tool 注册表 |
-| Context 策略 | tree-sitter AST + PageRank + 二分搜索 | 通常简单的文件列表或 embedding 检索 |
-| 编辑方式 | 12+ 种编辑格式，可运行时切换 | 通常固定 1-2 种格式 |
-| 错误处理 | 多级容错 + 反思循环 + 指数退避 | 通常简单重试或报错 |
-| Git 集成 | 深度集成（自动 commit, undo, diff） | 通常无或仅基础集成 |
-| 模型支持 | 通过 litellm 支持几乎所有 LLM | 通常绑定特定提供商 |
+| 维度 | aider | codex-cli | pi-agent |
+|------|-------|-----------|----------|
+| **语言** | Python | Rust + TypeScript | TypeScript |
+| **Agent Loop** | 三层嵌套（外层切换 + REPL + 反思） | tokio::select! 多路复用 + turn 循环 | 双层循环（steering + follow-up） |
+| **Tool 系统** | 双轨制：用户命令 + LLM 文本格式 | 原生 function calling + 审批门 | 原生 tool calling + pluggable ops |
+| **Context 策略** | tree-sitter AST + PageRank RepoMap | bytes/4 估算 + 首尾保留截断 | chars/4 估算 + 结构化摘要压缩 |
+| **编辑方式** | 12+ 编辑格式多态切换 | apply_patch（unified diff） | edit tool（精确替换 + 模糊匹配） |
+| **安全模型** | Git 集成（自动 commit + undo） | 三级审批 + 平台沙箱 + 网络代理 | 无内建沙箱 |
+| **错误处理** | 反思循环 + 多级解析容错 | 可重试性分类 + 指数退避 | 多 provider overflow 检测 |
+| **扩展性** | 无正式扩展系统 | Hooks + MCP + Skills + Custom Prompts | 深度扩展（生命周期钩子） |
+| **LLM 支持** | litellm 统一适配 | OpenAI 为主（可配置） | 原生多 provider SDK |
+| **Session** | Git 集成（auto-commit） | 无明显持久化 | JSONL 持久化 + 分支 |
 
 ### 总结
 
@@ -646,4 +649,4 @@ Aider 是一个**成熟、工程化程度极高的终端 AI 编程助手**。其
 2. **多 Coder 多态架构**：通过工厂模式和继承，支持 12+ 种编辑格式的无缝切换，适配不同模型的输出特性
 3. **反思闭环**：编辑 → lint → test → 自动修复的全自动闭环，大幅减少人工干预
 
-适用场景：需要在终端环境中进行多文件代码编辑的开发者，特别是已有 git 工作流的项目。不适合：没有代码库的绿地项目（RepoMap 无用武之地），或需要 GUI 交互的场景。
+与 Codex CLI 相比，Aider 更重**代码理解智能**（RepoMap、多编辑格式），Codex CLI 更重**安全与执行控制**（沙箱、审批、网络策略）。与 Pi-agent 相比，Aider 更重**工程��熟度和 Git 工作流**，Pi-agent 更重**架构抽象和运行时灵活性**（扩展系统、pluggable ops）。Aider 适合需要在终端环境中进行多文件代码编辑的开发者，特别是已有 git 工作流的项目。

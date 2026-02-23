@@ -20,8 +20,8 @@
 - [x] **event-stream** — EventStream 异步迭代器（自定义 async iterator + event queue，流式事件传递）
 - [x] **steering-queue** — Steering/Follow-up 双消息队列（实时干预 Agent 执行，中断 vs 排队两种模式）
 - [x] **structured-compaction** — 结构化 Compaction 摘要（固定格式 + 增量 UPDATE，阈值/溢出双触发）
-- [ ] **multi-provider-overflow** — 多 Provider Overflow 检测（10+ provider 错误模式匹配 + 静默溢出检测）
-- [ ] **extension-hooks** — 深度扩展系统（生命周期钩子 + 动态 tool/command 注册 + UI 覆盖）
+- [x] **multi-provider-overflow** — 多 Provider Overflow 检测（10+ provider 错误模式匹配 + 静默溢出检测）
+- [x] **extension-hooks** — 深度扩展系统（生命周期钩子 + 动态 tool/command 注册 + UI 覆盖）
 
 ## 完整串联
 
@@ -29,4 +29,4 @@
 
 ## 进度
 
-MVP: 4/4 | 进阶: 3/5 | 串联: 1/1 | 总计: 8/10
+MVP: 4/4 | 进阶: 5/5 | 串联: 1/1 | 总计: 10/10

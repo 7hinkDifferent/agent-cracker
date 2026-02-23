@@ -114,6 +114,6 @@ Git hooks 存放在 `scripts/githooks/`，`npm run setup` 安装到 `.git/hooks/
 Demo 覆盖:
 - **aider**: MVP 4/4 | 串联 1/1 | 总计 8/12 (core-loop, search-replace, prompt-assembly, llm-response-parsing, repomap, reflection, architect, mini-aider)
 - **codex-cli**: MVP 1/4 | 串联 0/1 | 总计 4/10 (prompt-assembly, approval-policy, head-tail-truncation, network-policy)
-- **pi-agent**: MVP 4/4 | 串联 1/1 | 总计 8/10 (agent-session-loop, pluggable-ops, prompt-builder, llm-multi-provider, event-stream, steering-queue, structured-compaction, mini-pi)
+- **pi-agent**: MVP 4/4 | 串联 1/1 | 总计 10/10 (agent-session-loop, pluggable-ops, prompt-builder, llm-multi-provider, event-stream, steering-queue, structured-compaction, multi-provider-overflow, extension-hooks, mini-pi)
 
 <!-- PROGRESS_END -->
