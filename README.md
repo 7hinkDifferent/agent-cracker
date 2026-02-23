@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-≥3.10-blue.svg)](https://www.python.org/)
-[![Agents](https://img.shields.io/badge/Agents-11-green.svg)](agents.yaml)
+[![Agents](https://img.shields.io/badge/Agents-12-green.svg)](agents.yaml)
 [![Demos](https://img.shields.io/badge/Demos-32-orange.svg)](demos/)
 
 > **拆解 AI Agent，从源码到最小复现。**
@@ -48,6 +48,7 @@
 | [devika](https://github.com/stitionai/devika) | Python | 自治 | pending | `stitionai/devika` |
 | [gpt-engineer](https://github.com/gpt-engineer-org/gpt-engineer) | Python | CLI | pending | `gpt-engineer-org/gpt-engineer` |
 | [pi-agent](https://github.com/badlogic/pi-mono) | TypeScript | CLI | done | `badlogic/pi-mono` |
+| [openclaw](https://github.com/openclaw/openclaw) | TypeScript | 平台 | pending | `openclaw/openclaw` |
 
 <!-- AGENT_TABLE_END -->
 

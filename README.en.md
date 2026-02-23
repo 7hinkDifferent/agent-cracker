@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-≥3.10-blue.svg)](https://www.python.org/)
-[![Agents](https://img.shields.io/badge/Agents-11-green.svg)](agents.yaml)
+[![Agents](https://img.shields.io/badge/Agents-12-green.svg)](agents.yaml)
 [![Demos](https://img.shields.io/badge/Demos-32-orange.svg)](demos/)
 
 > **Disassemble AI Agents, from source code to minimal reproduction.**
@@ -48,6 +48,7 @@ Side-by-side comparison of core mechanisms across 3 analyzed agents (continuousl
 | [devika](https://github.com/stitionai/devika) | Python | Autonomous | pending | `stitionai/devika` |
 | [gpt-engineer](https://github.com/gpt-engineer-org/gpt-engineer) | Python | CLI | pending | `gpt-engineer-org/gpt-engineer` |
 | [pi-agent](https://github.com/badlogic/pi-mono) | TypeScript | CLI | done | `badlogic/pi-mono` |
+| [openclaw](https://github.com/openclaw/openclaw) | TypeScript | Platform | pending | `openclaw/openclaw` |
 
 <!-- AGENT_TABLE_END -->
 

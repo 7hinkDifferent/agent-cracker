@@ -85,3 +85,11 @@ agents:
     description: AI agent toolkit with coding agent, unified LLM API, and terminal UI
     analyzed_commit: 316c2afe38d34a352474b852b95195be266709cb
     analyzed_date: "2026-02-23"
+
+  - name: openclaw
+    repo: https://github.com/openclaw/openclaw
+    language: TypeScript
+    category: 平台
+    type: agent-platform
+    status: pending
+    description: Personal AI assistant with multi-channel support, built on pi-agent
