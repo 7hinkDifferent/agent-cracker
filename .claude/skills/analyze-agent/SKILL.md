@@ -62,6 +62,20 @@ Analyze the agent across these 8 dimensions, in order:
 - **Strategy**: Based on findings from dimensions 1-6, highlight what makes this agent special. Check README for claimed features.
 - **Output**: Unique designs, reusable patterns
 
+### Dimension 7.5: MVP Component Map
+
+- **Goal**: 识别构建最小可运行版本需要的组件集合
+- **Strategy**: 基于 D1-D7 的发现，对照以下参考类目映射：
+  1. 主循环（D2）
+  2. Tool 注册与分发（D3）
+  3. Prompt 组装（D4）
+  4. LLM 调用与响应解析（D2/D6）
+  5. 编辑应用（D3）
+  根据 agent 实际架构调整类目（合并/拆分/新增均可）
+- **Language Decision**: 对每个组件判断 Python 是否足够，还是必须用原生语言
+  规则：仅当机制根本依赖语言特性时（async runtime、类型系统、FFI、平台 API）才用原生语言
+- **Output**: 填写 docs 中 7.5 节的 MVP 组件表
+
 ### Dimension 8: Cross-Agent Comparison
 
 - **Goal**: Compare with other analyzed agents
@@ -98,7 +112,10 @@ For each language ecosystem, use these heuristics to find critical files:
 
 ## After Analysis
 
-1. Create or update the demo overview at `demos/<agent-name>/README.md` using the template from `demos/TEMPLATE/AGENT_OVERVIEW.md`: list all mechanisms from the analysis worth creating demos for (as `- [ ] **name** — description`)
+1. Create or update the demo overview at `demos/<agent-name>/README.md` using the template from `demos/TEMPLATE/AGENT_OVERVIEW.md`（三段式结构）：
+   - MVP 组件: 从 7.5 节表格导出，注明语言
+   - 进阶机制: D7 中值得复现的特色机制
+   - 完整串联: mini-<agent> 占位
 2. Update `agents.yaml`: change the agent's `status` from `pending` to `in-progress`（分析完成但还没创建 demo）or `done`（全部完成）
 3. **Stamp analyzed commit**: read `projects/<agent-name>/` HEAD (`git -C projects/<agent-name> rev-parse HEAD`), update `agents.yaml` with `analyzed_commit` and `analyzed_date` (today's date), and update `docs/<agent-name>.md` header's `> Analyzed at commit:` line
 4. Run `npm run progress` to update the CLAUDE.md progress section (or it will auto-update on next commit)

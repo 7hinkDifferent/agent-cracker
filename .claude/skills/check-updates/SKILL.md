@@ -115,3 +115,11 @@ Update commit tracking after reviewing changes or completing a re-analysis.
 - Check mode is read-only — it does NOT update the submodule or any files
 - File→dimension mapping is assessed by Claude using the pattern table above as guidance
 - Demo impact assessment uses source file references in demo READMEs + fuzzy file name matching
+
+## MVP Coverage Hint
+
+If the agent's demo overview (`demos/<agent>/README.md`) uses the three-tier format (MVP 组件/进阶机制/完整串联), append a line at the end of the report:
+
+```
+> 💡 如需检查 MVP 覆盖缺口，运行 `/audit-coverage <agent>`
+```

@@ -609,6 +609,21 @@ class ArchitectCoder(AskCoder):
 
 ---
 
+## 7.5 MVP 组件清单
+
+基于以上分析，构建最小可运行版本需要以下组件：
+
+| 组件 | 对应维度 | 核心文件 | 建议语言 | 语言理由 |
+|------|----------|----------|----------|----------|
+| 主循环 (core-loop) | D2 | `aider/coders/base_coder.py` (run / run_one) | Python | 原生 Python，无特殊语言依赖 |
+| 编辑应用 (search-replace) | D3 | `aider/coders/editblock_coder.py`, `aider/coders/editblock_fenced.py` | Python | 正则解析 + 字符串处理 |
+| Prompt 组装 (prompt-assembly) | D4 | `aider/coders/base_coder.py` (format_messages), `aider/prompts/` | Python | 字符串模板拼接 |
+| LLM 响应解析 (llm-response-parsing) | D2/D6 | `aider/coders/editblock_coder.py`, `aider/coders/base_coder.py` | Python | markdown 解析 + 多格式适配 |
+
+**说明**: aider 不使用 function-calling，因此无需 "Tool 分发" 组件。编辑指令通过 LLM 文本响应中的 SEARCH/REPLACE 块传递。
+
+---
+
 ## 8. 跨 Agent 对比
 
 ### vs 其他 agent

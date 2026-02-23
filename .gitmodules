@@ -8,3 +8,6 @@
 [submodule "projects/codex-cli"]
 	path = projects/codex-cli
 	url = https://github.com/openai/codex
+[submodule "projects/learn-claude-code"]
+	path = projects/learn-claude-code
+	url = https://github.com/shareAI-lab/learn-claude-code.git

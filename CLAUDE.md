@@ -21,6 +21,7 @@ agent-cracker/
 └── .claude/
     ├── skills/               # Claude Code skills
     │   ├── analyze-agent/    # /analyze-agent <name> — 8 维度分析
+    │   ├── audit-coverage/  # /audit-coverage <name> — MVP 覆盖缺口审计
     │   ├── check-updates/   # /check-updates — 检查上游更新、评估分析漂移
     │   ├── create-demo/      # /create-demo <agent> <mechanism> — 创建机制 demo
     │   ├── sync-comparisons/ # /sync-comparisons — 同步跨 Agent 对比（Dimension 8）
@@ -54,6 +55,7 @@ npm run setup                # 安装 git hooks（clone 后执行一次）
 1. **添加 agent**: `npm run add -- <name>` → 源码到 `projects/<name>/`
 2. **分析 agent**: `/analyze-agent <name>` → 输出到 `docs/<name>.md`
 3. **创建 demo**: `/create-demo <agent> <mechanism>` → 输出到 `demos/<agent>/<mechanism>/`
+4. **审计覆盖**: `/audit-coverage <name>` → 检查 MVP 覆盖缺口
 
 ## 约定
 
@@ -61,8 +63,9 @@ npm run setup                # 安装 git hooks（clone 后执行一次）
 - **Demo 目录**: `demos/<agent>/<mechanism>/`，按 agent 分组，每个 mechanism 一个子目录
 - **Demo Overview**: 每个 agent 的 `demos/<agent>/README.md` 维护机制清单（`- [x]`/`- [ ]`），用于追踪进度和判断 status
 - **Demo 原则**: 单一机制、最少依赖、独立可运行
-- **包管理**: 使用 `uv` 运行 Python demo（`uv run --with <deps> python main.py`）
-- **LLM 调用**: Demo 中使用 `litellm` 库，支持通过环境变量 `DEMO_MODEL` 配置模型
+- **Demo 语言**: 默认 Python；当机制依赖语言特性时使用原生语言，README 须说明原因
+- **Python Demo**: `uv run --with <deps> python main.py` + `litellm` | **TypeScript Demo**: `npx tsx main.ts` + `openai` SDK | **Rust Demo**: `cargo run` + `reqwest`
+- **MVP 覆盖**: 每个 agent 的 demo overview 区分 MVP 组件/进阶机制/完整串联
 - **数据源**: `agents.yaml` 是 agent 列表的唯一数据源
 - **Agent status**: pending → in-progress → done，分析或 demo 完成后必须更新
 - **Commit 跟踪**: 分析完成后自动记录 analyzed_commit/analyzed_date 到 agents.yaml，demo 记录基于的 commit
@@ -86,7 +89,7 @@ Git hooks 存放在 `scripts/githooks/`，`npm run setup` 安装到 `.git/hooks/
 |------|----------|------|
 | `session-status.sh` | 每次对话开始 | 从 agents.yaml 读取各 agent 状态，注入为上下文，检测本地 drift |
 | `pre-commit-check.sh` | 执行 git commit 前 | 检查未暂存文档、缺少配套变更等遗漏（含 analyzed_commit 同步），阻断并提示修复 |
-| `demo-syntax-check.sh` | 编辑 demos/ 下 .py 文件后 | 自动 py_compile 语法检查，错误立即反馈 |
+| `demo-syntax-check.sh` | 编辑 demos/ 下源码文件后 | 多语言语法检查（.py/.ts/.rs），错误立即反馈 |
 | `validate-agents-yaml.sh` | 编辑 agents.yaml 后 | 校验 YAML 结构完整性（必须有 name/repo/status，analyzed_commit 格式） |
 | Stop prompt | Claude 结束回答前 | 按文件→文档映射规则检查是否有文档/配置遗漏未更新 |
 
@@ -97,8 +100,8 @@ Git hooks 存放在 `scripts/githooks/`，`npm run setup` 安装到 `.git/hooks/
 - **待分析**: openhands, cline, continue, goose, swe-agent, bolt.new, devika, gpt-engineer
 
 Demo 覆盖:
-- **aider**: 4/8 (repomap, search-replace, reflection, architect)
-- **codex-cli**: 4/6 (approval-policy, head-tail-truncation, network-policy, prompt-assembly)
-- **pi-agent**: 4/6 (event-stream, pluggable-ops, steering-queue, structured-compaction)
+- **aider**: MVP 1/4 | 总计 4/12 (search-replace, repomap, reflection, architect)
+- **codex-cli**: MVP 1/4 | 总计 4/10 (prompt-assembly, approval-policy, head-tail-truncation, network-policy)
+- **pi-agent**: MVP 1/4 | 总计 4/10 (pluggable-ops, event-stream, steering-queue, structured-compaction)
 
 <!-- PROGRESS_END -->

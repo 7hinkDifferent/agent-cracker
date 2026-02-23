@@ -26,7 +26,7 @@ done < "$YAML_FILE"
 # 统计 demo 数量
 DEMO_COUNT=0
 if [ -d "$PROJECT_DIR/demos" ]; then
-  DEMO_COUNT=$(find "$PROJECT_DIR/demos" -name "main.py" -o -name "repomap.py" | grep -v TEMPLATE | wc -l | tr -d ' ')
+  DEMO_COUNT=$(find "$PROJECT_DIR/demos" -name "main.py" -o -name "repomap.py" -o -name "main.ts" -o -name "index.ts" -o -name "main.rs" | grep -v TEMPLATE | wc -l | tr -d ' ')
 fi
 
 # 检查本地 drift（只查有 analyzed_commit 的 agent）

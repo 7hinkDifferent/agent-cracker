@@ -510,6 +510,21 @@ const bashTool = createBashTool(cwd, { operations: sshBashOps });
 
 ---
 
+## 7.5 MVP 组件清单
+
+基于以上分析，构建最小可运行版本需要以下组件：
+
+| 组件 | 对应维度 | 核心文件 | 建议语言 | 语言理由 |
+|------|----------|----------|----------|----------|
+| 会话主循环 (agent-session-loop) | D2 | `packages/agent/src/agent.ts` (run / processMessages) | TypeScript | async/await + EventStream async iterator 是核心抽象 |
+| 可插拔操作 (pluggable-ops) | D3 | `packages/agent/src/ops/` (OpsInterface) | Python | 依赖注入模式可用 Python 复现 |
+| Prompt 构建器 (prompt-builder) | D4 | `packages/agent/src/prompts/`, `packages/agent/src/agent.ts` (buildMessages) | Python | 字符串模板拼接 |
+| 多 Provider LLM 调用 (llm-multi-provider) | D2/D6 | `packages/agent/src/llm/` (LlmClient, providers/) | Python | 统一接口适配可用 Python + litellm 复现 |
+
+**说明**: pi-agent 的主循环深度依赖 TypeScript async iterator 模式（EventStream），MVP 中主循环组件建议用 TypeScript。其余组件用 Python 即可。
+
+---
+
 ## 8. 跨 Agent 对比
 
 ### vs Aider

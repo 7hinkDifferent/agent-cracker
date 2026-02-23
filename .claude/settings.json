@@ -31,7 +31,7 @@
           {
             "type": "command",
             "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/demo-syntax-check.sh",
-            "timeout": 10
+            "timeout": 30
           },
           {
             "type": "command",

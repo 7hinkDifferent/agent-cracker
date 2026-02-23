@@ -101,11 +101,14 @@ for agent_dir in demos/*/; do
 
     # 必须有入口文件
     has_entry=false
-    for f in main.py repomap.py index.js index.ts; do
+    for f in main.py repomap.py index.js index.ts main.ts; do
       [ -f "$demo_dir/$f" ] && has_entry=true && break
     done
+    if ! $has_entry && [ -f "$demo_dir/Cargo.toml" ] && [ -f "$demo_dir/src/main.rs" ]; then
+      has_entry=true
+    fi
     if ! $has_entry; then
-      error "$prefix: no entry file (main.py / index.js)"
+      error "$prefix: no entry file (main.py / main.ts / index.js / Cargo.toml+src/main.rs)"
     fi
   done
 done
@@ -202,8 +205,6 @@ else
 fi
 echo ""
 
-echo ""
-
 # ─── 7. Commit 跟踪一致性 ────────────────────────────
 echo "7. Commit 跟踪一致性"
 
@@ -233,6 +234,38 @@ for name in "${AGENT_NAMES[@]}"; do
     fi
   else
     ok "$name: has analyzed_commit ${analyzed_commit:0:7} (no local submodule)"
+  fi
+done
+echo ""
+
+# ─── 8. MVP 覆盖一致性（warning 级别）─────────────────
+echo "8. MVP 覆盖一致性"
+
+for agent_dir in demos/*/; do
+  agent=$(basename "$agent_dir")
+  [ "$agent" = "TEMPLATE" ] && continue
+
+  overview="$agent_dir/README.md"
+  if [ ! -f "$overview" ]; then
+    continue
+  fi
+
+  if grep -q '^## MVP 组件' "$overview" 2>/dev/null; then
+    # 新格式：检查 MVP 完成度和 mini-agent
+    mvp_done=$(sed -n '/^## MVP 组件/,/^## /p' "$overview" | grep -c '^\- \[x\]' 2>/dev/null) || mvp_done=0
+    mvp_total=$(sed -n '/^## MVP 组件/,/^## /p' "$overview" | grep -c '^\- \[.\]' 2>/dev/null) || mvp_total=0
+
+    if [ "$mvp_done" -eq "$mvp_total" ] && [ "$mvp_total" -gt 0 ]; then
+      if [ ! -d "${agent_dir}mini-${agent}" ]; then
+        warn "$agent: all MVP components done ($mvp_done/$mvp_total) but no mini-$agent integration demo"
+      else
+        ok "$agent: MVP complete with integration demo"
+      fi
+    else
+      ok "$agent: MVP $mvp_done/$mvp_total"
+    fi
+  else
+    warn "$agent: overview uses old format, consider migrating to three-tier (MVP/进阶/串联)"
   fi
 done
 echo ""

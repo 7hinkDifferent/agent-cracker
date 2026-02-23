@@ -550,6 +550,21 @@ static BANNED_PREFIX_SUGGESTIONS: &[&[&str]] = &[
 
 ---
 
+## 7.5 MVP 组件清单
+
+基于以上分析，构建最小可运行版本需要以下组件：
+
+| 组件 | 对应维度 | 核心文件 | 建议语言 | 语言理由 |
+|------|----------|----------|----------|----------|
+| 事件多路复用 (event-multiplex) | D2 | `codex-rs/core/src/codex.rs` (run_turn), `codex-rs/core/src/protocol.rs` | Rust | tokio select! 多通道并发是核心机制，async runtime 不可替代 |
+| Tool 沙箱执行 (tool-execution) | D3 | `codex-rs/exec/src/lib.rs`, `codex-rs/exec/src/seatbelt.rs` | Rust | 平台 API 集成 (sandbox-exec) + 进程管理 |
+| Prompt 组装 (prompt-assembly) | D4 | `codex-rs/core/src/prompt.rs`, `codex-rs/core/src/config_profile.rs` | Python | 模板拼接逻辑可用 Python 复现 |
+| 流式响应解析 (response-stream) | D2/D6 | `codex-rs/core/src/stream.rs`, `codex-rs/core/src/turns.rs` | Python | SSE 解析和增量拼接可简化复现 |
+
+**说明**: codex-cli 的核心是 Rust async runtime 驱动的事件循环，MVP 中前两个组件需要 Rust 才能体现其设计精髓。
+
+---
+
 ## 8. 跨 Agent 对比
 
 ### vs Aider / Pi-agent
