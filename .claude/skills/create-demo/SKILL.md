@@ -89,11 +89,11 @@ Guidelines:
 - Target ~100-200 lines of core logic per demo
 - LLM 调用按语言选择对应库和运行方式：
 
-| 语言 | LLM 库 | 运行方式 | 模型变量 |
-|------|--------|---------|---------|
-| Python | litellm | `uv run --with <deps> python main.py` | `DEMO_MODEL` |
-| TypeScript | openai SDK | `npx tsx main.ts` | `DEMO_MODEL` |
-| Rust | reqwest | `cargo run` | `DEMO_MODEL` |
+| 语言 | 版本要求 | 运行工具 | 运行方式 | LLM 库 | 模型变量 |
+|------|---------|---------|---------|--------|---------|
+| Python | ≥3.10 | uv | `uv run --with <deps> python main.py` | litellm | `DEMO_MODEL` |
+| TypeScript | Node ≥18 | npx | `npx tsx main.ts` | openai SDK | `DEMO_MODEL` |
+| Rust | stable | cargo | `cargo run` | reqwest | `DEMO_MODEL` |
 
 - Each demo must be independently runnable
 - Include sample data/projects so the demo works out of the box
@@ -105,9 +105,24 @@ When all MVP component demos for an agent are complete, create a combined integr
 
 - **目录**: `demos/<agent>/mini-<agent>/`
 - **目标**: 串联所有 MVP 组件为一个最简可运行 agent
-- **行数**: 200-400 行，可 import 兄弟 MVP demo 目录
-- **前提**: 所有 MVP 组件 demo 已完成
+- **核心原则**: **必须 import 兄弟 MVP demo 的模块**，而非把所有代码重写到一个文件中。mini-agent 本身只实现 Core Loop 逻辑，其余能力全部通过 import 复用
+- **行数**: mini-agent 自身 100-200 行（不含导入的模块）
+- **前提**: 所有 MVP 组件 demo 已完成，且每个 MVP demo 已提取可复用模块（如 `assembler.py`、`parser.py`）
 - **语言**: 与多数 MVP 组件一致（混合则用 Python）
+
+**模块提取约定**:
+- 每个 MVP demo 应将核心逻辑提取到独立模块文件（如 `prompt-assembly/assembler.py`）
+- `main.py` 保留 demo 演示代码，从模块 import 核心类/函数
+- mini-agent 通过 `sys.path` 添加兄弟目录来 import 这些模块
+
+**示例（aider）**:
+```python
+# mini-aider/main.py
+from assembler import PromptAssembler       # ← prompt-assembly/
+from parser import find_edit_blocks         # ← search-replace/
+from replacer import apply_edit             # ← search-replace/
+from parsers import generate_reflection     # ← llm-response-parsing/
+```
 
 ### Step 6: Verify
 

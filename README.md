@@ -22,6 +22,23 @@
 
 <!-- AGENT_TABLE_END -->
 
+## 环境要求
+
+| 工具 | 用途 | 安装 |
+|------|------|------|
+| [Node.js](https://nodejs.org/) ≥18 | npm scripts、TypeScript demo | `brew install node` |
+| [uv](https://docs.astral.sh/uv/) | Python 包管理与运行（自动管理 Python ≥3.10） | `curl -LsSf https://astral.sh/uv/install.sh \| sh` |
+| [Git](https://git-scm.com/) | 源码管理、submodule | 系统自带 |
+| [Rust](https://www.rust-lang.org/) (可选) | Rust demo | `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \| sh` |
+
+**Demo 运行工具链**:
+
+| 语言 | 运行方式 | 说明 |
+|------|---------|------|
+| Python | `uv run --with <deps> python main.py` | uv 自动解析 Python ≥3.10 和依赖，无需手动安装 |
+| TypeScript | `npx tsx main.ts` | 通过 npx 直接运行，无需全局安装 |
+| Rust | `cargo run` | 标准 Rust 工具链 |
+
 ## 快速开始
 
 ```bash

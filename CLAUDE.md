@@ -65,9 +65,16 @@ npm run setup                # 安装 git hooks（clone 后执行一次）
 - **Demo 目录**: `demos/<agent>/<mechanism>/`，按 agent 分组，每个 mechanism 一个子目录
 - **Demo Overview**: 每个 agent 的 `demos/<agent>/README.md` 维护机制清单（`- [x]`/`- [ ]`），用于追踪进度和判断 status
 - **Demo 原则**: 单一机制、最少依赖、独立可运行
-- **Demo 语言**: 默认 Python；当机制依赖语言特性时使用原生语言，README 须说明原因
-- **Python Demo**: `uv run --with <deps> python main.py` + `litellm` | **TypeScript Demo**: `npx tsx main.ts` + `openai` SDK | **Rust Demo**: `cargo run` + `reqwest`
+- **Demo 语言**: 默认 Python（≥3.10）；当机制依赖语言特性时使用原生语言，README 须说明原因
+- **Demo 运行工具链**:
+
+| 语言 | 版本要求 | 包管理/运行工具 | Demo 运行方式 | LLM 库 |
+|------|---------|----------------|--------------|--------|
+| Python | ≥3.10 | [uv](https://docs.astral.sh/uv/) | `uv run --with <deps> python main.py` | litellm |
+| TypeScript | ≥18 (Node) | npm / npx | `npx tsx main.ts` | openai SDK |
+| Rust | stable | cargo | `cargo run` | reqwest |
 - **MVP 覆盖**: 每个 agent 的 demo overview 区分 MVP 组件/进阶机制/完整串联，进度行格式 `MVP: X/N | 进阶: Y/M | 串联: Z/1 | 总计: A/K`
+- **Mini-agent 组合**: 串联 demo（`mini-<agent>`）**必须 import 兄弟 MVP demo 的模块**，不重写代码；每个 MVP demo 提取可复用模块（如 `assembler.py`），mini-agent 通过 `sys.path` 导入
 - **数据源**: `agents.yaml` 是 agent 列表的唯一数据源
 - **Agent status**: pending → in-progress → done，分析或 demo 完成后必须更新
 - **Commit 跟踪**: 分析完成后自动记录 analyzed_commit/analyzed_date 到 agents.yaml，demo 记录基于的 commit

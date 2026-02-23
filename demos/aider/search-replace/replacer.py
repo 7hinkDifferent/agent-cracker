@@ -1,5 +1,4 @@
-"""
-SEARCH/REPLACE block applier with fuzzy matching.
+"""SEARCH/REPLACE block applier with fuzzy matching.
 
 Applies edit blocks to files using two matching tiers:
   Tier 1: Exact string match
