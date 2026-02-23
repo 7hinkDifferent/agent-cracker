@@ -13,6 +13,7 @@
     "stars": "bash scripts/update-stars.sh",
     "new-doc": "bash scripts/new-analysis.sh",
     "lint": "bash scripts/lint.sh",
-    "progress": "bash scripts/gen-progress.sh"
+    "progress": "bash scripts/gen-progress.sh",
+    "demo-gif": "vhs demo.tape"
   }
 }

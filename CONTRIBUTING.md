@@ -57,6 +57,7 @@ npm run init     # 初始化 submodule
 
 - 提交前会自动运行 `lint.sh` 一致性检查
 - 修改 demo 后需更新对应的 `demos/<agent>/README.md` 进度
+- 如果改动影响 README 演示效果，可用 `npm run demo-gif` 重新录制动画
 - 修改分析文档后需确认 `agents.yaml` 状态一致
 
 ## 文件对应关系
