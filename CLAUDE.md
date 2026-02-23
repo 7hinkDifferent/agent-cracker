@@ -50,6 +50,7 @@ npm run readme               # 从 agents.yaml 更新 README 表格
 npm run stars                # 查询 GitHub star 数
 npm run lint                 # 一致性检查（agents.yaml/docs/demos/README 是否对齐）
 npm run progress             # 更新 CLAUDE.md 进度段落
+npm run deps                 # 显示自动化依赖关系图
 npm run setup                # 安装 git hooks（clone 后执行一次）
 vhs demo.tape                # 录制终端 demo 动画（需 brew install vhs）
 ```
@@ -89,7 +90,7 @@ vhs demo.tape                # 录制终端 demo 动画（需 brew install vhs�
 
 | Hook | 触发条件 | 作用 |
 |------|----------|------|
-| `pre-commit` | agents.yaml 改动 | 自动更新 README 表格（`gen-readme.sh`） |
+| `pre-commit` | agents.yaml 改动 | 自动更新 README 表格 + README.en.md 表格 + 徽章（`gen-readme.sh`） |
 | `pre-commit` | agents.yaml 或 demos/ 改动 | 自动更新 CLAUDE.md 进度段落（`gen-progress.sh`） |
 | `pre-commit` | 每次 commit | 跑 `lint.sh` 一致性检查 |
 

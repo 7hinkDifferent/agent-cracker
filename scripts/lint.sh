@@ -164,9 +164,19 @@ readme_agents=$(sed -n '/AGENT_TABLE_START/,/AGENT_TABLE_END/p' README.md | grep
 yaml_agents=${#AGENT_NAMES[@]}
 
 if [ "$readme_agents" -eq "$yaml_agents" ]; then
-  ok "README table ($readme_agents) matches agents.yaml ($yaml_agents)"
+  ok "README.md table ($readme_agents) matches agents.yaml ($yaml_agents)"
 else
-  warn "README table has $readme_agents agents, agents.yaml has $yaml_agents → run 'npm run readme'"
+  warn "README.md table has $readme_agents agents, agents.yaml has $yaml_agents → run 'npm run readme'"
+fi
+
+# README.en.md 表格同步检查
+if [ -f "README.en.md" ]; then
+  readme_en_agents=$(sed -n '/AGENT_TABLE_START/,/AGENT_TABLE_END/p' README.en.md | grep -c '^|.*\[.*\](http' 2>/dev/null || echo 0)
+  if [ "$readme_en_agents" -eq "$yaml_agents" ]; then
+    ok "README.en.md table ($readme_en_agents) matches agents.yaml ($yaml_agents)"
+  else
+    warn "README.en.md table has $readme_en_agents agents, agents.yaml has $yaml_agents → run 'npm run readme'"
+  fi
 fi
 echo ""
 

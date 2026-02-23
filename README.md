@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-≥3.10-blue.svg)](https://www.python.org/)
 [![Agents](https://img.shields.io/badge/Agents-11-green.svg)](agents.yaml)
-[![Demos](https://img.shields.io/badge/Demos-16-orange.svg)](demos/)
+[![Demos](https://img.shields.io/badge/Demos-32-orange.svg)](demos/)
 
 > **拆解 Coding Agent，从源码到最小复现。**
 >

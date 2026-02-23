@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-≥3.10-blue.svg)](https://www.python.org/)
 [![Agents](https://img.shields.io/badge/Agents-11-green.svg)](agents.yaml)
-[![Demos](https://img.shields.io/badge/Demos-16-orange.svg)](demos/)
+[![Demos](https://img.shields.io/badge/Demos-32-orange.svg)](demos/)
 
 > **Disassemble Coding Agents, from source code to minimal reproduction.**
 >
@@ -37,17 +37,17 @@ Side-by-side comparison of core mechanisms across 3 analyzed agents (continuousl
 
 | Agent | Language | Category | Status | Repo |
 |-------|----------|----------|--------|------|
-| [aider](https://github.com/Aider-AI/aider) | Python | CLI | in-progress | `Aider-AI/aider` |
+| [aider](https://github.com/Aider-AI/aider) | Python | CLI | done | `Aider-AI/aider` |
 | [openhands](https://github.com/All-Hands-AI/OpenHands) | Python | Platform | pending | `All-Hands-AI/OpenHands` |
 | [cline](https://github.com/cline/cline) | TypeScript | IDE Plugin | pending | `cline/cline` |
 | [continue](https://github.com/continuedev/continue) | TypeScript | IDE Plugin | pending | `continuedev/continue` |
 | [goose](https://github.com/block/goose) | Rust | CLI | pending | `block/goose` |
-| [codex-cli](https://github.com/openai/codex) | Rust | CLI | in-progress | `openai/codex` |
+| [codex-cli](https://github.com/openai/codex) | Rust | CLI | done | `openai/codex` |
 | [swe-agent](https://github.com/SWE-agent/SWE-agent) | Python | Research | pending | `SWE-agent/SWE-agent` |
 | [bolt.new](https://github.com/stackblitz/bolt.new) | TypeScript | Web | pending | `stackblitz/bolt.new` |
 | [devika](https://github.com/stitionai/devika) | Python | Autonomous | pending | `stitionai/devika` |
 | [gpt-engineer](https://github.com/gpt-engineer-org/gpt-engineer) | Python | CLI | pending | `gpt-engineer-org/gpt-engineer` |
-| [pi-agent](https://github.com/badlogic/pi-mono) | TypeScript | CLI | in-progress | `badlogic/pi-mono` |
+| [pi-agent](https://github.com/badlogic/pi-mono) | TypeScript | CLI | done | `badlogic/pi-mono` |
 
 <!-- AGENT_TABLE_END -->
 

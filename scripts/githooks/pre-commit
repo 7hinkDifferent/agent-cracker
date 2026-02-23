@@ -11,6 +11,9 @@ if echo "$STAGED" | grep -q "^agents.yaml$"; then
   echo "[pre-commit] agents.yaml changed, updating README table..."
   bash "$REPO_ROOT/scripts/gen-readme.sh"
   git add "$REPO_ROOT/README.md"
+  if [ -f "$REPO_ROOT/README.en.md" ]; then
+    git add "$REPO_ROOT/README.en.md"
+  fi
 fi
 
 # ── Step 2: agents.yaml 或 demos/ 改动 → CLAUDE.md 进度同步 ──

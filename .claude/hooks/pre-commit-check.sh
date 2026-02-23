@@ -24,7 +24,7 @@ ISSUES=()
 
 # 检查 1: 有未暂存的文档/配置变更
 UNSTAGED_DOCS=$(git diff --name-only -- \
-  docs/ CLAUDE.md README.md agents.yaml \
+  docs/ CLAUDE.md README.md README.en.md agents.yaml \
   'demos/*/README.md' .claude/ package.json 2>/dev/null || true)
 if [ -n "$UNSTAGED_DOCS" ]; then
   ISSUES+=("未暂存的文档/配置变更（可能需要一起提交）: $UNSTAGED_DOCS")
@@ -63,6 +63,14 @@ for doc_change in $(echo "$STAGED" | grep -E '^docs/[^/]+\.md$' | grep -v TEMPLA
     fi
   fi
 done
+
+# 检查 6: 暂存了 README.md 但 README.en.md 有未暂存变更
+if echo "$STAGED" | grep -q '^README\.md$'; then
+  UNSTAGED_EN=$(git diff --name-only -- README.en.md 2>/dev/null || true)
+  if [ -n "$UNSTAGED_EN" ]; then
+    ISSUES+=("暂存了 README.md 但 README.en.md 有未暂存变更 — 多语言 README 需同步")
+  fi
+fi
 
 if [ ${#ISSUES[@]} -gt 0 ]; then
   MSG="提交前检查发现以下可能遗漏："
