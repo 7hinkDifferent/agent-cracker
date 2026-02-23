@@ -26,7 +26,7 @@ agent-cracker/
     │   ├── create-demo/      # /create-demo <agent> <mechanism> — 创建机制 demo
     │   ├── guide/           # /guide <query> — 学习引导与资源推荐
     │   ├── sync-comparisons/ # /sync-comparisons — 同步跨 Agent 对比（Dimension 8）
-    │   ├── translate-doc/    # 中英文翻译
+    │   ├── translate-doc/    # /translate-doc — 中英双向翻译，支持批量和术语一致性
     │   └── update-repo/      # 更新 submodule 和 README
     ├── hooks/                # 自动化 hooks
     │   ├── session-status.sh       # SessionStart: 注入 agents.yaml 进度
