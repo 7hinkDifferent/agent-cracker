@@ -23,7 +23,7 @@ agent-cracker/
     │   ├── analyze-agent/    # /analyze-agent <name> — 8 维度分析
     │   ├── audit-coverage/  # /audit-coverage <name> — MVP 覆盖缺口审计
     │   ├── check-updates/   # /check-updates — 检查上游更新、评估分析漂移
-    │   ├── create-demo/      # /create-demo <agent> <mechanism> — 创建机制 demo
+    │   ├── create-demo/      # /create-demo <agent> <mechanism> — 创建机制 demo（含 mini-agent 组合）
     │   ├── guide/           # /guide <query> — 学习引导与资源推荐
     │   ├── sync-comparisons/ # /sync-comparisons — 同步跨 Agent 对比（Dimension 8）
     │   ├── translate-doc/    # /translate-doc — 中英双向翻译，支持批量和术语一致性

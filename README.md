@@ -1,6 +1,31 @@
 # Agent Cracker
 
-系统性研究各类 Coding Agent 的实现原理和关键机制。
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-≥3.10-blue.svg)](https://www.python.org/)
+[![Agents](https://img.shields.io/badge/Agents-11-green.svg)](agents.yaml)
+[![Demos](https://img.shields.io/badge/Demos-16-orange.svg)](demos/)
+
+> **拆解 Coding Agent，从源码到最小复现。**
+>
+> 系统性研究 11 个开源 Coding Agent 的实现原理，用 8 维度深度分析提取关键机制，再用 100-200 行代码逐一复现。最终串联为可运行的 mini-agent，让你真正理解 AI 编程助手是怎么工作的。
+
+[English](README.en.md)
+
+## 跨 Agent 对比亮点
+
+已分析 3 个 agent 的核心机制横向对比（持续更新中）：
+
+| 维度 | aider | codex-cli | pi-agent |
+|------|-------|-----------|----------|
+| **语言** | Python | Rust + TypeScript | TypeScript |
+| **Agent Loop** | 三层嵌套（模式切换 + REPL + 反思） | tokio 多路复用 + turn 循环 | 双层循环 + steering 队列 |
+| **编辑方式** | 12+ 编辑格式多态切换 | apply_patch（unified diff） | edit tool（精确替换 + 模糊匹配） |
+| **上下文策略** | tree-sitter AST + PageRank RepoMap | bytes/4 估算 + 首尾保留截断 | chars/4 估算 + 结构化摘要压缩 |
+| **安全模型** | Git 集成（auto-commit + undo） | 三级审批 + 平台沙箱 + 网络代理 | 无内建沙箱 |
+| **错误处理** | 多级容错 + 反思循环 | 可重试性分类 + 指数退避 | overflow 检测 + auto-compact |
+| **扩展性** | 无正式扩展系统 | Hooks + MCP + Skills | 深度扩展（全生命周期 Hook） |
+
+> 完整对比见各 agent 分析文档的 [Dimension 8](docs/)。每个 demo 都是 100-200 行的最小复现，可以直接运行体验。
 
 ## Agent 列表
 
