@@ -8,10 +8,10 @@
 
 构建最小可运行版本需要以下组件：
 
-- [ ] **core-loop** — 主循环（用户输入 → LLM 调用 → 编辑应用 → 反馈，单轮交互骨架）(Python)
+- [x] **core-loop** — 主循环（用户输入 → LLM 调用 → 编辑应用 → 反馈，单轮交互骨架）(Python)
 - [x] **search-replace** — SEARCH/REPLACE 块解析器（正则状态机 + 两级模糊匹配）(Python)
-- [ ] **prompt-assembly** — Prompt 组装（system prompt + repo map + chat history + 文件上下文拼接）(Python)
-- [ ] **llm-response-parsing** — LLM 响应解析（从 markdown 代码块提取编辑指令，多格式适配）(Python)
+- [x] **prompt-assembly** — Prompt 组装（system prompt + repo map + chat history + 文件上下文拼接）(Python)
+- [x] **llm-response-parsing** — LLM 响应解析（从 markdown 代码块提取编辑指令，多格式适配）(Python)
 
 ## 进阶机制
 
@@ -31,4 +31,4 @@
 
 ## 进度
 
-MVP: 1/4 | 进阶: 3/7 | 总计: 4/12
+MVP: 4/4 | 进阶: 3/7 | 总计: 7/12

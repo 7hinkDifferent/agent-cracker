@@ -102,7 +102,7 @@ Git hooks 存放在 `scripts/githooks/`，`npm run setup` 安装到 `.git/hooks/
 - **待分析**: openhands, cline, continue, goose, swe-agent, bolt.new, devika, gpt-engineer
 
 Demo 覆盖:
-- **aider**: MVP 1/4 | 总计 4/12 (search-replace, repomap, reflection, architect)
+- **aider**: MVP 4/4 | 总计 7/12 (core-loop, search-replace, prompt-assembly, llm-response-parsing, repomap, reflection, architect)
 - **codex-cli**: MVP 1/4 | 总计 4/10 (prompt-assembly, approval-policy, head-tail-truncation, network-policy)
 - **pi-agent**: MVP 1/4 | 总计 4/10 (pluggable-ops, event-stream, steering-queue, structured-compaction)
 
