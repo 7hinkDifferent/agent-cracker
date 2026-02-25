@@ -344,25 +344,26 @@ Vector（70%）+ BM25 文本（30%）加权混合检索，支持 MMR 去重、�
 
 ## 8. 跨 Agent 对比
 
-### vs aider / codex-cli / pi-agent
+### vs aider / codex-cli / pi-agent / nanoclaw
 
-| 维度 | openclaw | aider | codex-cli | pi-agent |
-|------|----------|-------|-----------|----------|
-| **定位** | 多通道 AI 助手平台 | 终端编码助手 | CLI 编码 agent | 模块化 agent 工具包 |
-| **语言** | TypeScript | Python | Rust + TS | TypeScript |
-| **Agent Loop** | 内嵌 pi-agent + 编排层 | 三层嵌套 | tokio 多路复用 | 双层循环 + steering |
-| **Tool 数量** | 47+ 核心 + plugin | 7 文本命令 | 6 function calling | 7 原生 tool calling |
-| **Tool 管理** | 4 档 profile + policy | 无分级 | 3 级审批 | 无分级 |
-| **通道** | 13+ 消息平台 | 仅 CLI | 仅 CLI | CLI + Slack Bot |
-| **记忆** | Vector + BM25 混合检索 | Git 集成 | 无 | 无（session 内 compaction） |
-| **安全** | Docker 沙箱 + 信任分级 | Git auto-commit | 平台沙箱 + 网络代理 | 无 |
-| **调度** | Cron + Heartbeat | 无 | 无 | 无 |
-| **子 Agent** | spawn + steer + kill | 无 | 无 | 无 |
-| **扩展** | Plugin SDK + 31 extension + 51 skills | 无 | Hooks + MCP | 深度扩展系统 |
+| 维度 | openclaw | aider | codex-cli | pi-agent | nanoclaw |
+|------|----------|-------|-----------|----------|----------|
+| **定位** | 多通道 AI 助手平台 | 终端编码助手 | CLI 编码 agent | 模块化 agent 工具包 | 极简个人 AI 助手 |
+| **语言** | TypeScript | Python | Rust + TS | TypeScript | TypeScript |
+| **Agent Loop** | 内嵌 pi-agent + 编排层 | 三层嵌套 | tokio 多路复用 | 双层循环 + steering | 双层：Host 轮询 + Container SDK |
+| **Tool 数量** | 47+ 核心 + plugin | 7 文本命令 | 6 function calling | 7 原生 tool calling | SDK 内置 + 6 MCP tool |
+| **Tool 管理** | 4 档 profile + policy | 无分级 | 3 级审批 | 无分级 | SDK 全权限 + IPC 权限分级 |
+| **通道** | 13+ 消息平台 | 仅 CLI | 仅 CLI | CLI + Slack Bot | WhatsApp + skill 扩展 |
+| **记忆** | Vector + BM25 混合检索 | Git 集成 | 无 | 无（session 内 compaction） | CLAUDE.md 文件 + SQLite session |
+| **安全** | Docker 沙箱 + 信任分级 | Git auto-commit | 平台沙箱 + 网络代理 | 无 | Docker 容器隔离 + 外部 allowlist |
+| **调度** | Cron + Heartbeat | 无 | 无 | 无 | Cron/Interval/Once |
+| **子 Agent** | spawn + steer + kill | 无 | 无 | 无 | Agent Swarms（Claude SDK Teams） |
+| **扩展** | Plugin SDK + 31 extension + 51 skills | 无 | Hooks + MCP | 深度扩展系统 | Claude Code Skills（代码变换） |
+| **代码规模** | ~450,000 行 | ~30,000 行 | ~30,000 行 | ~25,000 行 | ~3,900 行 |
 
 ### 总结
 
-OpenClaw 代表了 **Coding Agent 向 Agent 平台进化**的典型路径：不重造 agent 内核（直接内嵌 pi-agent），而是在其之上构建多通道接入、语义记忆、安全隔离、自主调度、子 agent 编排等平台能力。其核心架构决策——**Gateway 作为控制面 + 内嵌引擎 + Plugin 生态**——使得平台能力的扩展不影响编码核心的稳定性。47 个 tool 的 profile 分级机制、多 provider failover + auth 轮转、子 agent 生命周期管理是其最有价值的创新点。与纯 coding agent 相比，OpenClaw 的独特价值在于**连接**——将 AI 编码能力连接到用户已有的通信工具、工作流和设备中。
+OpenClaw 代表了 **Coding Agent 向 Agent 平台进化**的典型路径：不重造 agent 内核（直接内嵌 pi-agent），而是在其之上构建多通道接入、语义记忆、安全隔离、自主调度、子 agent 编排等平台能力。其核心架构决策——**Gateway 作为控制面 + 内嵌引擎 + Plugin 生态**——使得平台能力的扩展不影响编码核心的稳定性。47 个 tool 的 profile 分级机制、多 provider failover + auth 轮转、子 agent 生命周期管理是其最有价值的创新点。与 NanoClaw 相比，两者都是"个人 AI 助手平台"但走了截然相反的路线——OpenClaw 是**大而全**（450k 行、13+ 通道、向量记忆、Plugin SDK 生态），NanoClaw 是**小而精**（~3,900 行、代码即配置、Skills 代码变换）；OpenClaw 内嵌 pi-agent 自研引擎，NanoClaw 全委托 Claude Agent SDK 黑盒；OpenClaw 用应用级 agent fence + Docker 隔离，NanoClaw 用外部 allowlist + Docker 容器作为唯一安全边界。两者体现了"功能丰富 vs 代码可审计"的经典权衡。与纯 coding agent 相比，OpenClaw 的独特价值在于**连接**——将 AI 编码能力连接到用户已有的通信工具、工作流和设备中。
 
 ---
 

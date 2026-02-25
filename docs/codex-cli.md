@@ -567,23 +567,23 @@ static BANNED_PREFIX_SUGGESTIONS: &[&[&str]] = &[
 
 ## 8. 跨 Agent 对比
 
-### vs Aider / Pi-agent / OpenClaw
+### vs Aider / Pi-agent / OpenClaw / NanoClaw
 
-| 维度 | codex-cli | aider | pi-agent | openclaw |
-|------|-----------|-------|----------|----------|
-| **定位** | CLI 编码 agent | 终端编码助手 | 模块化 agent 工具包 | 多通道 AI 助手平台 |
-| **语言** | Rust + TypeScript | Python | TypeScript | TypeScript |
-| **Agent Loop** | tokio::select! 多路复用 + turn 循环 | 三层嵌套（外层切换 + REPL + 反思） | 双层循环（steering + follow-up） | 内嵌 pi-agent + 编排层（model fallback） |
-| **Tool 系统** | 原生 function calling + 协议驱动 + 审批门 | 双轨制：用户命令 + LLM 文本格式 | 原生 tool calling + pluggable ops | 47 tool + 4 档 profile + policy pipeline |
-| **Context 策略** | bytes/4 估算 + 首尾保留截断 + auto-compact | tree-sitter AST + PageRank RepoMap | chars/4 估算 + 结构化摘要压缩 | pi-agent 摘要 + tool result 截断 + DM 限制 |
-| **编辑方式** | apply_patch（unified diff） | 12+ 编辑格式多态切换 | edit tool（精确替换 + 模糊匹配） | 继承 pi-agent edit tool |
-| **安全模型** | 三级审批 + 平台沙箱 + 网络代理 | Git 集成（自动 commit + undo） | 无内建沙箱 | Docker 沙箱 + Owner 信任分级 |
-| **错误处理** | 可重试性分类 + 指数退避 | 反思循环 + 多级解析容错 | 多 provider overflow 检测 | Failover 分类器 + Auth 轮转 + session 修复 |
-| **扩展性** | Hooks + MCP + Skills + Custom Prompts | 无正式扩展系统 | 深度扩展（生命周期钩子） | Plugin SDK + 31 extension + 51 skills |
-| **多模态** | 支持图片输入 | 不支持 | 不支持 | 语音 + Canvas + 浏览器 + 图片 |
-| **Session** | 无明显持久化 | Git 集成（auto-commit） | JSONL 持久化 + 分支 | JSONL + SQLite 语义记忆 + 混合检索 |
-| **LLM 支持** | OpenAI 为主（可配置） | litellm 统一适配 | 原生多 provider SDK | 继承 pi-agent + auth profile 轮转 |
-| **通道** | 仅 CLI | 仅 CLI | CLI + Slack Bot | 13+ 消息平台 + Gateway RPC |
+| 维度 | codex-cli | aider | pi-agent | openclaw | nanoclaw |
+|------|-----------|-------|----------|----------|----------|
+| **定位** | CLI 编码 agent | 终端编码助手 | 模块化 agent 工具包 | 多通道 AI 助手平台 | 极简个人 AI 助手 |
+| **语言** | Rust + TypeScript | Python | TypeScript | TypeScript | TypeScript |
+| **Agent Loop** | tokio::select! 多路复用 + turn 循环 | 三层嵌套（外层切换 + REPL + 反思） | 双层循环（steering + follow-up） | 内嵌 pi-agent + 编排层（model fallback） | 双层：Host 消息轮询 + Container SDK query 循环 |
+| **Tool 系统** | 原生 function calling + 协议驱动 + 审批门 | 双轨制：用户命令 + LLM 文本格式 | 原生 tool calling + pluggable ops | 47 tool + 4 档 profile + policy pipeline | Claude SDK 内置 + MCP 自定义（6 tool） |
+| **Context 策略** | bytes/4 估算 + 首尾保留截断 + auto-compact | tree-sitter AST + PageRank RepoMap | chars/4 估算 + 结构化摘要压缩 | pi-agent 摘要 + tool result 截断 + DM 限制 | 全委托 Claude Agent SDK |
+| **编辑方式** | apply_patch（unified diff） | 12+ 编辑格式多态切换 | edit tool（精确替换 + 模糊匹配） | 继承 pi-agent edit tool | Claude SDK 内置 edit |
+| **安全模型** | 三级审批 + 平台沙箱 + 网络代理 | Git 集成（自动 commit + undo） | 无内建沙箱 | Docker 沙箱 + Owner 信任分级 | Docker 容器隔离 + 外部 allowlist |
+| **错误处理** | 可重试性分类 + 指数退避 | 反思循环 + 多级解析容错 | 多 provider overflow 检测 | Failover 分类器 + Auth 轮转 + session 修复 | 指数退避 + 游标回滚 + 哨兵标记解析 |
+| **扩展性** | Hooks + MCP + Skills + Custom Prompts | 无正式扩展系统 | 深度扩展（生命周期钩子） | Plugin SDK + 31 extension + 51 skills | Claude Code Skills（代码变换） |
+| **多模态** | 支持图片输入 | 不支持 | 不支持 | 语音 + Canvas + 浏览器 + 图片 | 容器内 Chromium 浏览器 |
+| **Session** | 无明显持久化 | Git 集成（auto-commit） | JSONL 持久化 + 分支 | JSONL + SQLite 语义记忆 + 混合检索 | CLAUDE.md 文件 + SQLite session |
+| **LLM 支持** | OpenAI 为主（可配置） | litellm 统一适配 | 原生多 provider SDK | 继承 pi-agent + auth profile 轮转 | 仅 Claude（SDK 绑定） |
+| **通道** | 仅 CLI | 仅 CLI | CLI + Slack Bot | 13+ 消息平台 + Gateway RPC | WhatsApp + skill 扩展 |
 
 ### 总结
 
@@ -593,4 +593,4 @@ Codex CLI 是一个**安全优先、性能导向**的 AI Coding Agent。其核�
 
 2. **Rust 原生性能**：核心引擎用 Rust 实现，tokio 异步运行时 + Ratatui TUI，在大规模代码库上的响应速度和资源占用优于 Python/TypeScript 实现。
 
-与 Aider 相比，Codex CLI 更重**安全与执行控制**（沙箱、审批、网络策略），Aider 更重**代码理解智能**（RepoMap、多编辑格式、反思循环）。与 pi-agent 相比，Codex CLI 有硬件级沙箱和网络代理，pi-agent 有更灵活的环境抽象（Pluggable Ops）和实时交互（Steering Queue）。与 OpenClaw 相比，两者都重视安全隔离但方式不同——Codex CLI 用**平台级沙箱**（Seatbelt/Landlock，轻量、零配置），OpenClaw 用**Docker 容器沙箱**（重量级但隔离更彻底）；Codex CLI 专注 CLI 单通道高性能执行，OpenClaw 则扩展到 13+ 通道和语义记忆等平台能力。Codex CLI 适合需要高安全性和自主执行的场景，OpenClaw 适合将 AI 能力部署到多种通信平台。
+与 Aider 相比，Codex CLI 更重**安全与执行控制**（沙箱、审批、网络策略），Aider 更重**代码理解智能**（RepoMap、多编辑格式、反思循环）。与 pi-agent 相比，Codex CLI 有硬件级沙箱和网络代理，pi-agent 有更灵活的环境抽象（Pluggable Ops）和实时交互（Steering Queue）。与 OpenClaw 相比，两者都重视安全隔离但方式不同——Codex CLI 用**平台级沙箱**（Seatbelt/Landlock，轻量、零配置），OpenClaw 用**Docker 容器沙箱**（重量级但隔离更彻底）；Codex CLI 专注 CLI 单通道高性能执行，OpenClaw 则扩展到 13+ 通道和语义记忆等平台能力。与 NanoClaw 相比，安全模型理念类似但层次不同——Codex CLI 用**内核级沙箱**（Seatbelt/Landlock，进程粒度），NanoClaw 用**容器级沙箱**（Docker/Apple Container，VM 粒度）+ 外部 allowlist（容器不可修改）；Codex CLI 自研完整 agent 循环和 prompt 工程，NanoClaw 全委托 Claude Agent SDK（~3,900 行 vs ~30,000 行），代表了"自研一切"vs"SDK 为核心"的两种路线。Codex CLI 适合需要高安全性和自主执行的场景，OpenClaw/NanoClaw 适合将 AI 能力部署到消息通信平台。

@@ -95,3 +95,13 @@ agents:
     description: Personal AI assistant with multi-channel support, built on pi-agent
     analyzed_commit: ea47ab29bd6d92394185636a27c3572c19aac8e5
     analyzed_date: "2026-02-23"
+
+  - name: nanoclaw
+    repo: https://github.com/qwibitai/nanoclaw
+    language: TypeScript
+    category: 平台
+    type: agent-platform
+    status: in-progress
+    description: Lightweight AI assistant with container isolation and agent swarms, built on Anthropic Agents SDK
+    analyzed_commit: bc05d5fbea00cc81ca68c643b61c6f1b7ca8a147
+    analyzed_date: "2026-02-25"
