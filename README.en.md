@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-≥3.10-blue.svg)](https://www.python.org/)
 [![Agents](https://img.shields.io/badge/Agents-13-green.svg)](agents.yaml)
-[![Demos](https://img.shields.io/badge/Demos-32-orange.svg)](demos/)
+[![Demos](https://img.shields.io/badge/Demos-46-orange.svg)](demos/)
 
 > **Disassemble AI Agents, from source code to minimal reproduction.**
 >
@@ -49,7 +49,7 @@ Side-by-side comparison of core mechanisms across 3 analyzed agents (continuousl
 | [gpt-engineer](https://github.com/gpt-engineer-org/gpt-engineer) | Python | CLI | pending | `gpt-engineer-org/gpt-engineer` |
 | [pi-agent](https://github.com/badlogic/pi-mono) | TypeScript | CLI | done | `badlogic/pi-mono` |
 | [openclaw](https://github.com/openclaw/openclaw) | TypeScript | Platform | in-progress | `openclaw/openclaw` |
-| [nanoclaw](https://github.com/qwibitai/nanoclaw) | TypeScript | Platform | in-progress | `qwibitai/nanoclaw` |
+| [nanoclaw](https://github.com/qwibitai/nanoclaw) | TypeScript | Platform | done | `qwibitai/nanoclaw` |
 
 <!-- AGENT_TABLE_END -->
 
