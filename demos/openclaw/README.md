@@ -18,10 +18,10 @@
 
 以下是超越 coding agent 的平台层机制（D9-D12），可复现为独立 demo：
 
-- [ ] **hybrid-memory** — Vector(70%)+BM25(30%) 混合检索 + MMR 去重 + 时间衰减 (D10: 记忆)
-- [ ] **docker-sandbox** — Docker 容器沙箱隔离，含 workspace mount 与 elevated exec (D11: 安全)
-- [ ] **cron-scheduler** — 三种调度类型 (at/every/cron) + heartbeat 空闲检测 (D11: 调度)
-- [ ] **subagent-orchestration** — spawn+steer+kill 子 Agent 生命周期管理 (D11: 多 Agent)
+- [x] **hybrid-memory** — Vector(70%)+BM25(30%) 混合检索 + MMR 去重 + 时间衰减 (D10: 记忆)
+- [x] **docker-sandbox** — Docker 容器沙箱隔离，含 workspace mount 与 elevated exec (D11: 安全)
+- [x] **cron-scheduler** — 三种调度类型 (at/every/cron) + heartbeat 空闲检测 (D11: 调度)
+- [x] **subagent-orchestration** — spawn+steer+kill 子 Agent 生命周期管理 (D11: 多 Agent)
 
 ## 进阶机制
 
@@ -38,4 +38,4 @@
 
 ## 进度
 
-MVP: 5/5 | 平台: 0/4 | 进阶: 0/4 | 串联: 0/1 | 总计: 5/14
+MVP: 5/5 | 平台: 4/4 | 进阶: 0/4 | 串联: 0/1 | 总计: 9/14
