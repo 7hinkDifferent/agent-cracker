@@ -27,15 +27,15 @@
 
 以下是该 agent 的特色功能，可选择性复现：
 
-- [ ] **auth-profile-rotation** — 多 API key 优先级轮转 + cooldown 追踪
-- [ ] **channel-dock** — 统一通道能力抽象接口 (capabilities/commands/streaming/threading)
-- [ ] **plugin-hook-pipeline** — before_prompt_build→before_agent_start→tool_call→tool_result hook 管道
-- [ ] **skills-injection** — 51+ Skills 按需匹配注入 prompt，每轮最多 1 个
+- [x] **auth-profile-rotation** — 多 API key 优先级轮转 + cooldown 追踪
+- [x] **channel-dock** — 统一通道能力抽象接口 (capabilities/commands/streaming/threading)
+- [x] **plugin-hook-pipeline** — before_prompt_build→before_agent_start→tool_call→tool_result hook 管道
+- [x] **skills-injection** — 51+ Skills 按需匹配注入 prompt，每轮最多 1 个
 
 ## 完整串联
 
-- [ ] **mini-openclaw** — 组合以上 MVP 组件 + 平台机制的最小完整 agent 平台
+- [x] **mini-openclaw** — 组合以上 MVP 组件 + 平台机制的最小完整 agent 平台
 
 ## 进度
 
-MVP: 5/5 | 平台: 4/4 | 进阶: 0/4 | 串联: 0/1 | 总计: 9/14
+MVP: 5/5 | 平台: 4/4 | 进阶: 4/4 | 串联: 1/1 | 总计: 14/14
