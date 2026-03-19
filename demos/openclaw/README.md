@@ -8,11 +8,11 @@
 
 构建最小可运行版本需要以下组件：
 
-- [ ] **channel-routing** — Binding 匹配路由引擎，消息→Agent 复合 session key (Python)
-- [ ] **gateway-rpc** — WebSocket RPC 服务器，通道标准化接入控制面 (Python)
-- [ ] **embedded-engine** — 内嵌 pi-agent 调用链模拟，含 model fallback (Python)
-- [ ] **tool-profile** — 4 档渐进 Tool Profile 策略 (minimal→coding→messaging→full) (Python)
-- [ ] **system-prompt-builder** — 14+ sections 动态 prompt 组装，含 Skills/Memory/SOUL 注入 (Python)
+- [x] **channel-routing** — Binding 匹配路由引擎，消息→Agent 复合 session key (Python)
+- [x] **gateway-rpc** — WebSocket RPC 服务器，通道标准化接入控制面 (Python)
+- [x] **embedded-engine** — 内嵌 pi-agent 调用链模拟，含 model fallback (Python)
+- [x] **tool-profile** — 4 档渐进 Tool Profile 策略 (minimal→coding→messaging→full) (Python)
+- [x] **system-prompt-builder** — 14+ sections 动态 prompt 组装，含 Skills/Memory/SOUL 注入 (Python)
 
 ## 平台机制
 
@@ -38,4 +38,4 @@
 
 ## 进度
 
-MVP: 0/5 | 平台: 0/4 | 进阶: 0/4 | 串联: 0/1 | 总计: 0/14
+MVP: 5/5 | 平台: 0/4 | 进阶: 0/4 | 串联: 0/1 | 总计: 5/14
