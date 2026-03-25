@@ -396,21 +396,21 @@ async def global_exception_handler(request, exc):
 
 ## 8. 跨 Agent 对比
 
-### vs aider / codex-cli / pi-agent / openclaw / nanoclaw
+### vs aider / codex-cli / pi-agent / openclaw / nanoclaw / gemini-cli
 
-| 维度 | eigent | aider | codex-cli | pi-agent | openclaw | nanoclaw |
-|------|--------|-------|-----------|----------|----------|----------|
-| **定位** | 桌面多 Agent Workforce 平台 | 终端编码助手 | CLI 编码 agent | 模块化 agent 工具包 | 多通道 AI 助手平台 | 极简个人 AI 助手 |
-| **语言** | TypeScript + Python | Python | Rust + TypeScript | TypeScript | TypeScript | TypeScript |
-| **Agent Loop** | 队列事件循环 + Workforce 多 Agent 并行编排 | 三层嵌套（外层切换 + REPL + 反思） | tokio::select! 多路复用 + turn 循环 | 双层循环（steering + follow-up） | 内嵌 pi-agent + 编排层 | 双层：Host 轮询 + Container SDK |
-| **多 Agent** | 8 类 Agent 并行（Workforce 编排） | 双模式（architect + coder） | 单 Agent | 单 Agent | 单 Agent + 子 Agent spawn | Agent Swarms（SDK Teams） |
-| **Tool 系统** | 30+ Toolkit + MCP + Skill 三层体系 | 双轨制：用户命令 + LLM 文本格式 | 原生 function calling + 审批门 | 原生 tool calling + pluggable ops | 47 tool + 4 档 profile + policy | Claude SDK 内置 + MCP 自定义 |
-| **框架依赖** | CAMEL-AI（重度） | 自研 | 自研 | 自研 | 内嵌 pi-agent | Claude Agent SDK（黑盒） |
-| **安全模型** | JWT + 速率限制（无代码沙箱） | Git 集成（auto-commit + undo） | 三级审批 + 平台沙箱 + 网络代理 | 无内建沙箱 | Docker 沙箱 + Owner 信任分级 | Docker 容器隔离 + 外部 allowlist |
-| **错误恢复** | Workforce retry + replan + 质量评估 | 反思循环 + 多级解析容错 | 可重试性分类 + 指数退避 | 多 provider overflow 检测 | Failover 分类器 + Auth 轮转 | 指数退避 + 游标回滚 |
-| **通道** | Electron 桌面 + Webhook + Slack 触发 | 仅 CLI | 仅 CLI | CLI + Slack Bot | 13+ 消息平台 + Gateway RPC | WhatsApp + skill 扩展 |
-| **记忆** | PostgreSQL + Redis + Qdrant | Git 集成 | 无明显持久化 | JSONL + 分支 | JSONL + SQLite 语义记忆 + 混合检索 | CLAUDE.md + SQLite session |
-| **扩展性** | Skill 多层配置 + MCP 服务器管理 | 无正式扩展系统 | Hooks + MCP + Skills | 深度扩展（生命周期钩子） | Plugin SDK + 31 extension + 51 skills | Claude Code Skills（代码变换） |
+| 维度 | eigent | aider | codex-cli | pi-agent | openclaw | nanoclaw | gemini-cli |
+|------|--------|-------|-----------|----------|----------|----------|------------|
+| **定位** | 桌面多 Agent Workforce 平台 | 终端编码助手 | CLI 编码 agent | 模块化 agent 工具包 | 多通道 AI 助手平台 | 极简个人 AI 助手 | CLI 编码 agent |
+| **语言** | TypeScript + Python | Python | Rust + TypeScript | TypeScript | TypeScript | TypeScript | TypeScript (Node.js) |
+| **Agent Loop** | 队列事件循环 + Workforce 多 Agent 并行编排 | 三层嵌套（外层切换 + REPL + 反思） | tokio::select! 多路复用 + turn 循环 | 双层循环（steering + follow-up） | 内嵌 pi-agent + 编排层 | 双层：Host 轮询 + Container SDK | 事件驱动流式（LLM 流 → 工具收集） |
+| **多 Agent** | 8 类 Agent 并行（Workforce 编排） | 双模式（architect + coder） | 单 Agent | 单 Agent | 单 Agent + 子 Agent spawn | Agent Swarms（SDK Teams） | 单 Agent |
+| **Tool 系统** | 30+ Toolkit + MCP + Skill 三层体系 | 双轨制：用户命令 + LLM 文本格式 | 原生 function calling + 审批门 | 原生 tool calling + pluggable ops | 47 tool + 4 档 profile + policy | Claude SDK 内置 + MCP 自定义 | MCP 原生集成 + 内置工具 |
+| **框架依赖** | CAMEL-AI（重度） | 自研 | 自研 | 自研 | 内嵌 pi-agent | Claude Agent SDK（黑盒） | Gemini SDK |
+| **安全模型** | JWT + 速率限制（无代码沙箱） | Git 集成（auto-commit + undo） | 三级审批 + 平台沙箱 + 网络代理 | 无内建沙箱 | Docker 沙箱 + Owner 信任分级 | Docker 容器隔离 + 外部 allowlist | MessageBus + 可选容器隔离 |
+| **错误恢复** | Workforce retry + replan + 质量评估 | 反思循环 + 多级解析容错 | 可重试性分类 + 指数退避 | 多 provider overflow 检测 | Failover 分类器 + Auth 轮转 | 指数退避 + 游标回滚 | 错误分类 + 恢复路由 |
+| **通道** | Electron 桌面 + Webhook + Slack 触发 | 仅 CLI | 仅 CLI | CLI + Slack Bot | 13+ 消息平台 + Gateway RPC | WhatsApp + skill 扩展 | 仅 CLI |
+| **记忆** | PostgreSQL + Redis + Qdrant | Git 集成 | 无明显持久化 | JSONL + 分支 | JSONL + SQLite 语义记忆 + 混合检索 | CLAUDE.md + SQLite session | 原生支持（eventId 精确恢复）|
+| **扩展性** | Skill 多层配置 + MCP 服务器管理 | 无正式扩展系统 | Hooks + MCP + Skills | 深度扩展（生命周期钩子） | Plugin SDK + 31 extension + 51 skills | Claude Code Skills（代码变换） | ⭐⭐⭐⭐⭐ (MCP) |
 
 ### 总结
 

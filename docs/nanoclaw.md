@@ -411,19 +411,19 @@ GroupQueue 指数退避重试:
 
 ### vs 其他 agent
 
-| 维度 | nanoclaw | aider | openclaw | codex-cli | pi-agent | eigent |
-|------|----------|-------|----------|-----------|----------|--------|
-| **架构** | 单进程 + 容器隔离 | 三层嵌套 Coder 继承体系 | Gateway + monorepo + 内嵌 pi | Rust 二进制 + TUI | TypeScript monorepo 7 packages | Electron + 双 FastAPI + CAMEL-AI |
-| **代码规模** | ~3,900 行（含测试 ~26k） | ~30,000 行 Python | ~450,000 行 | ~30,000 行 Rust | ~25,000 行 TS | ~50,000+ 行（含前端） |
-| **Agent 引擎** | Claude Agent SDK（黑盒） | 自研 Python 循环 + RepoMap | pi-coding-agent（内嵌） | 自研 Rust 循环 | 自研 Agent Session | CAMEL-AI ChatAgent（框架依赖） |
-| **Tool 系统** | SDK 内置 + MCP 自定义 | 双轨制（命令 + LLM 文本格式） | pi ops 注册 + gateway ops | Rust trait + patch/shell | Pluggable Ops 注册表 | 30+ Toolkit + MCP + Skill 三层 |
-| **安全模型** | OS 容器隔离 + 外部 allowlist | Git 集成（auto-commit + undo） | Docker + 应用级 agent fence | 平台沙箱（Seatbelt/Landlock） | 无沙箱（信任用户） | JWT + 速率限制（无代码沙箱） |
-| **通道** | WhatsApp + skill 扩展 | 仅 CLI | 13+ 内置通道 + 31 扩展 | CLI 终端 | CLI + Slack | Electron 桌面 + Webhook + Slack |
-| **扩展方式** | Claude Code Skills（代码变换） | 无正式扩展系统 | Skills + Extensions（运行时插件） | Hooks + MCP | Extension Hooks | Skill 多层配置 + MCP 管理 |
-| **上下文管理** | 全委托 SDK | tree-sitter AST + PageRank RepoMap | Steering Queue + Compaction | Head-Tail 截断 | Structured Compaction | CAMEL AgentMemory + 历史长度检查 |
-| **定时调度** | Cron/Interval/Once | 无 | Cron 调度器 | 无 | 无 | Celery Beat + Webhook 触发 |
-| **记忆** | CLAUDE.md 文件 + SQLite session | Git 集成 | SQLite + 向量嵌入 + BM25 | 无持久记忆 | 无持久记忆 | PostgreSQL + Redis + Qdrant |
-| **多 Agent** | Agent Swarms（SDK Teams） | 双模式（architect + coder） | 单 Agent + 子 Agent spawn | 单 Agent | 单 Agent | 8 类 Agent Workforce 并行 |
+| 维度 | nanoclaw | aider | openclaw | codex-cli | pi-agent | eigent | gemini-cli |
+|------|----------|-------|----------|-----------|----------|--------|------------|
+| **架构** | 单进程 + 容器隔离 | 三层嵌套 Coder 继承体系 | Gateway + monorepo + 内嵌 pi | Rust 二进制 + TUI | TypeScript monorepo 7 packages | Electron + 双 FastAPI + CAMEL-AI | Node.js + Gemini SDK 流式 |
+| **代码规模** | ~3,900 行（含测试 ~26k） | ~30,000 行 Python | ~450,000 行 | ~30,000 行 Rust | ~25,000 行 TS | ~50,000+ 行（含前端） | ~20,000 行 |
+| **Agent 引擎** | Claude Agent SDK（黑盒） | 自研 Python 循环 + RepoMap | pi-coding-agent（内嵌） | 自研 Rust 循环 | 自研 Agent Session | CAMEL-AI ChatAgent（框架依赖） | Gemini SDK 流式处理 |
+| **Tool 系统** | SDK 内置 + MCP 自定义 | 双轨制（命令 + LLM 文本格式） | pi ops 注册 + gateway ops | Rust trait + patch/shell | Pluggable Ops 注册表 | 30+ Toolkit + MCP + Skill 三层 | MCP 原生 + 内置工具 |
+| **安全模型** | OS 容器隔离 + 外部 allowlist | Git 集成（auto-commit + undo） | Docker + 应用级 agent fence | 平台沙箱（Seatbelt/Landlock） | 无沙箱（信任用户） | JWT + 速率限制（无代码沙箱） | MessageBus + 可选容器隔离 |
+| **通道** | WhatsApp + skill 扩展 | 仅 CLI | 13+ 内置通道 + 31 扩展 | CLI 终端 | CLI + Slack | Electron 桌面 + Webhook + Slack | 仅 CLI |
+| **扩展方式** | Claude Code Skills（代码变换） | 无正式扩展系统 | Skills + Extensions（运行时插件） | Hooks + MCP | Extension Hooks | Skill 多层配置 + MCP 管理 | ⭐⭐⭐⭐⭐ (MCP) |
+| **上下文管理** | 全委托 SDK | tree-sitter AST + PageRank RepoMap | Steering Queue + Compaction | Head-Tail 截断 | Structured Compaction | CAMEL AgentMemory + 历史长度检查 | 1M token 大窗口 + JIT 加载 |
+| **定时调度** | Cron/Interval/Once | 无 | Cron 调度器 | 无 | 无 | Celery Beat + Webhook 触发 | 无内建调度 |
+| **记忆** | CLAUDE.md 文件 + SQLite session | Git 集成 | SQLite + 向量嵌入 + BM25 | 无持久记忆 | 无持久记忆 | PostgreSQL + Redis + Qdrant | 原生支持（eventId 精确恢复）|
+| **多 Agent** | Agent Swarms（SDK Teams） | 双模式（architect + coder） | 单 Agent + 子 Agent spawn | 单 Agent | 单 Agent | 8 类 Agent Workforce 并行 | 单 Agent |
 
 ### 总结
 

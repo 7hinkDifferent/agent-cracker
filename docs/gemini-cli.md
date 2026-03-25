@@ -482,17 +482,34 @@ if (fatalTool) {
 
 ## 8. 跨 Agent 对比
 
-| 维度 | gemini-cli | aider | pi-agent | openclaw |
-|------|-----------|-------|----------|----------|
-| **主循环** | 事件驱动流式 | 响应轮询式 | 异步队列式 | 继承 pi-agent 的队列 + 网关路由 |
-| **LLM 支持** | Gemini 原生（可扩展） | Claude（多 provider via litellm） | 多 provider 原生 SDK | 多 provider + auth 轮转 |
-| **工具系统** | MCP 原生集成 | 基于 Genai API 的工具 | 可插拔工具模块 | Skill center + 工具注入 |
-| **上下文** | 1M token 大窗口 + JIT | 4K-8K token + Repomap | 可配置，无显式管理 | Hybrid memory 混合存储 |
-| **会话恢复** | 原生支持（eventId） | 无内置支持 | 轻量支持（单线程） | 持久化 worktree 恢复 |
-| **权限模型** | MessageBus + 沙箱 | 用户确认（交互） | 权限菜单选择 | Auth profile + 角色管理 |
-| **工具隔离** | Docker/Podman 可选 | 本地执行 | 本地执行 + 权限检查 | Docker 强制隔离 |
-| **可扩展性** | ⭐⭐⭐⭐⭐ (MCP) | ⭐⭐⭐ (API) | ⭐⭐⭐⭐ (插件) | ⭐⭐⭐⭐⭐ (平台模式) |
-| **代码行数** | ~10K (TS monorepo) | ~5K (Python) | ~8K (TypeScript) | ~20K (多渠道) |
+### vs Aider / Codex-CLI / Pi-agent / OpenClaw / NanoClaw / Eigent
+
+| 维度 | gemini-cli | aider | codex-cli | pi-agent | openclaw | nanoclaw | eigent |
+|------|-----------|-------|-----------|----------|----------|----------|--------|
+| **定位** | CLI 编码 agent | 终端编码助手 | CLI 编码 agent | 模块化 agent 工具包 | 多通道 AI 助手平台 | 极简个人 AI 助手 | 桌面多 Agent Workforce 平台 |
+| **语言** | TypeScript (Node.js) | Python | Rust + TypeScript | TypeScript（Node.js） | TypeScript | TypeScript | TypeScript + Python |
+| **Agent Loop** | 事件驱动流式（LLM 流 → 工具收集） | 三层嵌套（外层切换 + REPL + 反思） | tokio::select! 多路复用 + turn 循环 | 双层循环 + steering/follow-up 队列 | 内嵌 pi-agent + 编排层（model fallback） | 双层：Host 消息轮询 + Container SDK query 循环 | 队列事件循环 + Workforce 多 Agent 并行编排 |
+| **Tool 系统** | MCP 原生集成 + 内置工具 | 双轨制：用户命令 + LLM 文本格式 | 原生 function calling + 审批门 | 原生 tool calling + pluggable operations | 47 tool + 4 档 profile + policy pipeline | Claude SDK 内置 + MCP 自定义（6 tool） | 30+ Toolkit + MCP + Skill 三层体系 |
+| **Context 策略** | 1M token 大窗口 + JIT 文件加载 | tree-sitter AST + PageRank RepoMap | bytes/4 估算 + 首尾保留截断 | 阈值触发 + LLM 结构化摘要压缩 | pi-agent 摘要 + tool result 截断 + DM 限制 | 全委托 Claude Agent SDK | CAMEL AgentMemory + 对话历史长度检查 |
+| **编辑方式** | 工具调用返回内容（无 diff 格式） | 12+ 编辑格式多态切换 | apply_patch（unified diff） | edit tool（精确替换 + 模糊匹配） | 继承 pi-agent edit tool | Claude SDK 内置 edit | Terminal/Code Execution（非 diff） |
+| **安全模型** | MessageBus（权限确认）+ 可选 Docker/Podman | Git 集成（自动 commit + undo） | 三级审批 + 平台沙箱 + 网络代理 | 无内建沙箱 | Docker 沙箱 + Owner 信任分级 | Docker 容器隔离 + 外部 allowlist | JWT 认证 + 速率限制 + 路径逃逸检测 |
+| **错误处理** | 错误分类（FATAL/RECOVERABLE） + 恢复路由 | 反思循环 + 多级解析容错 | 可重试性分类 + 指数退避 | 多 provider overflow 检测 + 指数退避 | Failover 分类器 + Auth 轮转 + session 修复 | 指数退避 + 游标回滚 + 哨兵标记解析 | Workforce retry + replan + 质量评估 |
+| **扩展性** | ⭐⭐⭐⭐⭐ (MCP) | ⭐⭐⭐ (API) | Hooks + MCP + Skills + Custom Prompts | 深度扩展（生命周期钩子） | Plugin SDK + 31 extension + 51 skills | Claude Code Skills（代码变换） | Skill 多层配置 + MCP 服务器管理 |
+| **LLM 支持** | Gemini 原生（可扩展多 provider） | litellm 统一适配 | OpenAI 为主（可配置） | 原生多 provider SDK | 继承 pi-agent + auth profile 轮转 | 仅 Claude（SDK 绑定） | OpenAI SDK（多平台：Azure/LiteLLM/OpenRouter） |
+| **Session** | 原生支持（eventId 精确恢复） | Git 集成（auto-commit） | 无明显持久化 | JSONL 持久化 + 分支 | JSONL + SQLite 语义记忆 + 混合检索 | CLAUDE.md 文件 + SQLite session | PostgreSQL 聊天历史 + Redis 缓存 |
+| **通道** | 仅 CLI | 仅 CLI | 仅 CLI | CLI + Slack Bot | 13+ 消息平台 + Gateway RPC | WhatsApp + skill 扩展 | Electron 桌面 + Webhook + Slack 触发 |
+| **多 Agent** | 单 Agent | 双模式（architect + coder） | 单 Agent | 单 Agent | 单 Agent（通道复用） | Agent Swarms（SDK Teams） | 8 类 Agent 并行（Workforce 编排） |
+
+### 总结
+
+**Gemini CLI** 是 Google 官方开源的纯编码 agent，其核心竞争优势在于：
+
+1. **第一个原生 MCP 支持的 agent**：通过 MCP（Model Context Protocol）实现无限扩展，插件机制灵活性首屈一指
+2. **流式事件架构**：实时反馈、支持中途中止、eventId 精确会话恢复（对标 Cursor 的 undo/redo）
+3. **1M token 大窗口**：充分利用 Gemini 的上下文容量，配合 JIT 文件加载实现智能缓存
+4. **消息总线权限模型**：灵活的权限确认机制（AUTO/INTERACTIVE/DENY），支持工具执行前的交互式批准
+
+与 Aider 相比，Gemini CLI 更重**实时流式处理和 MCP 扩展**（原生 MCP、事件驱动、支持中止），Aider 更重**代码理解智能**（RepoMap、多编辑格式、Git 深度集成）。与 Codex-CLI 相比，两者在安全模型上都很重视但方式不同——Gemini 用**应用级权限总线**（灵活但需用户适配），Codex 用**操作系统级沙箱**（Seatbelt/Landlock，零配置 but 不灵活）；Gemini 用 MCP 扩展（标准化插件），Codex 用 Hooks + Skills（自研体系）。与 Pi-agent 相比，Gemini 的 MCP 原生支持强于 Pi 的需要兼容多 LLM 的工具系统，但 Pi 的 Pluggable Operations 实现多环境透明运行是 Gemini 所缺的。与 OpenClaw 相比，两者都支持多通道但定位不同——OpenClaw 以 pi-agent 为内核构建完整的多通道平台（13+ 通道、Docker、语义记忆），Gemini 仍是单通道 CLI Agent 专注流式交互。与 NanoClaw 相比，极端对立的设计理念——Gemini 深度自研 agent 循环和工具系统，NanoClaw 全部委托 Claude Agent SDK 黑盒，自己只做容器编排；Gemini 用 eventId 恢复，NanoClaw 用游标回滚。与 Eigent 相比，Gemini 是**轻量级单 Agent 编码工具**（~10K 行），Eigent 是**重量级多 Agent 桌面应用**（Electron + CAMEL + Workforce）；Gemini 的 MCP 是标准扩展，Eigent 的 Skill 是自研配置；两者在多 Agent 协作分差最大。
 
 ### 总结
 **Gemini CLI** 的核心竞争优势：

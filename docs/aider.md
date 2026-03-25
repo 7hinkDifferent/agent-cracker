@@ -626,23 +626,23 @@ class ArchitectCoder(AskCoder):
 
 ## 8. 跨 Agent 对比
 
-### vs Codex-CLI / Pi-agent / OpenClaw / NanoClaw / Eigent
+### vs Codex-CLI / Pi-agent / OpenClaw / NanoClaw / Eigent / Gemini-CLI
 
-| 维度 | aider | codex-cli | pi-agent | openclaw | nanoclaw | eigent |
-|------|-------|-----------|----------|----------|----------|--------|
-| **定位** | 终端编码助手 | CLI 编码 agent | 模块化 agent 工具包 | 多通道 AI 助手平台 | 极简个人 AI 助手 | 桌面多 Agent Workforce 平台 |
-| **语言** | Python | Rust + TypeScript | TypeScript | TypeScript | TypeScript | TypeScript + Python |
-| **Agent Loop** | 三层嵌套（外层切换 + REPL + 反思） | tokio::select! 多路复用 + turn 循环 | 双层循环（steering + follow-up） | 内嵌 pi-agent + 编排层（model fallback） | 双层：Host 消息轮询 + Container SDK query 循环 | 队列事件循环 + Workforce 多 Agent 并行编排 |
-| **Tool 系统** | 双轨制：用户命令 + LLM 文本格式 | 原生 function calling + 审批门 | 原生 tool calling + pluggable ops | 47 tool + 4 档 profile + policy pipeline | Claude SDK 内置 + MCP 自定义（6 tool） | 30+ Toolkit + MCP + Skill 三层体系 |
-| **Context 策略** | tree-sitter AST + PageRank RepoMap | bytes/4 估算 + 首尾保留截断 | chars/4 估算 + 结构化摘要压缩 | pi-agent 摘要 + tool result 截断 + DM 限制 | 全委托 Claude Agent SDK | CAMEL AgentMemory + 对话历史长度检查 |
-| **编辑方式** | 12+ 编辑格式多态切换 | apply_patch（unified diff） | edit tool（精确替换 + 模糊匹配） | 继承 pi-agent edit tool | Claude SDK 内置 edit | Terminal/Code Execution（非 diff） |
-| **安全模型** | Git 集成（自动 commit + undo） | 三级审批 + 平台沙箱 + 网络代理 | 无内建沙箱 | Docker 沙箱 + Owner 信任分级 | Docker 容器隔离 + 外部 allowlist | JWT 认证 + 速率限制 + 路径逃逸检测 |
-| **错误处理** | 反思循环 + 多级解析容错 | 可重试性分类 + 指数退避 | 多 provider overflow 检测 | Failover 分类器 + Auth 轮转 + session 修复 | 指数退避 + 游标回滚 + 哨兵标记解析 | Workforce retry + replan + 质量评估 |
-| **扩展性** | 无正式扩展系统 | Hooks + MCP + Skills + Custom Prompts | 深度扩展（生命周期钩子） | Plugin SDK + 31 extension + 51 skills | Claude Code Skills（代码变换） | Skill 多层配置 + MCP 服务器管理 |
-| **LLM 支持** | litellm 统一适配 | OpenAI 为主（可配置） | 原生多 provider SDK | 继承 pi-agent + auth profile 轮转 | 仅 Claude（SDK 绑定） | OpenAI SDK（多平台：Azure/LiteLLM/OpenRouter） |
-| **Session** | Git 集成（auto-commit） | 无明显持久化 | JSONL 持久化 + 分支 | JSONL + SQLite 语义记忆 + 混合检索 | CLAUDE.md 文件 + SQLite session | PostgreSQL 聊天历史 + Redis 缓存 |
-| **通道** | 仅 CLI | 仅 CLI | CLI + Slack Bot | 13+ 消息平台 + Gateway RPC | WhatsApp + skill 扩展 | Electron 桌面 + Webhook + Slack 触发 |
-| **多 Agent** | 双模式（architect + coder） | 单 Agent | 单 Agent | 单 Agent（通道复用） | Agent Swarms（SDK Teams） | 8 类 Agent 并行（Workforce 编排） |
+| 维度 | aider | codex-cli | pi-agent | openclaw | nanoclaw | eigent | gemini-cli |
+|------|-------|-----------|----------|----------|----------|--------|------------|
+| **定位** | 终端编码助手 | CLI 编码 agent | 模块化 agent 工具包 | 多通道 AI 助手平台 | 极简个人 AI 助手 | 桌面多 Agent Workforce 平台 | CLI 编码 agent |
+| **语言** | Python | Rust + TypeScript | TypeScript（Node.js） | TypeScript | TypeScript | TypeScript + Python | TypeScript (Node.js) |
+| **Agent Loop** | 三层嵌套（外层切换 + REPL + 反思） | tokio::select! 多路复用 + turn 循环 | 双层循环（steering + follow-up） | 内嵌 pi-agent + 编排层（model fallback） | 双层：Host 消息轮询 + Container SDK query 循环 | 队列事件循环 + Workforce 多 Agent 并行编排 | 事件驱动流式（LLM 流 → 工具收集） |
+| **Tool 系统** | 双轨制：用户命令 + LLM 文本格式 | 原生 function calling + 审批门 | 原生 tool calling + pluggable ops | 47 tool + 4 档 profile + policy pipeline | Claude SDK 内置 + MCP 自定义（6 tool） | 30+ Toolkit + MCP + Skill 三层体系 | MCP 原生集成 + 内置工具 |
+| **Context 策略** | tree-sitter AST + PageRank RepoMap | bytes/4 估算 + 首尾保留截断 + auto-compact | chars/4 估算 + 结构化摘要压缩 | pi-agent 摘要 + tool result 截断 + DM 限制 | 全委托 Claude Agent SDK | CAMEL AgentMemory + 对话历史长度检查 | 1M token 大窗口 + JIT 文件加载 |
+| **编辑方式** | 12+ 编辑格式多态切换 | apply_patch（unified diff） | edit tool（精确替换 + 模糊匹配） | 继承 pi-agent edit tool | Claude SDK 内置 edit | Terminal/Code Execution（非 diff） | 工具调用返回内容（无 diff 格式） |
+| **安全模型** | Git 集成（自动 commit + undo） | 三级审批 + 平台沙箱 + 网络代理 | 无内建沙箱 | Docker 沙箱 + Owner 信任分级 | Docker 容器隔离 + 外部 allowlist | JWT 认证 + 速率限制 + 路径逃逸检测 | MessageBus（权限确认）+ 可选 Docker/Podman |
+| **错误处理** | 反思循环 + 多级解析容错 | 可重试性分类 + 指数退避 | 多 provider overflow 检测 | Failover 分类器 + Auth 轮转 + session 修复 | 指数退避 + 游标回滚 + 哨兵标记解析 | Workforce retry + replan + 质量评估 | 错误分类（FATAL/RECOVERABLE） + 恢复路由 |
+| **扩展性** | 无正式扩展系统 | Hooks + MCP + Skills + Custom Prompts | 深度扩展（生命周期钩子） | Plugin SDK + 31 extension + 51 skills | Claude Code Skills（代码变换） | Skill 多层配置 + MCP 服务器管理 | ⭐⭐⭐⭐⭐ (MCP) |
+| **LLM 支持** | litellm 统一适配 | OpenAI 为主（可配置） | 原生多 provider SDK | 继承 pi-agent + auth profile 轮转 | 仅 Claude（SDK 绑定） | OpenAI SDK（多平台：Azure/LiteLLM/OpenRouter） | Gemini 原生（可扩展多 provider） |
+| **Session** | Git 集成（auto-commit） | 无明显持久化 | JSONL 持久化 + 分支 | JSONL + SQLite 语义记忆 + 混合检索 | CLAUDE.md 文件 + SQLite session | PostgreSQL 聊天历史 + Redis 缓存 | 原生支持（eventId 精确恢复） |
+| **通道** | 仅 CLI | 仅 CLI | CLI + Slack Bot | 13+ 消息平台 + Gateway RPC | WhatsApp + skill 扩展 | Electron 桌面 + Webhook + Slack 触发 | 仅 CLI |
+| **多 Agent** | 双模式（architect + coder） | 单 Agent | 单 Agent | 单 Agent（通道复用） | Agent Swarms（SDK Teams） | 8 类 Agent 并行（Workforce 编排） | 单 Agent |
 
 ### 总结
 
