@@ -9,11 +9,11 @@
 构建最小可运行版本需要以下组件：
 
 - [x] **event-driven-loop** — 事件驱动主循环（LLM 流式事件 → 工具调用收集 → 并发执行 → 响应回流）(Python)
-- [ ] **tool-registry-system** — 工具注册与分发（内置工具类 + MCP 工具发现 + 调度器）(Python)
-- [ ] **mcp-tool-integration** — MCP 工具调用（MCP 客户端库集成 + 工具元数据序列化）(Python)
-- [ ] **prompt-assembly** — 提示组装（系统提示 + 工具声明注入 + MCP 提示动态加载）(Python)
-- [ ] **session-replay** — 会话恢复（事件重放 + eventId/streamId 精确定位 + 流式订阅）(Python)
-- [ ] **error-handling** — 错误处理与恢复（LLM 错误 / 工具失败分类 + 致命错误检测）(Python)
+- [x] **tool-registry-system** — 工具注册与分发（内置工具类 + MCP 工具发现 + 调度器）(Python)
+- [x] **mcp-tool-integration** — MCP 工具调用（MCP 客户端库集成 + 工具元数据序列化）(Python)
+- [x] **prompt-assembly** — 提示组装（系统提示 + 工具声明注入 + MCP 提示动态加载）(Python)
+- [x] **session-replay** — 会话恢复（事件重放 + eventId/streamId 精确定位 + 流式订阅）(Python)
+- [x] **error-handling** — 错误处理与恢复（LLM 错误 / 工具失败分类 + 致命错误检测）(Python)
 
 ## 进阶机制
 
@@ -29,7 +29,7 @@
 
 ## 进度
 
-MVP: 1/6 | 进阶: 0/3 | 串联: 0/1 | 总计: 1/10
+MVP: 6/6 | 进阶: 0/3 | 串联: 0/1 | 总计: 6/10
 
 ---
 
