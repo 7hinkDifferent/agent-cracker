@@ -17,3 +17,6 @@
 [submodule "projects/nanoclaw"]
 	path = projects/nanoclaw
 	url = https://github.com/qwibitai/nanoclaw
+[submodule "projects/eigent"]
+	path = projects/eigent
+	url = https://github.com/eigent-ai/eigent.git

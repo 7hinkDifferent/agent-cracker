@@ -411,22 +411,23 @@ GroupQueue 指数退避重试:
 
 ### vs 其他 agent
 
-| 维度 | nanoclaw | aider | openclaw | codex-cli | pi-agent |
-|------|----------|-------|----------|-----------|----------|
-| **架构** | 单进程 + 容器隔离 | 三层嵌套 Coder 继承体系 | Gateway + monorepo + 内嵌 pi | Rust 二进制 + TUI | TypeScript monorepo 7 packages |
-| **代码规模** | ~3,900 行（含测试 ~26k） | ~30,000 行 Python | ~450,000 行 | ~30,000 行 Rust | ~25,000 行 TS |
-| **Agent 引擎** | Claude Agent SDK（黑盒） | 自研 Python 循环 + RepoMap | pi-coding-agent（内嵌） | 自研 Rust 循环 | 自研 Agent Session |
-| **Tool 系统** | SDK 内置 + MCP 自定义 | 双轨制（命令 + LLM 文本格式） | pi ops 注册 + gateway ops | Rust trait + patch/shell | Pluggable Ops 注册表 |
-| **安全模型** | OS 容器隔离 + 外部 allowlist | Git 集成（auto-commit + undo） | Docker + 应用级 agent fence | 平台沙箱（Seatbelt/Landlock） | 无沙��（信任用户） |
-| **通道** | WhatsApp + skill 扩展 | 仅 CLI | 13+ 内置通道 + 31 扩展 | CLI 终端 | CLI + Slack |
-| **扩展方式** | Claude Code Skills（代码变换） | 无正式扩展系统 | Skills + Extensions（运行时插件） | Hooks + MCP | Extension Hooks |
-| **上下文管理** | 全委托 SDK | tree-sitter AST + PageRank RepoMap | Steering Queue + Compaction | Head-Tail 截断 | Structured Compaction |
-| **定时调度** | Cron/Interval/Once | 无 | Cron 调度器 | 无 | 无 |
-| **记忆** | CLAUDE.md 文件 + SQLite session | Git 集成 | SQLite + 向量嵌入 + BM25 | 无持久记忆 | 无持久记忆 |
+| 维度 | nanoclaw | aider | openclaw | codex-cli | pi-agent | eigent |
+|------|----------|-------|----------|-----------|----------|--------|
+| **架构** | 单进程 + 容器隔离 | 三层嵌套 Coder 继承体系 | Gateway + monorepo + 内嵌 pi | Rust 二进制 + TUI | TypeScript monorepo 7 packages | Electron + 双 FastAPI + CAMEL-AI |
+| **代码规模** | ~3,900 行（含测试 ~26k） | ~30,000 行 Python | ~450,000 行 | ~30,000 行 Rust | ~25,000 行 TS | ~50,000+ 行（含前端） |
+| **Agent 引擎** | Claude Agent SDK（黑盒） | 自研 Python 循环 + RepoMap | pi-coding-agent（内嵌） | 自研 Rust 循环 | 自研 Agent Session | CAMEL-AI ChatAgent（框架依赖） |
+| **Tool 系统** | SDK 内置 + MCP 自定义 | 双轨制（命令 + LLM 文本格式） | pi ops 注册 + gateway ops | Rust trait + patch/shell | Pluggable Ops 注册表 | 30+ Toolkit + MCP + Skill 三层 |
+| **安全模型** | OS 容器隔离 + 外部 allowlist | Git 集成（auto-commit + undo） | Docker + 应用级 agent fence | 平台沙箱（Seatbelt/Landlock） | 无沙箱（信任用户） | JWT + 速率限制（无代码沙箱） |
+| **通道** | WhatsApp + skill 扩展 | 仅 CLI | 13+ 内置通道 + 31 扩展 | CLI 终端 | CLI + Slack | Electron 桌面 + Webhook + Slack |
+| **扩展方式** | Claude Code Skills（代码变换） | 无正式扩展系统 | Skills + Extensions（运行时插件） | Hooks + MCP | Extension Hooks | Skill 多层配置 + MCP 管理 |
+| **上下文管理** | 全委托 SDK | tree-sitter AST + PageRank RepoMap | Steering Queue + Compaction | Head-Tail 截断 | Structured Compaction | CAMEL AgentMemory + 历史长度检查 |
+| **定时调度** | Cron/Interval/Once | 无 | Cron 调度器 | 无 | 无 | Celery Beat + Webhook 触发 |
+| **记忆** | CLAUDE.md 文件 + SQLite session | Git 集成 | SQLite + 向量嵌入 + BM25 | 无持久记忆 | 无持久记忆 | PostgreSQL + Redis + Qdrant |
+| **多 Agent** | Agent Swarms（SDK Teams） | 双模式（architect + coder） | 单 Agent + 子 Agent spawn | 单 Agent | 单 Agent | 8 类 Agent Workforce 并行 |
 
 ### 总结
 
-NanoClaw 代表了与 OpenClaw 截然相反的设计哲学：**极简而非全能**。它放弃了自研 agent 循环、prompt 工程、上下文管理等"标配"能力，全部委托给 Claude Agent SDK，自身只专注于**容器编排、IPC 通信、安全隔离和多群组管理**这几个 SDK 不提供的能力。这使得它的核心代码仅 ~3,900 行，是所有已分析 agent 中最精简的。与 Aider 相比，Aider 自研了完整的 RepoMap、12+ 编辑格式和反思循环等深度编码能力，NanoClaw 则将编码能力全部委托给 SDK，专注平台层编排。与 Codex CLI 的内核级沙箱（Seatbelt/Landlock）不同，NanoClaw 用容器级沙箱 + 外部 allowlist 实现安全隔离。其"代码即配置 + Skills 代码变换"的扩展模型也是独一无二的——不通过配置或插件系统扩展，而是让 AI 直接重写源码。适合追求完全理解和掌控自己 AI 助手的高级用户。
+NanoClaw 代表了与 OpenClaw 截然相反的设计哲学：**极简而非全能**。它放弃了自研 agent 循环、prompt 工程、上下文管理等"标配"能力，全部委托给 Claude Agent SDK，自身只专注于**容器编排、IPC 通信、安全隔离和多群组管理**这几个 SDK 不提供的能力。这使得它的核心代码仅 ~3,900 行，是所有已分析 agent 中最精简的。与 Aider 相比，Aider 自研了完整的 RepoMap、12+ 编辑格式和反思循环等深度编码能力，NanoClaw 则将编码能力全部委托给 SDK，专注平台层编排。与 Codex CLI 的内核级沙箱（Seatbelt/Landlock）不同，NanoClaw 用容器级沙箱 + 外部 allowlist 实现安全隔离。与 Eigent 相比，两者代表了"Agent 平台"的两个极端——NanoClaw 极简（~3,900 行、代码即配置、SDK 黑盒），Eigent 重量级（Electron + CAMEL-AI、30+ Toolkit、8 类 Agent 并行）；NanoClaw 的 Agent Swarms 通过 Claude SDK Teams 实现，Eigent 通过 CAMEL Workforce 实现任务分解和角色化并行；NanoClaw 用容器隔离确保安全，Eigent 缺少代码执行沙箱但有完整的用户认证和速率限制。NanoClaw 适合追求完全理解和掌控自己 AI 助手的高级用户，Eigent 适合需要 GUI 操作和多 Agent 协作的非技术用户。
 
 ---
 

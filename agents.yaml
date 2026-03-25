@@ -105,3 +105,13 @@ agents:
     description: Lightweight AI assistant with container isolation and agent swarms, built on Anthropic Agents SDK
     analyzed_commit: bc05d5fbea00cc81ca68c643b61c6f1b7ca8a147
     analyzed_date: "2026-02-25"
+
+  - name: eigent
+    repo: https://github.com/eigent-ai/eigent
+    language: TypeScript/Python
+    category: 桌面平台
+    type: agent-platform
+    status: in-progress
+    description: Open-source desktop app for multi-agent AI workforce coordination, built on CAMEL-AI
+    analyzed_commit: 38f8f2b292d7d1f64dbd211312ca335202565c83
+    analyzed_date: "2026-03-25"
