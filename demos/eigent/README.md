@@ -18,23 +18,23 @@
 
 以下是超越 coding agent 的平台层机制（D9-D12），可复现为独立 demo：
 
-- [ ] **sse-streaming** — SSE 事件流协议：Agent/Toolkit 激活事件 + 任务分解流式推送 (D9: 通道层) (Python)
-- [ ] **trigger-webhook** — Webhook/Slack/Cron 触发器：外部事件驱动 Agent 任务 (D9/D11: 通道+自治) (Python)
-- [ ] **note-collaboration** — NoteTakingToolkit 跨 Agent 笔记协作 + shared_files 约定 (D10: 协作记忆) (Python)
-- [ ] **skill-config** — 多�� Skill 配置体系：项目级 > 用户级，按 Agent 类型权限控制 (D12: 特色) (Python)
+- [x] **sse-streaming** — SSE 事件流协议：Agent/Toolkit 激活事件 + 任务分解流式推送 (D9: 通道层) (Python)
+- [x] **trigger-webhook** — Webhook/Slack/Cron 触发器：外部事件驱动 Agent 任务 (D9/D11: 通道+自治) (Python)
+- [x] **note-collaboration** — NoteTakingToolkit 跨 Agent 笔记协作 + shared_files 约定 (D10: 协作记忆) (Python)
+- [x] **skill-config** — 多层 Skill 配置体系：项目级 > 用户级，按 Agent 类型权限控制 (D12: 特色) (Python)
 
 ## 进阶机制
 
 以下是该 agent 的特色功能，可选择性复现：
 
-- [ ] **complexity-router** — 任务复杂度判断：简单问题直接回答 vs 复杂任务启动 Workforce (Python)
-- [ ] **failure-retry-replan** — Workforce 失败处理：retry + replan 策略 + _analyze_task 质量评估 (Python)
-- [ ] **mcp-lifecycle** — MCP 服务器全生命周期管理：安装、OAuth 认证、工具注入、连接池 (Python)
+- [x] **complexity-router** — 任务复杂度判断：简单问题直接回答 vs 复杂任务启动 Workforce (Python)
+- [x] **failure-retry-replan** — Workforce 失败处理：retry + replan 策略 + _analyze_task 质量评估 (Python)
+- [x] **mcp-lifecycle** — MCP 服务器全生命周期管理：安装、OAuth 认证、工具注入、连接池 (Python)
 
 ## 完整串联
 
-- [ ] **mini-eigent** — 组合以上 MVP 组件 + 平台机制的最小完整 agent
+- [x] **mini-eigent** — 组合以上 MVP 组件 + 平台机制的最小完整 agent
 
 ## 进度
 
-MVP: 5/5 | 平台: 0/4 | 进阶: 0/3 | 串联: 0/1 | 总计: 5/13
+MVP: 5/5 | 平台: 4/4 | 进阶: 3/3 | 串联: 1/1 | 总计: 13/13

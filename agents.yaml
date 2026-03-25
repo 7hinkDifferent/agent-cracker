@@ -111,7 +111,7 @@ agents:
     language: TypeScript/Python
     category: 桌面平台
     type: agent-platform
-    status: in-progress
+    status: done
     description: Open-source desktop app for multi-agent AI workforce coordination, built on CAMEL-AI
     analyzed_commit: 38f8f2b292d7d1f64dbd211312ca335202565c83
     analyzed_date: "2026-03-25"

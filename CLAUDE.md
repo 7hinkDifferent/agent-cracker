@@ -112,14 +112,13 @@ Git hooks 存放在 `scripts/githooks/`，`npm run setup` 安装到 `.git/hooks/
 ## 当前进度
 
 <!-- PROGRESS_START -->
-- **已完成**: aider, codex-cli, pi-agent, openclaw, nanoclaw
-- **进行中**: eigent
+- **已完成**: aider, codex-cli, pi-agent, openclaw, nanoclaw, eigent
 - **待分析**: openhands, cline, continue, goose, swe-agent, bolt.new, devika, gpt-engineer
 
 Demo 覆盖:
 - **aider**: MVP 4/4 | 串联 1/1 | 总计 12/12 (core-loop, search-replace, prompt-assembly, llm-response-parsing, repomap, reflection, architect, multi-coder, chat-summary, fuzzy-match, context-window, mini-aider)
 - **codex-cli**: MVP 4/4 | 串联 1/1 | 总计 10/10 (event-multiplex, tool-execution, prompt-assembly, response-stream, approval-policy, head-tail-truncation, network-policy, sandbox-exec, retry-backoff, mini-codex)
-- **eigent**: MVP 5/5 | 串联 0/1 | 总计 5/13 (queue-event-loop, workforce-orchestration, agent-factory, toolkit-dispatch, prompt-assembly)
+- **eigent**: MVP 5/5 | 串联 1/1 | 总计 13/13 (queue-event-loop, workforce-orchestration, agent-factory, toolkit-dispatch, prompt-assembly, sse-streaming, trigger-webhook, note-collaboration, skill-config, complexity-router, failure-retry-replan, mcp-lifecycle, mini-eigent)
 - **nanoclaw**: MVP 5/5 | 串联 1/1 | 总计 14/14 (message-poll-loop, container-spawn, ipc-mcp-server, agent-runner, group-queue, channel-abstraction, sqlite-persistence, mount-security, task-scheduler, sentinel-stream-parser, skills-engine, precompact-archive, cursor-rollback, mini-nanoclaw)
 - **openclaw**: MVP 5/5 | 串联 1/1 | 总计 14/14 (channel-routing, gateway-rpc, embedded-engine, tool-profile, system-prompt-builder, hybrid-memory, docker-sandbox, cron-scheduler, subagent-orchestration, auth-profile-rotation, channel-dock, plugin-hook-pipeline, skills-injection, mini-openclaw)
 - **pi-agent**: MVP 4/4 | 串联 1/1 | 总计 10/10 (agent-session-loop, pluggable-ops, prompt-builder, llm-multi-provider, event-stream, steering-queue, structured-compaction, multi-provider-overflow, extension-hooks, mini-pi)
