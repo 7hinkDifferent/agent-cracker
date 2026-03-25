@@ -20,3 +20,6 @@
 [submodule "projects/eigent"]
 	path = projects/eigent
 	url = https://github.com/eigent-ai/eigent.git
+[submodule "projects/gemini-cli"]
+	path = projects/gemini-cli
+	url = https://github.com/google-gemini/gemini-cli

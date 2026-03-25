@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-≥3.10-blue.svg)](https://www.python.org/)
-[![Agents](https://img.shields.io/badge/Agents-14-green.svg)](agents.yaml)
+[![Agents](https://img.shields.io/badge/Agents-15-green.svg)](agents.yaml)
 [![Demos](https://img.shields.io/badge/Demos-73-orange.svg)](demos/)
 
 > **拆解 AI Agent，从源码到最小复现。**
@@ -51,6 +51,7 @@
 | [openclaw](https://github.com/openclaw/openclaw) | TypeScript | 平台 | done | `openclaw/openclaw` |
 | [nanoclaw](https://github.com/qwibitai/nanoclaw) | TypeScript | 平台 | done | `qwibitai/nanoclaw` |
 | [eigent](https://github.com/eigent-ai/eigent) | TypeScript/Python | 桌面平台 | done | `eigent-ai/eigent` |
+| [gemini-cli](https://github.com/google-gemini/gemini-cli) | Python | CLI | done | `google-gemini/gemini-cli` |
 
 <!-- AGENT_TABLE_END -->
 

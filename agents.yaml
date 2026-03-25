@@ -115,3 +115,12 @@ agents:
     description: Open-source desktop app for multi-agent AI workforce coordination, built on CAMEL-AI
     analyzed_commit: 38f8f2b292d7d1f64dbd211312ca335202565c83
     analyzed_date: "2026-03-25"
+
+  - name: gemini-cli
+    repo: https://github.com/google-gemini/gemini-cli
+    language: Python
+    category: CLI
+    status: done
+    description: Google Gemini command-line interface for AI-powered development
+    analyzed_commit: 0c919857fa5770ad06bd5d67913249cd0f3c4f06
+    analyzed_date: "2026-03-25"
