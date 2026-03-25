@@ -8,11 +8,11 @@
 
 构建最小可运行版本需要以下组件：
 
-- [ ] **queue-event-loop** — 队列驱动的异步事件循环，Action 分发 + SSE 流式响应 (Python)
-- [ ] **workforce-orchestration** — 基于 CAMEL Workforce 的任务分解与并行 Agent 执行 (Python)
-- [ ] **agent-factory** — 8 类专业 Agent 工厂 + ListenChatAgent 事件织入 (Python)
-- [ ] **toolkit-dispatch** — Toolkit 三层体系：注册、收集、条件过滤 + @listen_toolkit 装饰器 (Python)
-- [ ] **prompt-assembly** — 角色化 system prompt 模板 + 动态变量注入 + 对话历史拼接 (Python)
+- [x] **queue-event-loop** — 队列驱动的异步事件循环，Action 分发 + SSE 流式响应 (Python)
+- [x] **workforce-orchestration** — 基于 CAMEL Workforce 的任务分解与并行 Agent 执行 (Python)
+- [x] **agent-factory** — 8 类专业 Agent 工厂 + ListenChatAgent 事件织入 (Python)
+- [x] **toolkit-dispatch** — Toolkit 三层体系：注册、收集、条件过滤 + @listen_toolkit 装饰器 (Python)
+- [x] **prompt-assembly** — 角色化 system prompt 模板 + 动态变量注入 + 对话历史拼接 (Python)
 
 ## 平台机制
 
@@ -37,4 +37,4 @@
 
 ## 进度
 
-MVP: 0/5 | 平台: 0/4 | 进阶: 0/3 | 串联: 0/1 | 总计: 0/13
+MVP: 5/5 | 平台: 0/4 | 进阶: 0/3 | 串联: 0/1 | 总计: 5/13
