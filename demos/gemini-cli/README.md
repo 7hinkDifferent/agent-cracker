@@ -19,17 +19,17 @@
 
 以下是该 agent 的特色功能，可选择性复现：
 
-- [ ] **message-bus-confirmation** — 权限确认总线（工具执行前交互确认 + 策略管理）
-- [ ] **sandbox-execution** — 沙箱隔离执行（Docker/Podman 容器隔离 + 命令重写）
-- [ ] **context-window-management** — 上下文策略（1M token 大窗口 + JIT 文件选择 + 溢出检测）
+- [x] **message-bus-confirmation** — 权限确认总线（工具执行前交互确认 + 策略管理）(Python)
+- [x] **sandbox-execution** — 沙箱隔离执行（Docker/Podman 容器隔离 + 命令重写）(Python)
+- [x] **context-window-management** — 上下文策略（1M token 大窗口 + JIT 文件选择 + 溢出检测）(Python)
 
 ## 完整串联
 
-- [ ] **mini-gemini** — 组合以上 MVP 组件的最小完整 agent
+- [x] **mini-gemini** — 组合以上 MVP 组件的最小完整 agent (Python)
 
 ## 进度
 
-MVP: 6/6 | 进阶: 0/3 | 串联: 0/1 | 总计: 6/10
+MVP: 6/6 | 进阶: 3/3 | 串联: 1/1 | 总计: 10/10
 
 ---
 
