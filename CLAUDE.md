@@ -20,6 +20,12 @@ agent-cracker/
 │   └── <agent>/
 │       └── <mechanism>/      # 每个 demo 独立可运行
 ├── scripts/                  # 辅助脚本（通过 npm run 调用）
+├── .codex/
+│   ├── README.md             # Codex 使用说明
+│   └── skills/               # Codex 专用仓库 workflow skill
+├── .pi/
+│   ├── prompts/              # pi prompt templates（复用 Claude 风格 slash command）
+│   └── extensions/           # pi extensions（兼容 Claude hooks 的关键行为）
 └── .claude/
     ├── skills/               # Claude Code skills
     │   ├── analyze-agent/    # /analyze-agent <name> — 8+4 维度分析（平台维度自动检测）
@@ -108,6 +114,16 @@ Git hooks 存放在 `scripts/githooks/`，`npm run setup` 安装到 `.git/hooks/
 | `demo-syntax-check.sh` | 编辑 demos/ 下源码文件后 | 多语言语法检查（.py/.ts/.rs），错误立即反馈 |
 | `validate-agents-yaml.sh` | 编辑 agents.yaml 后 | 校验 YAML 结构完整性（必须有 name/repo/status，analyzed_commit 格式） |
 | Stop prompt | Claude 结束回答前 | 按文件→文档映射规则检查是否有文档/配置遗漏未更新 |
+
+## 多 Agent Harness 兼容性
+
+- `AGENTS.md` → `CLAUDE.md`：用软链接复用同一份项目说明，兼容 Codex 与 pi 的 context file 发现规则
+- `.agents/skills` → `.claude/skills`：用软链接复用同一套 skills，兼容 Codex 与 pi 的技能发现规则
+- `.pi/prompts/*.md` 提供 `/analyze-agent`、`/create-demo` 等别名命令，让 pi 可以沿用 Claude 风格的 slash command
+- `.pi/extensions/claude-compat.ts` 在 pi 中复现关键 hooks：session status、git commit 前检查、demo 语法检查、agents.yaml 校验
+- `.codex/skills/agent-cracker-codex/` 为 Codex 补充仓库级 workflow 提示，提醒手动执行原本由 Claude hooks 负责的检查
+- `.claude/settings.json` 中的 hooks 仍是 Claude Code 专用；Codex 不会自动触发，pi 则通过 extension 兼容关键行为
+- 跨 harness 的兜底自动化仍以 `scripts/githooks/*`、`npm run lint`、`npm run progress` 为准
 
 ## 当前进度
 

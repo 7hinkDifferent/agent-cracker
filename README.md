@@ -108,6 +108,8 @@ npm run readme
 ```
 agent-cracker/
 ├── agents.yaml              # Agent 目录（单一数据源）
+├── AGENTS.md                # Codex / pi 读取的上下文文件（软链接到 CLAUDE.md）
+├── CLAUDE.md                # 项目工作流、约定、自动化说明
 ├── package.json             # npm scripts 统一入口
 ├── projects/                 # Agent 源码（git submodule, shallow clone）
 │   └── <agent>/
@@ -127,16 +129,26 @@ agent-cracker/
 │   ├── update-stars.sh
 │   ├── lint.sh
 │   └── githooks/pre-commit
+├── .agents/
+│   └── skills -> ../.claude/skills   # Codex / pi / Claude 共用 skills 入口
+├── .codex/
+│   ├── README.md             # Codex 使用说明
+│   └── skills/               # Codex 专用仓库 workflow skill
+├── .pi/
+│   ├── prompts/              # pi 的 slash command 模板
+│   └── extensions/           # pi 的 Claude hooks 兼容层
 └── .claude/
-    ├── skills/               # Claude Code skills
-    ├── hooks/                # 自动化 hooks
+    ├── skills/               # Claude Code skills（主目录）
+    ├── hooks/                # Claude Code hooks
     └── settings.json
 ```
 
 ## 自动化
 
 - **Git pre-commit hook**: agents.yaml 改动 → 自动更新 README 表格 + CLAUDE.md 进度；每次 commit 自动 lint 一致性检查
-- **Claude hooks**: 对话中自动注入进度、语法检查 demo .py 文件、校验 agents.yaml 格式、结束时提醒更新文档
+- **Claude hooks**: 原生支持会话状态注入、编辑后检查、提交前检查、结束前遗漏提醒
+- **pi extension**: 通过 `.pi/extensions/claude-compat.ts` 兼容关键 hooks 行为（session status、demo 语法检查、agents.yaml 校验、git commit 前检查）
+- **Codex**: 通过 `AGENTS.md` + `.agents/skills` 复用上下文与 skills，并通过 `.codex/skills/agent-cracker-codex/` 补充仓库级 workflow 提示；但目前仍没有完全等价于 Claude hooks 的自动触发层
 
 ## 分析维度
 
@@ -160,11 +172,22 @@ agent-cracker/
 11. **安全模型与自治** — 信任分级、沙箱隔离、自主调度
 12. **其他特色机制** — Skills 生态、Companion Apps 等不属于 D9-D11 的独特设计
 
-## 配合 Claude Code 使用
+## 配合 Claude Code / Codex / pi 使用
 
-本项目内置了 Claude Code skills 和 hooks，推荐以下工作流：
+这个仓库最初为 Claude Code 设计，现在已经补了一层多 harness 兼容。
 
-### 可用 Skills
+### 兼容矩阵
+
+| 能力 | Claude Code | Codex | pi |
+|------|-------------|-------|----|
+| 项目上下文 | `CLAUDE.md` | `AGENTS.md`（软链接） | `AGENTS.md` / `CLAUDE.md` |
+| Skills 发现 | `.claude/skills` | `.agents/skills` + `.codex/skills` | `.agents/skills` |
+| Slash commands | 原生 skills 命令 | 依赖 skill 触发 | `.pi/prompts/*.md` 提供 `/analyze-agent` 等别名 |
+| 会话启动状态注入 | 原生 hooks | 无原生等价层 | `.pi/extensions/claude-compat.ts` |
+| 编辑后校验 | 原生 hooks | 无原生等价层 | `.pi/extensions/claude-compat.ts` |
+| git commit 前检查 | 原生 hooks | 无原生等价层 | `.pi/extensions/claude-compat.ts` |
+
+### 可用 Skills / Commands
 
 | 命令 | 用途 |
 |------|------|
@@ -175,21 +198,41 @@ agent-cracker/
 | `/guide <query>` | 学习引导：按需求推荐 docs/demos/源码 |
 | `/sync-comparisons` | 同步跨 Agent 对比 |
 | `/translate-doc <file>` | 中英文互译 |
+| `/update-repo` | 更新 submodule、README 表格与相关元数据 |
 
-### 自动化 Hooks
+### 各 Harness 推荐用法
 
-- **对话开始**: 自动注入项目状态（各 agent 分析进度、drift 检测）
-- **编辑 demo**: 自动语法检查（Python/TypeScript/Rust）
-- **提交代码**: 自动检查文档配套更新是否完整
-- **对话结束**: 检查是否有遗漏的文档更新
+#### Claude Code
 
-### 推荐用法
+1. 直接打开仓库即可读取 `CLAUDE.md`
+2. `/guide` → `/analyze-agent` → `/create-demo` 是主工作流
+3. `.claude/settings.json` 会自动触发 hooks
 
-1. 开启 Claude Code 对话，项目状态会自动注入
-2. 用 `/guide` 探索你感兴趣的机制或获取学习路径
-3. 用 `/analyze-agent` 分析新的 agent
-4. 用 `/create-demo` 复现特定机制
-5. 用 `/audit-coverage` 检查还有哪些 MVP 组件缺 demo
+#### Codex
+
+1. 进入仓库后会读取 `AGENTS.md`
+2. 通过 `.agents/skills` 发现共享 skills，通过 `.codex/skills/agent-cracker-codex/` 获取 Codex 专用 workflow 提示
+3. 适合复用分析/学习类 skill，但**不会自动执行 Claude hooks**
+4. 建议在复杂修改前明确要求使用 `agent-cracker-codex` skill
+5. 提交前建议手动跑 `npm run lint`，必要时再跑 `npm run progress`
+
+#### pi
+
+1. 进入仓库后会读取 `AGENTS.md` / `CLAUDE.md`
+2. 通过 `.agents/skills` 发现技能，通过 `.pi/prompts` 获得 Claude 风格 slash command
+3. `.pi/extensions/claude-compat.ts` 会补上关键自动化：
+   - 会话启动状态提示
+   - 每轮前注入项目状态摘要
+   - `git commit` 前检查
+   - 编辑 `demos/` 后语法检查
+   - 编辑 `agents.yaml` 后结构校验
+
+### 限制与约定
+
+- `agents.yaml` 仍是唯一数据源，任何 harness 下都应优先维护它
+- Claude hooks 的 Stop prompt 仍只有 Claude Code 原生支持
+- Codex 目前兼容上下文、共享 skills 与仓库级 workflow skill，但仍不保证 Claude 式自动检查
+- 跨 harness 的稳定兜底仍然是：`scripts/githooks/*`、`npm run lint`、`npm run progress`
 
 ## 如何学习
 

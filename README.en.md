@@ -108,6 +108,8 @@ npm run readme
 ```
 agent-cracker/
 ├── agents.yaml              # Agent registry (single source of truth)
+├── AGENTS.md                # Context file for Codex / pi (symlink to CLAUDE.md)
+├── CLAUDE.md                # Project workflow, conventions, automation notes
 ├── package.json             # npm scripts entry point
 ├── projects/                 # Agent source code (git submodule, shallow clone)
 │   └── <agent>/
@@ -127,16 +129,26 @@ agent-cracker/
 │   ├── update-stars.sh
 │   ├── lint.sh
 │   └── githooks/pre-commit
+├── .agents/
+│   └── skills -> ../.claude/skills   # Shared skills entry for Codex / pi / Claude
+├── .codex/
+│   ├── README.md             # Codex usage notes
+│   └── skills/               # Codex-specific repository workflow skill
+├── .pi/
+│   ├── prompts/              # pi slash-command templates
+│   └── extensions/           # pi compatibility layer for Claude-style hooks
 └── .claude/
-    ├── skills/               # Claude Code skills
-    ├── hooks/                # Automation hooks
+    ├── skills/               # Claude Code skills (primary source)
+    ├── hooks/                # Claude Code hooks
     └── settings.json
 ```
 
 ## Automation
 
 - **Git pre-commit hook**: Changes to agents.yaml → auto-update README table + CLAUDE.md progress; lint consistency check on every commit
-- **Claude hooks**: Auto-inject progress on session start, syntax check demo files, validate agents.yaml format, remind about doc updates on session end
+- **Claude hooks**: Native support for session status injection, post-edit checks, pre-commit checks, and end-of-turn reminders
+- **pi extension**: `.pi/extensions/claude-compat.ts` reproduces key hook behaviors in pi (session status, demo syntax checks, `agents.yaml` validation, pre-commit checks)
+- **Codex**: Reuses context and skills through `AGENTS.md` + `.agents/skills`, and adds a repository workflow helper via `.codex/skills/agent-cracker-codex/`; it still does not have a fully equivalent automatic hook layer
 
 ## Analysis Dimensions
 
@@ -160,11 +172,22 @@ Each agent analysis covers 8 core dimensions + 4 optional platform dimensions:
 11. **Security Model & Autonomy** — Trust levels, sandboxing, autonomous scheduling
 12. **Other Notable Mechanisms** — Skills ecosystem, companion apps, and other unique designs outside D9-D11
 
-## Using with Claude Code
+## Working with Claude Code / Codex / pi
 
-This project includes built-in Claude Code skills and hooks. Recommended workflow:
+This repository was originally designed for Claude Code, and now includes a lightweight multi-harness compatibility layer.
 
-### Available Skills
+### Compatibility Matrix
+
+| Capability | Claude Code | Codex | pi |
+|------------|-------------|-------|----|
+| Project context | `CLAUDE.md` | `AGENTS.md` (symlink) | `AGENTS.md` / `CLAUDE.md` |
+| Skill discovery | `.claude/skills` | `.agents/skills` + `.codex/skills` | `.agents/skills` |
+| Slash commands | Native skill commands | Skill-trigger based | `.pi/prompts/*.md` provides `/analyze-agent`-style aliases |
+| Session-start status injection | Native hooks | No native equivalent yet | `.pi/extensions/claude-compat.ts` |
+| Post-edit validation | Native hooks | No native equivalent yet | `.pi/extensions/claude-compat.ts` |
+| Pre-commit guard | Native hooks | No native equivalent yet | `.pi/extensions/claude-compat.ts` |
+
+### Available Skills / Commands
 
 | Command | Purpose |
 |---------|---------|
@@ -175,21 +198,41 @@ This project includes built-in Claude Code skills and hooks. Recommended workflo
 | `/guide <query>` | Learning guide: recommend relevant docs/demos/source |
 | `/sync-comparisons` | Sync cross-agent comparisons |
 | `/translate-doc <file>` | Translate between Chinese and English |
+| `/update-repo` | Update submodules, README tables, and related metadata |
 
-### Automation Hooks
+### Recommended Per-Harness Workflow
 
-- **Session start**: Auto-inject project status (agent progress, drift detection)
-- **Edit demo**: Auto syntax check (Python/TypeScript/Rust)
-- **Commit code**: Auto-check for missing companion doc updates
-- **Session end**: Check for overlooked doc updates
+#### Claude Code
 
-### Recommended Usage
+1. Open the repo and let it load `CLAUDE.md`
+2. Main workflow: `/guide` → `/analyze-agent` → `/create-demo`
+3. `.claude/settings.json` triggers hooks automatically
 
-1. Start a Claude Code session — project status is auto-injected
-2. Use `/guide` to explore mechanisms or get learning paths
-3. Use `/analyze-agent` to analyze a new agent
-4. Use `/create-demo` to reproduce specific mechanisms
-5. Use `/audit-coverage` to check which MVP components still need demos
+#### Codex
+
+1. Enter the repo so Codex loads `AGENTS.md`
+2. Shared project skills are discovered via `.agents/skills`, and `.codex/skills/agent-cracker-codex/` provides Codex-specific workflow guidance
+3. Good for reusing analysis and learning skills, but **Claude hooks do not auto-run**
+4. For non-trivial edits, explicitly ask Codex to use the `agent-cracker-codex` skill
+5. Before committing, manually run `npm run lint` and, if needed, `npm run progress`
+
+#### pi
+
+1. Enter the repo so pi loads `AGENTS.md` / `CLAUDE.md`
+2. Skills come from `.agents/skills`, and `.pi/prompts` adds Claude-style slash commands
+3. `.pi/extensions/claude-compat.ts` restores the key automations:
+   - session-start status notice
+   - project status snapshot injected before turns
+   - pre-`git commit` checks
+   - syntax checks after editing `demos/`
+   - structural validation after editing `agents.yaml`
+
+### Limits and Conventions
+
+- `agents.yaml` remains the single source of truth in every harness
+- The Claude Stop prompt behavior is still only natively available in Claude Code
+- Codex currently reuses context, shared skills, and a repository workflow skill, but not full Claude-style automatic checks
+- Cross-harness safety net still comes from `scripts/githooks/*`, `npm run lint`, and `npm run progress`
 
 ## How to Learn
 
