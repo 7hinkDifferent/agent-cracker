@@ -120,7 +120,7 @@ Git hooks 存放在 `scripts/githooks/`，`npm run setup` 安装到 `.git/hooks/
 - `AGENTS.md` → `CLAUDE.md`：用软链接复用同一份项目说明，兼容 Codex 与 pi 的 context file 发现规则
 - `.agents/skills` → `.claude/skills`：用软链接复用同一套 skills，兼容 Codex 与 pi 的技能发现规则
 - `.pi/prompts/*.md` 提供 `/analyze-agent`、`/create-demo` 等别名命令，让 pi 可以沿用 Claude 风格的 slash command
-- `.pi/extensions/claude-compat.ts` 在 pi 中复现关键 hooks：session status、git commit 前检查、demo 语法检查、agents.yaml 校验
+- `.pi/extensions/claude-compat.ts` 在 pi 中复现关键 hooks：session status、git commit 前检查、demo 语法检查、agents.yaml 校验；编辑/写入后的校验逻辑基于 pi 的 `tool_result` 事件实现，避免与 Claude 风格事件字段不兼容
 - `.codex/skills/agent-cracker-codex/` 为 Codex 补充仓库级 workflow 提示，提醒手动执行原本由 Claude hooks 负责的检查
 - `.claude/settings.json` 中的 hooks 仍是 Claude Code 专用；Codex 不会自动触发，pi 则通过 extension 兼容关键行为
 - 跨 harness 的兜底自动化仍以 `scripts/githooks/*`、`npm run lint`、`npm run progress` 为准

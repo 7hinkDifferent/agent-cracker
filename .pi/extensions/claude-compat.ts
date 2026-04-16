@@ -366,12 +366,12 @@ export default function claudeCompat(pi: ExtensionAPI) {
     return { block: true, reason: message };
   });
 
-  pi.on("tool_execution_end", async (event, ctx) => {
+  pi.on("tool_result", async (event, ctx) => {
     if (event.isError) return;
     if (event.toolName !== "edit" && event.toolName !== "write") return;
 
-    const input = event.args as { path?: unknown };
-    if (typeof input.path !== "string") return;
+    const input = event.input as { path?: unknown };
+    if (typeof input?.path !== "string") return;
 
     const absolutePath = path.resolve(ctx.cwd, input.path);
     const relativePath = path.relative(ctx.cwd, absolutePath).split(path.sep).join("/");
