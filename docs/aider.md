@@ -653,3 +653,9 @@ Aider 是一个**成熟、工程化程度极高的终端 AI 编程助手**。其
 3. **反思闭环**：编辑 → lint → test → 自动修复的全自动闭环，大幅减少人工干预
 
 与 Codex CLI 相比，Aider 更重**代码理解智能**（RepoMap、多编辑格式），Codex CLI 更重**安全与执行控制**（沙箱、审批、网络策略）。与 Pi-agent 相比，Aider 更重**工程成熟度和 Git 工作流**，Pi-agent 更重**架构抽象和运行时灵活性**（扩展系统、pluggable ops）。与 OpenClaw 相比，Aider 专注于**终端编码场景的深度体验**（RepoMap + 反思循环），OpenClaw 则是**从 Coding Agent 进化为 Agent 平台**，将 pi-agent 内嵌后在其之上构建多通道接入、语义记忆、Docker 沙箱和子 Agent 编排等平台能力。与 NanoClaw 相比，两者定位截然不同——Aider 自研了完整的 prompt 工程、编辑格式和上下文管理（RepoMap），NanoClaw 将这些全部委托给 Claude Agent SDK，只用 ~3,900 行代码专注于容器编排和 IPC 通信；Aider 是**深度编码 agent**，NanoClaw 是**极简个人助手平台**。与 Eigent 相比，Aider 是**单 Agent 深度编码**（RepoMap + 反思循环），Eigent 是**多 Agent 协作平台**（8 类 Agent 通过 CAMEL Workforce 并行执行），两者在多 Agent 协作上差距最大——Aider 最多双模式（architect + coder），Eigent 支持真正的任务分解和角色化并行。Aider 适合终端环境中的深度代码编辑，OpenClaw/NanoClaw/Eigent 适合将 AI 能力连接到更广泛的工作流中。
+
+### vs hermes-agent
+
+`hermes-agent` 与 Aider 的最大差别，在于它把 coding loop 扩展成了**长期运行的个人 agent 平台**：除了文件编辑与命令执行，还原生支持 messaging gateway、ACP、cron、persistent memory、session search 与 skills。
+
+Aider 仍然是更纯粹的“终端内深度编码助手”——RepoMap、反思闭环、Git 工作流比 hermes-agent 更聚焦代码编辑本身；而 hermes-agent 的优势在于跨入口、跨 session 和自治调度，适合把 coding 能力嵌进更广泛的个人工作流。

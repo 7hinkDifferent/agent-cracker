@@ -23,3 +23,6 @@
 [submodule "projects/gemini-cli"]
 	path = projects/gemini-cli
 	url = https://github.com/google-gemini/gemini-cli
+[submodule "projects/hermes-agent"]
+	path = projects/hermes-agent
+	url = https://github.com/NousResearch/hermes-agent

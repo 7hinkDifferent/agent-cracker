@@ -2,8 +2,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-≥3.10-blue.svg)](https://www.python.org/)
-[![Agents](https://img.shields.io/badge/Agents-15-green.svg)](agents.yaml)
-[![Demos](https://img.shields.io/badge/Demos-73-orange.svg)](demos/)
+[![Agents](https://img.shields.io/badge/Agents-16-green.svg)](agents.yaml)
+[![Demos](https://img.shields.io/badge/Demos-97-orange.svg)](demos/)
 
 > **Disassemble AI Agents, from source code to minimal reproduction.**
 >
@@ -52,6 +52,7 @@ Side-by-side comparison of core mechanisms across 3 analyzed agents (continuousl
 | [nanoclaw](https://github.com/qwibitai/nanoclaw) | TypeScript | Platform | done | `qwibitai/nanoclaw` |
 | [eigent](https://github.com/eigent-ai/eigent) | TypeScript/Python | 桌面平台 | done | `eigent-ai/eigent` |
 | [gemini-cli](https://github.com/google-gemini/gemini-cli) | Python | CLI | done | `google-gemini/gemini-cli` |
+| [hermes-agent](https://github.com/NousResearch/hermes-agent) | Python | Platform | done | `NousResearch/hermes-agent` |
 
 <!-- AGENT_TABLE_END -->
 

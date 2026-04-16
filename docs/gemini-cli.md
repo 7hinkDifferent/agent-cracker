@@ -524,6 +524,12 @@ if (fatalTool) {
 - 需要中断/恢复的工作流（会话恢复）
 - Google 生态用户（Gemini API 免费额度较高）
 
+### vs hermes-agent
+
+`hermes-agent` 与 Gemini CLI 都重视工具调用与多模型接入，但定位差异很大：Gemini CLI 仍是**官方 CLI coding agent**，强项在原生 MCP、流式事件与超大上下文；hermes-agent 则把 coding 能力放进了一个**可长期运行的平台型 agent** 中，原生覆盖 gateway、ACP、cron、memory、skills 与多终端后端。
+
+因此，Gemini CLI 更适合单机、单通道、强流式交互的编码工作流；hermes-agent 更适合需要跨入口、跨 session 和记忆闭环的个人 assistant 场景。Gemini 在 MCP 标准化扩展上更纯粹，hermes-agent 在平台整合度上更完整。
+
 ---
 
 ---

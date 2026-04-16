@@ -1,0 +1,3 @@
+- Verify virtualenv health
+- Run targeted tests before full suite
+- Keep lint last so syntax errors fail early

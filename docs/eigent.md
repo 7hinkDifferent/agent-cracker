@@ -416,6 +416,12 @@ async def global_exception_handler(request, exc):
 
 Eigent 的核心特点是 **基于 CAMEL-AI 的多 Agent Workforce 编排**，它是目前分析的 Agent 中唯一实现了真正并行多 Agent 协作的项目。相比 pi-agent 和 openclaw 的单 Agent 架构，Eigent 通过任务自动分解和角色化 Agent 分工，能处理更复杂的跨领域任务（如"调研一个主题 + 写代码 + 生成文档 + 发布社交媒体"）。代价是架构复杂度更高，对 CAMEL 框架有重度依赖。与 NanoClaw 相比，两者代表了"Agent 平台"的两个极端——Eigent 重量级（Electron + CAMEL-AI、30+ Toolkit），NanoClaw 极简（~3,900 行、代码即配置、SDK 黑盒）；Eigent 的 Workforce 通过 CAMEL 实现任务分解和角色化并行，NanoClaw 的 Agent Swarms 通过 Claude SDK Teams 实现。与 Aider/Codex CLI 等纯 coding agent 相比，Eigent 更接近"AI 操作系统"——其 Electron 桌面应用定位和 Trigger 系统将 AI 能力延伸到编码之外的文档、社交媒体、数据分析等领域。
 
+### vs hermes-agent
+
+Eigent 和 `hermes-agent` 都属于平台型 agent，但方向不同：Eigent 强在 **GUI + 多 Agent Workforce + 桌面工作台**，适合把复杂任务拆成多个角色并行执行；hermes-agent 强在 **单核心运行时 + 多入口接入 + 长期个人记忆与自治调度**，更像面向个人的 self-hosted AI assistant platform。
+
+换句话说，Eigent 解决的是“如何把多个专业 agent 组织成一个团队”，而 hermes-agent 解决的是“如何让一个个人 agent 跨 CLI、消息平台、IDE、cron 和长期会话持续工作”。前者在并行协作更强，后者在个人长期陪伴式 agent 体验更成熟。
+
 ---
 
 ## 9. 通道层与网关 _(平台维度)_

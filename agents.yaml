@@ -124,3 +124,13 @@ agents:
     description: Google Gemini command-line interface for AI-powered development
     analyzed_commit: 0c919857fa5770ad06bd5d67913249cd0f3c4f06
     analyzed_date: "2026-03-25"
+
+  - name: hermes-agent
+    repo: https://github.com/NousResearch/hermes-agent
+    language: Python
+    category: 平台
+    type: agent-platform
+    status: done
+    description: Self-improving autonomous agent platform with CLI, messaging gateway, ACP, memory, skills, and cron
+    analyzed_commit: 722331a57de9e18f134c896d733870b4a493dc84
+    analyzed_date: "2026-04-15"

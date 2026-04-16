@@ -554,3 +554,9 @@ Pi-agent 是一个**架构精良、高度模块化的 AI Agent 工具包**。其
 3. **深度可扩展**：扩展系统覆盖 Agent 生命周期每个阶段，从输入拦截到 UI 覆盖，扩展能力远超同类 Agent
 
 与 Aider 相比，Pi 更重**架构抽象和运行时灵活性**（分层设计、扩展系统、多 provider 原生支持），而 Aider 更重**代码理解智能**（RepoMap、多编辑格式、Git 深度集成）。与 Codex CLI 相比，Pi 有更灵活的环境抽象（Pluggable Ops）和实时交互（Steering Queue），Codex CLI 有硬件级沙箱和网络代理。与 OpenClaw 相比，Pi 是 OpenClaw 的**内嵌核心引擎**——OpenClaw 直接以库方式调用 pi-agent（`@mariozechner/pi-coding-agent` v0.54.1），在其之上构建了 Gateway 控制面、13+ 通道路由、语义记忆、Docker 沙箱、Cron 调度、47 tool profile 体系和 Plugin SDK 生态。与 NanoClaw 相比，两者代表了完全不同的 agent 构建理念——Pi 自研了完整的 Agent Session 循环、Pluggable Ops、EventStream 和多 Provider SDK，而 NanoClaw 将 agent 核心全部委托给 Claude Agent SDK（黑盒），只自研容器编排和 IPC 通信。与 Eigent 相比，Pi 是**轻量级可嵌入工具包**（~25k 行 TypeScript），Eigent 是**重量级桌面平台**（Electron + FastAPI + CAMEL-AI）；Pi 的 Pluggable Ops 实现环境无关性，Eigent 的 Workforce 实现多 Agent 并行——两者解决了不同层次的问题（执行环境抽象 vs 多 Agent 协调）；Pi 可被 OpenClaw 等平台内嵌复用，Eigent 则深度绑定 CAMEL 框架，可嵌入性较低。
+
+### vs hermes-agent
+
+`hermes-agent` 可以看作把 pi-agent 这类 coding runtime 再往前推进一层：pi-agent 强在 **可嵌入、可扩展、环境无关的 agent harness**，而 hermes-agent 强在 **把 CLI、gateway、ACP、cron、memory、skills 和多 backend 执行统一成一个面向最终用户的平台产品**。
+
+两者都强调多 provider、tool calling 和上下文压缩，但取向不同：pi-agent 更适合作为底座被 OpenClaw 一类平台复用；hermes-agent 则直接把“长期个人 agent”所需的记忆、授权、消息入口与自治调度一起做完，平台完成度更高。

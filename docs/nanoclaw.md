@@ -429,6 +429,12 @@ GroupQueue 指数退避重试:
 
 NanoClaw 代表了与 OpenClaw 截然相反的设计哲学：**极简而非全能**。它放弃了自研 agent 循环、prompt 工程、上下文管理等"标配"能力，全部委托给 Claude Agent SDK，自身只专注于**容器编排、IPC 通信、安全隔离和多群组管理**这几个 SDK 不提供的能力。这使得它的核心代码仅 ~3,900 行，是所有已分析 agent 中最精简的。与 Aider 相比，Aider 自研了完整的 RepoMap、12+ 编辑格式和反思循环等深度编码能力，NanoClaw 则将编码能力全部委托给 SDK，专注平台层编排。与 Codex CLI 的内核级沙箱（Seatbelt/Landlock）不同，NanoClaw 用容器级沙箱 + 外部 allowlist 实现安全隔离。与 Eigent 相比，两者代表了"Agent 平台"的两个极端——NanoClaw 极简（~3,900 行、代码即配置、SDK 黑盒），Eigent 重量级（Electron + CAMEL-AI、30+ Toolkit、8 类 Agent 并行）；NanoClaw 的 Agent Swarms 通过 Claude SDK Teams 实现，Eigent 通过 CAMEL Workforce 实现任务分解和角色化并行；NanoClaw 用容器隔离确保安全，Eigent 缺少代码执行沙箱但有完整的用户认证和速率限制。NanoClaw 适合追求完全理解和掌控自己 AI 助手的高级用户，Eigent 适合需要 GUI 操作和多 Agent 协作的非技术用户。
 
+### vs hermes-agent
+
+`hermes-agent` 和 NanoClaw 都在做“个人 agent 平台”，但 NanoClaw 的核心哲学是**把 agent 智能委托给 Claude Agent SDK，自己专注隔离与编排**；hermes-agent 则反过来，自研 `AIAgent` 主循环、tool registry、memory/session search 与 gateway，把更多智能控制权握在自己手里。
+
+因此，两者的差异也很明显：NanoClaw 的优势是极简、容器隔离强、代码可完全读透；hermes-agent 的优势是入口更全（CLI/gateway/ACP/cron）、记忆与 skills 闭环更完整、provider/tool/backend 选择面更广，更像可长期自托管的个人 AI 运行平台。
+
 ---
 
 ## 9. 通道层与网关 _(平台维度)_

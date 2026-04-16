@@ -366,6 +366,12 @@ Vector（70%）+ BM25 文本（30%）加权混合检索，支持 MMR 去重、�
 
 OpenClaw 代表了 **Coding Agent 向 Agent 平台进化**的典型路径：不重造 agent 内核（直接内嵌 pi-agent），而是在其之上构建多通道接入、语义记忆、安全隔离、自主调度、子 agent 编排等平台能力。其核心架构决策——**Gateway 作为控制面 + 内嵌引擎 + Plugin 生态**——使得平台能力的扩展不影响编码核心的稳定性。47 个 tool 的 profile 分级机制、多 provider failover + auth 轮转、子 agent 生命周期管理是其最有价值的创新点。与 NanoClaw 相比，两者都是"个人 AI 助手平台"但走了截然相反的路线——OpenClaw 是**大而全**（450k 行、13+ 通道、向量记忆、Plugin SDK 生态），NanoClaw 是**小而精**（~3,900 行、代码即配置、Skills 代码变换）。与 Eigent 相比，两者都是"Agent 平台"但走了不同的多 Agent 路线——OpenClaw 用**单 Agent + 子 Agent spawn**（pi-agent 内嵌，子 agent 按需创建），Eigent 用**多 Agent Workforce 并行**（8 类 Agent 通过 CAMEL 框架协调）；OpenClaw 自研编排层 + 内嵌成熟引擎，Eigent 重度依赖 CAMEL 框架；OpenClaw 的通道覆盖（13+）远超 Eigent（桌面 + Webhook），但 Eigent 的多 Agent 真正并行执行是 OpenClaw 所不具备的。与纯 coding agent 相比，OpenClaw 的独特价值在于**连接**——将 AI 编码能力连接到用户已有的通信工具、工作流和设备中。
 
+### vs hermes-agent
+
+OpenClaw 和 `hermes-agent` 都属于“个人 AI 平台”路线，但实现哲学不同：OpenClaw 选择 **TypeScript monorepo + 内嵌 pi-agent + Gateway/Extension 控制面**，强调通道覆盖、插件生态与 profile/policy 组合；hermes-agent 则用 **Python 单仓 + 单一 AIAgent 运行时** 统一 CLI、gateway、ACP、cron、memory、skills 与多终端后端。
+
+在平台能力上，两者都具备 messaging、记忆、调度与子 agent 能力，但 Hermes 的 `MEMORY.md`/`USER.md` + SQLite FTS5 `session_search` 闭环更像“长期个人记忆系统”，OpenClaw 的优势则在于更重的 extension/plugin 生态与更广泛的通道适配面。
+
 ---
 
 ## 9. 通道层与网关 _(平台维度)_

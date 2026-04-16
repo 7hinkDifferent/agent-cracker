@@ -595,3 +595,9 @@ Codex CLI 是一个**安全优先、性能导向**的 AI Coding Agent。其核�
 2. **Rust 原生性能**：核心引擎用 Rust 实现，tokio 异步运行时 + Ratatui TUI，在大规模代码库上的响应速度和资源占用优于 Python/TypeScript 实现。
 
 与 Aider 相比，Codex CLI 更重**安全与执行控制**（沙箱、审批、网络策略），Aider 更重**代码理解智能**（RepoMap、多编辑格式、反思循环）。与 pi-agent 相比，Codex CLI 有硬件级沙箱和网络代理，pi-agent 有更灵活的环境抽象（Pluggable Ops）和实时交互（Steering Queue）。与 OpenClaw 相比，两者都重视安全隔离但方式不同——Codex CLI 用**平台级沙箱**（Seatbelt/Landlock，轻量、零配置），OpenClaw 用**Docker 容器沙箱**（重量级但隔离更彻底）；Codex CLI 专注 CLI 单通道高性能执行，OpenClaw 则扩展到 13+ 通道和语义记忆等平台能力。与 NanoClaw 相比，安全模型理念类似但层次不同——Codex CLI 用**内核级沙箱**（Seatbelt/Landlock，进程粒度），NanoClaw 用**容器级沙箱**（Docker/Apple Container，VM 粒度）+ 外部 allowlist（容器不可修改）。与 Eigent 相比，两者在**架构理念**上差异最大——Codex CLI 是轻量级单 Agent（Rust 原生、~30k 行），Eigent 是重量级多 Agent 平台（CAMEL 框架依赖、Electron 桌面应用）；Codex CLI 用内核级沙箱实现安全，Eigent 用 JWT + 速率限制实现访问控制但缺乏代码执行沙箱；Eigent 的 Workforce 多 Agent 并行是独有能力，但代价是更高的复杂度和框架依赖。
+
+### vs hermes-agent
+
+`hermes-agent` 和 Codex CLI 都很重视执行安全，但层级不同：Codex CLI 依赖 **OS 级沙箱 + 审批策略** 做单机 CLI 安全执行；hermes-agent 则把安全放到**平台运行时**里，通过危险命令审批、多 terminal backend、gateway 授权、pairing/allowlist 与 execute_code sandbox 形成组合防线。
+
+从产品边界看，Codex CLI 仍是高性能单通道 coding agent；hermes-agent 则是可长期运行的 agent platform，把 CLI、消息网关、ACP、cron、memory 与 skills 统一到一个 `AIAgent` 核心之上，因此更偏“个人 agent 操作系统”而不是单点编码工具。
