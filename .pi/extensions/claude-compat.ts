@@ -356,6 +356,14 @@ export default function claudeCompat(pi: ExtensionAPI) {
     const command = typeof event.input.command === "string" ? event.input.command : "";
     if (!command.includes("git commit")) return undefined;
 
+    const isCompoundCommand = command.includes("&&") || command.includes(";") || command.includes("||") || command.includes("\n");
+    if (isCompoundCommand) {
+      if (ctx.hasUI) {
+        ctx.ui.notify("检测到复合 git 提交命令，跳过执行前拦截，交由实际 git hooks 校验。", "warning");
+      }
+      return undefined;
+    }
+
     const issues = await runPreCommitChecks(pi, ctx.cwd);
     if (issues.length === 0) return undefined;
 
